@@ -1,0 +1,23 @@
+name: monthly_bills
+
+packages:
+  - app/**
+  - packages/**
+  - modules/**
+
+command:
+      
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+    usePubspecOverrides: true
+
+scripts:
+  generate:
+    run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build
+  test-all:
+    run: very_good test
+  test-all-coverage:
+    run: very_good test --coverage

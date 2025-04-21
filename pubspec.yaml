@@ -1,0 +1,15 @@
+name: monthly_bills_workspace
+publish_to: none
+environment:
+  sdk: ^3.6.0
+workspace:
+  - app/monthly_bills
+  - packages/monthly_core
+  - packages/monthly_dependencies
+  - packages/monthly_common
+  - modules/monthly_home
+  - modules/monthly_login
+  - modules/monthly_register
+  - modules/monthly_report  
+dev_dependencies:
+  melos: ^6.3.2

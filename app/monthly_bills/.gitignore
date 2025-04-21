@@ -93,7 +93,7 @@ flutter_export_environment.sh
 *.swp
 *.swo
 *~
-#*.lock
+*.lock
 *.DS_Store
 *.class
 *.log
@@ -106,7 +106,7 @@ Thumbs.db
 *.userprefs
 
 # Arquivos de saída do pub
-#pubspec.lock
+pubspec.lock
 .dart_tool/package_config.json
 **/doc/api/
 
@@ -132,6 +132,3 @@ Thumbs.db
 .travis.yml
 .codecov.yml
 .coveralls.yml
-app/monthly_bills/firebase.json
-app/monthly_bills/firepit-log.txt
-app/monthly_bills/lib/firebase_options.dart

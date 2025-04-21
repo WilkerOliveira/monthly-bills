@@ -5,6 +5,8 @@
 [![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-lightgrey?style=for-the-badge)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 [![go_router](https://img.shields.io/badge/go_router-blueviolet?style=for-the-badge)](https://pub.dev/packages/go_router)
 [![Cubit](https://img.shields.io/badge/Cubit-blue?style=for-the-badge)](https://bloclibrary.dev/#/cubit)
+[![Melos](https://img.shields.io/badge/Melos-2E7D32?style=for-the-badge&logoColor=white)](https://pub.dev/packages/melos)
+
 
 ## Overview
 
@@ -23,8 +25,6 @@ This is a mobile application designed to help users track their monthly bills ef
 
 ![image](https://github.com/user-attachments/assets/e6d273b3-fe94-4f8c-b968-6fc3b04813cd)
 
-
-
 ## Tech Stack
 
 This application is being built using the following technologies and architectural patterns:
@@ -35,3 +35,5 @@ This application is being built using the following technologies and architectur
 * **Clean Architecture:** The application's codebase is structured following the principles of Clean Architecture to ensure separation of concerns, testability, and maintainability. This approach organizes the code into distinct layers (Entities, Use Cases, Interface Adapters, and Frameworks & Drivers), making it more robust and adaptable to future changes.
 * **go\_router:** A declarative routing package for Flutter that simplifies navigation within the application. It enables type-safe routing, deep linking, and more.
 * **Cubit:** A simple and predictable state management library that extends the BLoC pattern. Cubit is being used to manage the application's state in a reactive and efficient manner.
+* **Melos:** A tool for managing Flutter projects with multiple packages. Melos helps streamline tasks such as dependency management, building, testing, and releasing across the entire project.
+
