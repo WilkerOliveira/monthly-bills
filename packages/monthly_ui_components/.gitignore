@@ -1,0 +1,134 @@
+# Arquivos e diretórios gerados pelo Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+.fvm/
+flutter_export_environment.sh
+
+# Arquivos específicos do Android
+**/android/**/gradle-wrapper.jar
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/**/gradle-app.setting
+**/android/**/gradle.properties
+**/android/**/gradlew
+**/android/**/gradlew.bat
+
+# Arquivos específicos do iOS
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Arquivos específicos do macOS
+**/macos/.defaults
+**/macos/Flutter/Flutter.framework
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+
+# Arquivos específicos do Web
+**/web/.dart_tool/
+**/web/.last_build_id
+
+# Arquivos específicos do Windows/Linux
+**/linux/.dart_tool/
+**/linux/flutter/ephemeral/
+**/windows/.dart_tool/
+**/windows/flutter/ephemeral/
+**/windows/runner/flutter_export_environment.sh
+
+# Arquivos de ambiente
+.env
+.env.*
+!.env.example
+
+# Arquivos de configuração do VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Arquivos de configuração do Android Studio/IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Arquivos de configuração do Visual Studio
+.vs/
+
+# Arquivos temporários
+*.swp
+*.swo
+*~
+*.lock
+*.DS_Store
+*.class
+*.log
+*.pyc
+*.swp
+Thumbs.db
+
+# Arquivos de usuário
+*.user
+*.userprefs
+
+# Arquivos de saída do pub
+pubspec.lock
+.dart_tool/package_config.json
+**/doc/api/
+
+# Arquivos de teste
+**/coverage/
+**/test/**/output/
+
+# Arquivos de análise estática
+**/analysis_options.user.yaml
+
+# Arquivos de Firebase
+**/firebase-debug.log
+**/firebase-app.log
+**/google-services.json
+**/GoogleService-Info.plist
+**/flutter_config.js
+
+# Arquivos de CI/CD
+.cache/
+.ci/
+.github/
+.gitlab-ci.yml
+.travis.yml
+.codecov.yml
+.coveralls.yml

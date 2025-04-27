@@ -25,3 +25,6 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/translations/
+    - packages/monthly_login/assets/translations/

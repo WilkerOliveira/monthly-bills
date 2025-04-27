@@ -1,0 +1,7 @@
+{
+    "login_app_name": "Controle de Despesas",
+    "login_app_name_desc": "Gerencie seus gastos de forma inteligente.",
+    "login_button_title": "Entrar com Google",
+    "something_went_wrong": "Não foi possível realizar o login. Tente novamente.",
+    "login_success_message": "Login realizado com sucesso."
+}

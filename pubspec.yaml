@@ -7,9 +7,10 @@ workspace:
   - packages/monthly_core
   - packages/monthly_dependencies
   - packages/monthly_common
+  - packages/monthly_ui_components
   - modules/monthly_home
   - modules/monthly_login
   - modules/monthly_register
-  - modules/monthly_report  
+  - modules/monthly_report    
 dev_dependencies:
   melos: ^6.3.2

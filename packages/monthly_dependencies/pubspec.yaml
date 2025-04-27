@@ -24,6 +24,8 @@ dependencies:
   bloc: ^9.0.0
   flutter_bloc: ^9.1.0
   google_fonts: ^6.2.1
+  easy_localization: ^3.0.7+1
+  easy_localization_loader: ^2.0.2
 
 
 dev_dependencies:

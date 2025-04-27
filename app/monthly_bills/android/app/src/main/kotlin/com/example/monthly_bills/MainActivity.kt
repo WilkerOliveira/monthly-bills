@@ -1,4 +1,4 @@
-package com.wilkeroliveira.monthlybills
+package com.dlmwsolucoes.monthlybills
 
 import io.flutter.embedding.android.FlutterActivity
 

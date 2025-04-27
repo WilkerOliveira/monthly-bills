@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_login/core/translation/login_strings.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_cubit.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_state.dart';
+import 'package:monthly_login/modules/login/presentation/widgets/login_image_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,11 +15,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late final LoginCubit cubit;
-
+  late final LoginStrings strings;
   @override
   void initState() {
     super.initState();
     cubit = MonthlyDI.I.get<LoginCubit>();
+    strings = MonthlyDI.I.get<LoginStrings>();
   }
 
   @override
@@ -32,15 +35,12 @@ class _LoginPageState extends State<LoginPage> {
       bloc: cubit,
       listener: (context, state) {
         if (state is LoginErrorState) {
-          MonthlySnackBar.error(
-            context,
-            message: 'Não foi possível realizar o login. Tente novamente.',
-          );
+          MonthlySnackBar.error(context, message: strings.somethingWentWrong);
         }
         if (state is LoginSuccessState) {
           MonthlySnackBar.success(
             context,
-            message: 'Login realizado com sucesso',
+            message: strings.loginSuccessMessage,
           );
           context.go(MainRoutes.home);
         }
@@ -58,15 +58,18 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.greenAccent,
                 ),
                 const SizedBox(height: 24),
-                const Text(
-                  'Controle de Despesas',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                Text(
+                  strings.loginAppName,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Gerencie seus gastos de forma inteligente.',
+                Text(
+                  strings.loginAppNameDesc,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 40),
                 Visibility(
@@ -75,14 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       onPressed: () => cubit.login(),
-                      icon: SvgPicture.asset(
-                        'assets/icons/google.svg',
-                        package: 'monthly_login',
-                        height: 24,
-                      ),
-                      label: const Text(
-                        'Entrar com Google',
-                        style: TextStyle(fontSize: 16),
+                      icon: const LoginImageButton(),
+                      label: Text(
+                        strings.loginButtonTitle,
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),

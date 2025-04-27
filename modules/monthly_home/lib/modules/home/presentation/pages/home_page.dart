@@ -45,11 +45,10 @@ class _HomePageState extends State<HomePage> {
             .length;
 
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
       appBar: AppBar(
-        title: const Text('My Bills'),
+        title: const Text('Minhas Contas Mensais'),
         centerTitle: true,
-        backgroundColor: Colors.blue.shade800,
+
         elevation: 0,
         actions: [
           IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
@@ -58,15 +57,19 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header with summary
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.blue.shade800, Colors.blue.shade600],
+                  colors: [
+                    Color(0xFF1C1C1E), // Cor de fundo base
+                    Color(0xFF2E2E30), // Um tom ligeiramente mais claro
+                    Color(0xFF3A3A3C), // Outro tom mais claro para o gradiente
+                  ],
+                  stops: [0.0, 0.5, 1.0], // Distribuição das cores no gradiente
                 ),
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
@@ -74,7 +77,6 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  // Welcome message
                   Row(
                     children: [
                       CircleAvatar(
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome back,',
+                            'Welcome,',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.8),
                               fontSize: 14,

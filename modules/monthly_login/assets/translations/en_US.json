@@ -1,0 +1,7 @@
+{
+    "login_app_name": "Expense Control",
+    "login_app_name_desc": "Manage your expenses wisely.",
+    "login_button_title": "Login with Google",
+    "something_went_wrong": "Unable to log in. Please try again.",
+    "login_success_message": "Login successful."
+}
