@@ -14,3 +14,7 @@ workspace:
   - modules/monthly_report    
 dev_dependencies:
   melos: ^6.3.2
+
+flutter:
+
+  uses-material-design: true

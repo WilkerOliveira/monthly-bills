@@ -20,7 +20,9 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
+  uses-material-design: true
   assets:
     - assets/animations/
     - assets/icons/
-    - assets/translations/
+    - assets/translations/en_US.json
+    - assets/translations/pt_BR.json

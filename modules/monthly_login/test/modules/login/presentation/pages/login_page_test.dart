@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_login/core/translation/login_strings.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_cubit.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_state.dart';
 import 'package:monthly_login/modules/login/presentation/pages/login_page.dart';
+
+import '../../../../mocks/strings/mock_login_strings.dart';
 
 class MockLoginCubit extends MockCubit<LoginState> implements LoginCubit {}
 
 void main() {
   late LoginCubit mockLoginCubit;
   final mockGoRouter = MockGoRouter();
+  final loginStrings = MockLoginStrings();
   setUpAll(() {
     mockLoginCubit = MockLoginCubit();
 
     GetIt.I.registerSingleton<LoginCubit>(mockLoginCubit);
+    GetIt.I.registerSingleton<LoginStrings>(loginStrings);
 
     when(() => mockLoginCubit.stream).thenAnswer((_) => const Stream.empty());
     when(() => mockLoginCubit.state).thenReturn(LoginInitialState());

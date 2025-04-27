@@ -18,6 +18,11 @@ scripts:
   generate:
     run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build
   test-all:
-    run: very_good test
+    run: |
+      echo "Running All tests without coverage"
+      melos exec -- very_good test
+
   test-all-coverage:
-    run: very_good test --coverage
+    run: |
+      echo "Running All tests with coverage"
+      melos exec -- very_good test --coverage --test-randomize-ordering-seed=random --reporter=json
