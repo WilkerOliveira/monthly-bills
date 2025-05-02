@@ -1,0 +1,12 @@
+{
+    "home_title": "Controle de Despesas",
+    "home_welcome": "Bem vindo",
+    "home_total_due": "Total devido",
+    "home_upcoming": "A vencer",
+    "home_subtitle": "Suas contas mensais",
+    "home_see_all": "Ver todas",
+    "home_no_bills_message": "Sem contas para exibir",
+    "home_add_first_bill": "Adicione sua primeira conta para começar",
+    "home_due_until": "Vence em %s dias",
+    "home_pay": "Pagar"
+}

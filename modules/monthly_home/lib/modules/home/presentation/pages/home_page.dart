@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_home/core/translation/home_strings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,6 +34,14 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
+  late HomeStrings strings;
+
+  @override
+  void initState() {
+    super.initState();
+    strings = MonthlyDI.I.get<HomeStrings>();
+  }
+
   @override
   Widget build(BuildContext context) {
     const totalAmount = 50.6;
@@ -46,7 +56,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minhas Contas Mensais'),
+        title: Text(strings.homeTitle),
         centerTitle: true,
 
         elevation: 0,
@@ -88,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Welcome,',
+                            '${strings.homeWelcome},',
                             style: TextStyle(
                               color: Colors.white.withValues(alpha: 0.8),
                               fontSize: 14,
@@ -116,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                         child: _SummaryCard(
                           icon: Icons.receipt,
                           value: '\$${totalAmount.toStringAsFixed(2)}',
-                          label: 'Total Due',
+                          label: strings.homeTotalDue,
                           color: Colors.white,
                         ),
                       ),
@@ -125,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                         child: _SummaryCard(
                           icon: Icons.calendar_today,
                           value: upcomingBills.toString(),
-                          label: 'Upcoming',
+                          label: strings.homeUpcoming,
                           color: Colors.amber.shade200,
                         ),
                       ),
@@ -143,14 +153,17 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Your Monthly Bills',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Text(
+                    strings.homeSubtitle,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      'See All',
+                      strings.homeSeeAll,
                       style: TextStyle(color: Colors.blue.shade800),
                     ),
                   ),
@@ -161,8 +174,13 @@ class _HomePageState extends State<HomePage> {
             // Bills list
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: _bills.map((bill) => _BillCard(bill: bill)).toList(),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: _bills.length,
+                itemBuilder: (context, index) {
+                  return _BillCard(bill: _bills[index]);
+                },
               ),
             ),
 
@@ -180,13 +198,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'No bills to display',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  Text(
+                    strings.homeNoBillsMessage,
+                    style: const TextStyle(fontSize: 18, color: Colors.grey),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Add your first bill to get started',
+                    strings.homeAddFirstBill,
                     style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
                   ),
                 ],
@@ -253,6 +271,8 @@ class _BillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = MonthlyDI.I.get<HomeStrings>();
+
     final daysUntilDue = bill.dueDate.difference(DateTime.now()).inDays;
 
     return Card(
@@ -289,7 +309,10 @@ class _BillCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Due in $daysUntilDue days',
+                    strings.homeDueUntil.replace(
+                      ['%s'],
+                      [daysUntilDue.toString()],
+                    ),
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                 ],
@@ -321,7 +344,7 @@ class _BillCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: const Text('Pay'),
+                  child: Text(strings.homePay),
                 ),
               ],
             ),

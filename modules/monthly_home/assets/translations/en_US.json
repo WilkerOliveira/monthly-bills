@@ -1,0 +1,12 @@
+{
+    "home_title": "Expense Control",
+    "home_welcome": "Welcome",
+    "home_total_due": "Total Due",
+    "home_upcoming": "Upcoming",
+    "home_subtitle": "Your Monthly Bills",
+    "home_see_all": "See All",
+    "home_no_bills_message": "No bills to display",
+    "home_add_first_bill": "Add your first bill to get started",
+    "home_due_until": "Due in %s days",
+    "home_pay": "Pay"
+}
