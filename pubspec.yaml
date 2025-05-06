@@ -8,6 +8,7 @@ workspace:
   - packages/monthly_dependencies
   - packages/monthly_common
   - packages/monthly_ui_components
+  - packages/monthly_domain
   - modules/monthly_home
   - modules/monthly_login
   - modules/monthly_register

@@ -1,5 +1,6 @@
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_home/monthly_home.dart';
 import 'package:monthly_login/monthly_login.dart';
 import 'package:monthly_register/monthly_register.dart';
@@ -15,7 +16,7 @@ abstract class MainRouters {
       ...reportRoutes,
     ],
     redirect: (context, state) {
-      final isLoggedIn = MonthlyDI.I.get<AuthService>().isLoggedIn();
+      final isLoggedIn = MonthlyDI.I.get<AuthServiceContract>().isLoggedIn;
       final isAuthRoute = state.matchedLocation.startsWith('/auth');
 
       if (!isLoggedIn && !isAuthRoute) {

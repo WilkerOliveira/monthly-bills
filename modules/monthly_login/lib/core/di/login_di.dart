@@ -1,4 +1,5 @@
 import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_login/core/translation/login_strings.dart';
 import 'package:monthly_login/modules/login/data/datasources/firebase_datasource.dart';
 import 'package:monthly_login/modules/login/data/repositories/login_repository_impl.dart';
@@ -38,7 +39,7 @@ abstract class LoginDI {
   }
 
   static void _registerService(MonthlyDI di) {
-    di.registerLazySingleton<AuthService>(
+    di.registerLazySingleton<AuthServiceContract>(
       () => AuthServiceImpl(firebaseAuth: di()),
     );
   }
