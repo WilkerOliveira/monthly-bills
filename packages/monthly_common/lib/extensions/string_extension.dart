@@ -1,3 +1,5 @@
+import 'package:monthly_common/enums/bill_types_enum.dart';
+
 extension StringExtension on String {
   String replace(List<String> replacements, List<String> values) {
     if (replacements.length != values.length) {
@@ -11,5 +13,15 @@ extension StringExtension on String {
     }
 
     return result;
+  }
+
+  BillTypesEnum toBillType() {
+    try {
+      return BillTypesEnum.values.firstWhere(
+        (e) => e.name.toLowerCase() == toLowerCase(),
+      );
+    } on Exception catch (_) {
+      return BillTypesEnum.other;
+    }
   }
 }

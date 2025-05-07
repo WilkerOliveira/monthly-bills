@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({super.key});
@@ -11,24 +12,27 @@ class EmptyStateWidget extends StatelessWidget {
     final strings = MonthlyDI.I.get<HomeStrings>();
     return Column(
       children: [
-        const SizedBox(height: 40),
+        SizedBox(height: vBigSpace),
         SizedBox(
-          height: 200,
+          height: largeImage,
           child: Lottie.asset(
             'assets/animations/empty.json',
             package: 'monthly_home',
             fit: BoxFit.contain,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: vNormalSpace),
         Text(
           strings.homeNoBillsMessage,
-          style: const TextStyle(fontSize: 18, color: Colors.grey),
+          style: TextStyle(fontSize: subTitleTextSize, color: Colors.grey),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: vTinySpace),
         Text(
           strings.homeAddFirstBill,
-          style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+          style: TextStyle(
+            fontSize: defaultFontSize,
+            color: Colors.grey.shade500,
+          ),
         ),
       ],
     );

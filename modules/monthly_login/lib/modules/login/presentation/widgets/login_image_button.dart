@@ -7,10 +7,10 @@ class LoginImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SvgImageAsset(
+    return SvgImageAsset(
       assetPath: 'assets/icons/google.svg',
       package: LoginTranslateLoader.package,
-      height: 24,
+      height: defaultButtonHeight,
     );
   }
 }

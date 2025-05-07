@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class BillCard extends StatelessWidget {
   const BillCard({required this.bill, super.key});
@@ -14,38 +15,32 @@ class BillCard extends StatelessWidget {
     final daysUntilDue = bill.dueDate.difference(DateTime.now()).inDays;
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: EdgeInsets.only(bottom: vSmallSpace),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(defaultRadius),
+      ),
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(
+          horizontal: hMediumSpace,
+          vertical: vMediumSpace,
+        ),
         child: Row(
           children: [
-            // Bill icon
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(_getBillIcon(bill.name), color: Colors.blue.shade800),
-            ),
-
-            const SizedBox(width: 16),
-
-            // Bill details
+            BillIconWidget(type: bill.name),
+            SizedBox(width: hNormalSpace),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     bill.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: mediumTextSize,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: vSpace4),
                   Text(
                     strings.homeDueUntil.replace(
                       ['%s'],
@@ -56,54 +51,23 @@ class BillCard extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Amount and pay button
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   '\$${bill.amount.toStringAsFixed(2)}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: mediumTextSize,
                   ),
                 ),
-                const SizedBox(height: 8),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade800,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Text(strings.homePay),
-                ),
+                SizedBox(height: vTinySpace),
+                SimpleButton(onPressed: () {}, label: strings.homePay),
               ],
             ),
           ],
         ),
       ),
     );
-  }
-}
-
-IconData _getBillIcon(String billName) {
-  switch (billName.toLowerCase()) {
-    case 'electricity':
-      return Icons.bolt;
-    case 'internet':
-      return Icons.wifi;
-    case 'rent':
-      return Icons.home;
-    case 'water':
-      return Icons.water_drop;
-    default:
-      return Icons.receipt;
   }
 }

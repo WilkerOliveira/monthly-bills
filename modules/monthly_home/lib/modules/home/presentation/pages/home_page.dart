@@ -37,6 +37,11 @@ class _HomePageState extends State<HomePage> {
       amount: 45.75,
       dueDate: DateTime.now().add(const Duration(days: 7)),
     ),
+    Bill(
+      name: 'Groceries',
+      amount: 45.75,
+      dueDate: DateTime.now().add(const Duration(days: 7)),
+    ),
   ];
 
   late HomeStrings strings;
@@ -59,37 +64,41 @@ class _HomePageState extends State<HomePage> {
             )
             .length;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(strings.homeTitle),
-        centerTitle: true,
-        elevation: 0,
-        actions: [
-          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            GradientBoxWidget(
-              child: Column(
-                children: [
-                  const ProfileWidget(),
-                  const SizedBox(height: 24),
-                  SummaryWidget(
-                    totalAmount: totalAmount,
-                    upcomingBills: upcomingBills,
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
-
-            BillsListWidget(bills: _bills),
-
-            if (_bills.isEmpty) const EmptyStateWidget(),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(strings.homeTitle),
+          centerTitle: true,
+          elevation: 0,
+          actions: [
+            IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
           ],
+        ),
+        body: BasePage(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                GradientBoxWidget(
+                  child: Column(
+                    children: [
+                      const ProfileWidget(),
+                      SizedBox(height: vMediumSpace),
+                      SummaryWidget(
+                        totalAmount: totalAmount,
+                        upcomingBills: upcomingBills,
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: vMediumSpace),
+
+                BillsListWidget(bills: _bills),
+
+                if (_bills.isEmpty) const EmptyStateWidget(),
+              ],
+            ),
+          ),
         ),
       ),
     );

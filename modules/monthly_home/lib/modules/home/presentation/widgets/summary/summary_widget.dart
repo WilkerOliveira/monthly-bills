@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/summary/summary_card_widget.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class SummaryWidget extends StatelessWidget {
   const SummaryWidget({
@@ -26,7 +27,7 @@ class SummaryWidget extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: hSmallSpace),
         Expanded(
           child: SummaryCard(
             icon: Icons.calendar_today,

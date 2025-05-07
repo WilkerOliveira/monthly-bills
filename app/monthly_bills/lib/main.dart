@@ -6,6 +6,7 @@ import 'package:monthly_dependencies/monthly_dependencies.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   MainDI.setup();
   runApp(
@@ -24,12 +25,15 @@ class MonthlBillsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      title: 'Flutter Demo',
-      theme: AppThemes.darkTheme,
-      routerConfig: MainRouters.routes,
+    return ScreenUtilInit(
+      minTextAdapt: true,
+      child: MaterialApp.router(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        title: 'Flutter Demo',
+        theme: AppThemes.darkTheme,
+        routerConfig: MainRouters.routes,
+      ),
     );
   }
 }

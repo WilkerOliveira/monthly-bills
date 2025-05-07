@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class SummaryCard extends StatelessWidget {
   const SummaryCard({
@@ -16,26 +17,29 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(
+        horizontal: hNormalSpace,
+        vertical: vNormalSpace,
+      ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .2),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(defaultRadius),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color),
-          const SizedBox(height: 8),
+          SizedBox(height: vTinySpace),
           Text(
             value,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: largeTextSize,
               fontWeight: FontWeight.bold,
               color: color,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: vSpace4),
           Text(label, style: TextStyle(color: color.withValues(alpha: 0.8))),
         ],
       ),

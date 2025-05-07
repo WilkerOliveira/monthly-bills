@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class HeaderBillsWidget extends StatelessWidget {
   const HeaderBillsWidget({super.key});
@@ -9,13 +10,16 @@ class HeaderBillsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = MonthlyDI.I.get<HomeStrings>();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: hMediumSpace),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             strings.homeSubtitle,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: subTitleTextSize,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           TextButton(
             onPressed: () {},

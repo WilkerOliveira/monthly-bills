@@ -5,6 +5,7 @@ import 'package:monthly_login/core/translation/login_strings.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_cubit.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_state.dart';
 import 'package:monthly_login/modules/login/presentation/widgets/login_image_button.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -47,51 +48,47 @@ class _LoginPageState extends State<LoginPage> {
       },
       builder: (context, state) {
         return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              children: [
-                const Spacer(),
-                const Icon(
-                  Icons.account_balance_wallet_rounded,
-                  size: 80,
-                  color: Colors.greenAccent,
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  strings.loginAppName,
-                  style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  strings.loginAppNameDesc,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 40),
-                Visibility(
-                  visible: state is! LoginLoadingState,
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => cubit.login(),
-                      icon: const LoginImageButton(),
-                      label: Text(
-                        strings.loginButtonTitle,
-                        style: const TextStyle(fontSize: 16),
-                      ),
+          body: BasePage(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hLargeSpace,
+                vertical: vLargeSpace,
+              ),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  const LogoWidget(),
+                  SizedBox(height: vMediumSpace),
+                  Text(
+                    strings.loginAppName,
+                    style: TextStyle(
+                      fontSize: titleTextSize,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                Visibility(
-                  visible: state is LoginLoadingState,
-                  child: const CircularProgressIndicator(),
-                ),
-                const Spacer(),
-              ],
+                  SizedBox(height: vNormalSpace),
+                  Text(
+                    strings.loginAppNameDesc,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: subTitleTextSize),
+                  ),
+                  SizedBox(height: vBigSpace),
+                  if (state is! LoginLoadingState)
+                    SizedBox(
+                      width: screenWidth,
+                      child: CustomIconButton(
+                        onPressed: () => cubit.login(),
+                        icon: const LoginImageButton(),
+                        label: strings.loginButtonTitle,
+                        fontSize: mediumTextSize,
+                      ),
+                    )
+                  else
+                    const CircularProgressIndicator(),
+
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
         );
