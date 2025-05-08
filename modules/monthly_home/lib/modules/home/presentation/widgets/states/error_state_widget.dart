@@ -4,14 +4,14 @@ import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
-class EmptyStateWidget extends StatefulWidget {
-  const EmptyStateWidget({super.key});
+class ErrorStateWidget extends StatefulWidget {
+  const ErrorStateWidget({super.key});
 
   @override
-  State<EmptyStateWidget> createState() => _EmptyStateWidgetState();
+  State<ErrorStateWidget> createState() => _ErrorStateWidgetState();
 }
 
-class _EmptyStateWidgetState extends State<EmptyStateWidget>
+class _ErrorStateWidgetState extends State<ErrorStateWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   @override
@@ -34,7 +34,7 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
         SizedBox(
           height: largeImage,
           child: Lottie.asset(
-            'assets/animations/empty.json',
+            'assets/animations/error_lottie.json',
             package: 'monthly_home',
             fit: BoxFit.contain,
             controller: _controller,
@@ -46,15 +46,10 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
         ),
         SizedBox(height: vNormalSpace),
         Text(
-          strings.homeNoBillsMessage,
-          style: TextStyle(fontSize: subTitleTextSize, color: Colors.grey),
-        ),
-        SizedBox(height: vTinySpace),
-        Text(
-          strings.homeAddFirstBill,
+          strings.homeErrorMessage,
           style: TextStyle(
-            fontSize: defaultFontSize,
-            color: Colors.grey.shade500,
+            fontSize: subTitleTextSize,
+            color: Colors.red.shade300,
           ),
         ),
       ],
