@@ -15,7 +15,8 @@ This is a mobile application designed to help users track their monthly bills ef
 
 ## Base Architecture
 
-![image](https://github.com/user-attachments/assets/48a2571d-2602-42dc-84dc-de81990d42f2)
+![image](https://github.com/user-attachments/assets/7c3edebb-a85b-4691-9710-03e480dbc936)
+
 
 ---
 
