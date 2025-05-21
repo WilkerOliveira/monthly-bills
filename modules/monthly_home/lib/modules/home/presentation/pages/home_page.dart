@@ -8,6 +8,7 @@ import 'package:monthly_home/modules/home/presentation/widgets/bills/bills_list_
 import 'package:monthly_home/modules/home/presentation/widgets/profile/profile_widget.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/states/empty_state_widget.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/states/error_state_widget.dart';
+import 'package:monthly_home/modules/home/presentation/widgets/states/loading_state_widget.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/summary/summary_widget.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
@@ -21,10 +22,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late HomeStrings strings;
 
+  late HomeCubit _cubit;
+
   @override
   void initState() {
     super.initState();
     strings = MonthlyDI.I.get<HomeStrings>();
+    _cubit = MonthlyDI.I.get<HomeCubit>();
+    _cubit.loadData();
+  }
+
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
   }
 
   @override
@@ -39,42 +50,42 @@ class _HomePageState extends State<HomePage> {
             IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
           ],
         ),
-        body: BlocProvider(
-          create: (context) => HomeCubit()..init(),
-          child: BasePage(
-            child: SingleChildScrollView(
-              child: BlocBuilder<HomeCubit, HomeState>(
-                builder: (context, state) {
-                  switch (state) {
-                    case HomeLoadingState():
-                      return const CircularProgressIndicator();
-                    case HomeSuccessState():
-                      return Column(
-                        children: [
-                          GradientBoxWidget(
-                            child: Column(
-                              children: [
-                                const ProfileWidget(),
-                                SizedBox(height: vMediumSpace),
-                                SummaryWidget(
-                                  totalAmount: state.bill.totalAmount,
-                                  upcomingBills: state.bill.upcomingBills,
-                                ),
-                              ],
-                            ),
+        body: BasePage(
+          child: BlocBuilder<HomeCubit, HomeState>(
+            bloc: _cubit,
+            builder: (context, state) {
+              switch (state) {
+                case HomeLoadingState():
+                  return const LoadingStateWidget();
+                case HomeSuccessState():
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        GradientBoxWidget(
+                          child: Column(
+                            children: [
+                              const ProfileWidget(),
+                              SizedBox(height: vMediumSpace),
+                              SummaryWidget(
+                                totalAmount: state.bill?.totalAmount ?? 0,
+                                upcomingBills: state.bill?.upcomingBills ?? 0,
+                              ),
+                            ],
                           ),
-                          if (state.isEmpty)
-                            const EmptyStateWidget()
-                          else if (state.isError)
-                            const ErrorStateWidget()
-                          else
-                            BillsListWidget(bills: state.bill.bills),
-                        ],
-                      );
-                  }
-                },
-              ),
-            ),
+                        ),
+                        if (state.isEmpty)
+                          const EmptyStateWidget()
+                        else if (state.isError)
+                          const ErrorStateWidget()
+                        else
+                          BillsListWidget(bills: state.bill!.bills),
+                      ],
+                    ),
+                  );
+                case HomeErrorState():
+                  return const ErrorStateWidget();
+              }
+            },
           ),
         ),
       ),

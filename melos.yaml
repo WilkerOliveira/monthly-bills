@@ -16,7 +16,7 @@ command:
 
 scripts:
   generate:
-    run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build
+    run: melos exec -c 1 --depends-on build_runner -- dart run build_runner build --delete-conflicting-outputs
   test-all:
     run: |
       echo "Running All tests without coverage"

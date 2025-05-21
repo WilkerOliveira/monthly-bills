@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 class MonthlyDI {
   MonthlyDI._internal();
-  static final MonthlyDI _instance = MonthlyDI._internal();
+  static MonthlyDI _instance = MonthlyDI._internal();
   static MonthlyDI get I => _instance;
 
   void registerLazySingleton<T extends Object>(T Function() factory) {
@@ -31,5 +32,13 @@ class MonthlyDI {
 
   void unregister<T extends Object>() {
     GetIt.I.unregister<T>();
+  }
+
+  @visibleForTesting
+  static void enableTestMode({bool reset = true}) {
+    if (reset) {
+      GetIt.I.reset();
+    }
+    _instance = MonthlyDI._internal();
   }
 }

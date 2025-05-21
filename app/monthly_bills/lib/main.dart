@@ -8,6 +8,7 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   MainDI.setup();
   runApp(
     EasyLocalization(

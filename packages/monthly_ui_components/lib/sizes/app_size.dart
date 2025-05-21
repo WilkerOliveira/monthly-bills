@@ -38,3 +38,6 @@ final buttonRadius = 20.r;
 
 //Icons/Images
 final largeImage = 200.h;
+
+//Progress Indicator
+final progressIndicatorSize = 50.h;

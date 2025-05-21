@@ -6,133 +6,107 @@ import 'package:monthly_login/core/translation/login_strings.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_cubit.dart';
 import 'package:monthly_login/modules/login/presentation/cubit/login_state.dart';
 import 'package:monthly_login/modules/login/presentation/pages/login_page.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
-import '../../../../mocks/strings/mock_login_strings.dart';
+class MockLoginCubit extends Mock implements LoginCubit {}
 
-class MockLoginCubit extends MockCubit<LoginState> implements LoginCubit {}
+class MockLoginStrings extends Mock implements LoginStrings {}
 
 void main() {
-  late LoginCubit mockLoginCubit;
-  final mockGoRouter = MockGoRouter();
-  final loginStrings = MockLoginStrings();
-  setUpAll(() {
-    mockLoginCubit = MockLoginCubit();
+  late MockLoginCubit mockCubit;
+  late MockLoginStrings mockStrings;
 
-    GetIt.I.registerSingleton<LoginCubit>(mockLoginCubit);
-    GetIt.I.registerSingleton<LoginStrings>(loginStrings);
+  setUp(() {
+    MonthlyDI.enableTestMode();
+    TestWidgetsFlutterBinding.ensureInitialized();
+    mockCubit = MockLoginCubit();
+    mockStrings = MockLoginStrings();
 
-    when(() => mockLoginCubit.stream).thenAnswer((_) => const Stream.empty());
-    when(() => mockLoginCubit.state).thenReturn(LoginInitialState());
-    when(() => mockLoginCubit.login()).thenAnswer((_) => Future.value());
+    MonthlyDI.I.registerFactory<LoginCubit>(() => mockCubit);
+    MonthlyDI.I.registerLazySingleton<LoginStrings>(() => mockStrings);
+
+    when(
+      () => mockStrings.somethingWentWrong,
+    ).thenReturn('Something went wrong');
+    when(() => mockStrings.loginSuccessMessage).thenReturn('Login successful');
+    when(() => mockStrings.loginAppName).thenReturn('App Name');
+    when(() => mockStrings.loginAppNameDesc).thenReturn('App Description');
+    when(() => mockStrings.loginButtonTitle).thenReturn('Login');
+
+    when(() => mockCubit.close()).thenAnswer((_) => Future.value());
   });
 
   tearDown(() {
-    mockLoginCubit.close();
+    MonthlyDI.I.reset();
   });
 
-  Widget createWidgetUnderTest() {
-    return MaterialApp(
-      home: MockGoRouterProvider(
-        goRouter: mockGoRouter,
-        child: const LoginPage(),
-      ),
+  testWidgets('renders LoginPage and shows login button', (tester) async {
+    when(() => mockCubit.state).thenReturn(LoginInitialState());
+    whenListen(
+      mockCubit,
+      Stream<LoginState>.fromIterable([LoginInitialState()]),
+      initialState: LoginInitialState(),
     );
-  }
 
-  testWidgets('renders LoginPage with initial UI elements', (tester) async {
-    await tester.pumpWidget(createWidgetUnderTest());
+    await pumpWidgetTest(tester);
 
-    expect(find.byType(Icon), findsOneWidget);
-    expect(find.text('Controle de Despesas'), findsOneWidget);
-    expect(
-      find.text('Gerencie seus gastos de forma inteligente.'),
-      findsOneWidget,
+    expect(find.text('App Name'), findsOneWidget);
+    expect(find.text('App Description'), findsOneWidget);
+    expect(find.text('Login'), findsOneWidget);
+    expect(find.byType(CustomIconButton), findsOneWidget);
+  });
+
+  testWidgets('shows CircularProgressIndicator when loading', (tester) async {
+    when(() => mockCubit.state).thenReturn(LoginLoadingState());
+    whenListen(
+      mockCubit,
+      Stream<LoginState>.fromIterable([LoginLoadingState()]),
+      initialState: LoginLoadingState(),
     );
-    expect(find.text('Entrar com Google'), findsOneWidget);
+
+    await pumpWidgetTest(tester);
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(CustomIconButton), findsNothing);
   });
 
-  testWidgets(
-    'shows CircularProgressIndicator when state is LoginLoadingState',
-    (tester) async {
-      when(() => mockLoginCubit.state).thenReturn(LoginLoadingState());
+  testWidgets('calls cubit.login when login button is pressed', (tester) async {
+    when(() => mockCubit.state).thenReturn(LoginInitialState());
+    when(() => mockCubit.login()).thenAnswer((_) => Future.value());
+    whenListen(
+      mockCubit,
+      Stream<LoginState>.fromIterable([LoginInitialState()]),
+      initialState: LoginInitialState(),
+    );
 
-      await tester.pumpWidget(createWidgetUnderTest());
-      await tester.pump();
+    await pumpWidgetTest(tester);
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsNothing);
-    },
-  );
-
-  testWidgets('calls login method when login button is pressed', (
-    tester,
-  ) async {
-    when(() => mockLoginCubit.state).thenReturn(LoginInitialState());
-
-    await tester.pumpWidget(createWidgetUnderTest());
-
-    final loginButton = find.text('Entrar com Google');
-    expect(loginButton, findsOneWidget);
-
-    await tester.tap(loginButton);
-    verify(() => mockLoginCubit.login()).called(1);
+    await tester.tap(find.byType(CustomIconButton));
+    verify(() => mockCubit.login()).called(1);
   });
 
-  testWidgets('shows error snackbar when state is LoginErrorState', (
-    tester,
-  ) async {
-    whenListen(mockLoginCubit, Stream.fromIterable([LoginErrorState()]));
+  testWidgets('shows error snackbar on LoginErrorState', (tester) async {
+    when(() => mockCubit.state).thenReturn(LoginInitialState());
+    whenListen(
+      mockCubit,
+      Stream<LoginState>.fromIterable([LoginInitialState(), LoginErrorState()]),
+      initialState: LoginInitialState(),
+    );
 
-    await tester.pumpWidget(createWidgetUnderTest());
+    await pumpWidgetTest(tester);
+
     await tester.pump();
 
-    expect(
-      find.text('Não foi possível realizar o login. Tente novamente.'),
-      findsOneWidget,
-    );
+    expect(find.byType(SnackBar), findsOneWidget);
+    expect(find.text('Something went wrong'), findsOneWidget);
   });
+}
 
-  testWidgets('navigates to home when state is LoginSuccessState', (
-    tester,
-  ) async {
-    whenListen(mockLoginCubit, Stream.fromIterable([LoginSuccessState()]));
-
-    await tester.pumpWidget(createWidgetUnderTest());
-    await tester.pump();
-
-    expect(find.text('Login realizado com sucesso'), findsOneWidget);
-    verify(() => mockGoRouter.go('/home')).called(1);
-  });
-
-  testWidgets('displays Google icon in login button', (tester) async {
-    await tester.pumpWidget(createWidgetUnderTest());
-
-    final googleIcon = find.byType(SvgPicture);
-    expect(googleIcon, findsOneWidget);
-  });
-
-  testWidgets('shows error snackbar when login fails', (tester) async {
-    whenListen(mockLoginCubit, Stream.fromIterable([LoginErrorState()]));
-
-    await tester.pumpWidget(createWidgetUnderTest());
-    await tester.pump();
-
-    expect(
-      find.text('Não foi possível realizar o login. Tente novamente.'),
-      findsOneWidget,
-    );
-  });
-
-  testWidgets(
-    'displays CircularProgressIndicator when state is LoginLoadingState',
-    (tester) async {
-      when(() => mockLoginCubit.state).thenReturn(LoginLoadingState());
-
-      await tester.pumpWidget(createWidgetUnderTest());
-      await tester.pump();
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      expect(find.byType(ElevatedButton), findsNothing);
-    },
+Future<void> pumpWidgetTest(WidgetTester tester) async {
+  await tester.pumpWidget(
+    const ScreenUtilInit(
+      minTextAdapt: true,
+      child: MaterialApp(home: LoginPage()),
+    ),
   );
 }

@@ -17,7 +17,7 @@ class SummaryBillsEntity extends Equatable {
 
   final double totalAmount;
   final int upcomingBills;
-  final List<Bill> bills;
+  final List<BillEntity> bills;
 
   @override
   List<Object?> get props => [totalAmount, upcomingBills, bills];

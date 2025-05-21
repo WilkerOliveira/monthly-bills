@@ -9,5 +9,6 @@
     "home_add_first_bill": "Add your first bill to get started",
     "home_due_until": "Due in %s days",
     "home_pay": "Pay",
-    "home_error_message": "Something went wrong!"
+    "home_error_message": "Something went wrong!",
+    "home_loading": "Waiting, loading data..."
 }

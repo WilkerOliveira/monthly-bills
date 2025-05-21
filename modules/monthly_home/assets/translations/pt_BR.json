@@ -9,5 +9,6 @@
     "home_add_first_bill": "Adicione sua primeira conta para começar",
     "home_due_until": "Vence em %s dias",
     "home_pay": "Pagar",
-    "home_error_message": "Algo deu errado!"
+    "home_error_message": "Algo deu errado!",
+    "home_loading": "Aguarde, carregando dados..."
 }

@@ -6,7 +6,7 @@ import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class BillCard extends StatelessWidget {
   const BillCard({required this.bill, super.key});
-  final Bill bill;
+  final BillEntity bill;
 
   @override
   Widget build(BuildContext context) {
