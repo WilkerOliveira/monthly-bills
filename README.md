@@ -1,13 +1,5 @@
 # Monthly Bills App (Under Development)
 
-[![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)](https://flutter.dev/)
-[![Firebase](https://img.shields.io/badge/Firebase-%23FFCA28.svg?style=for-the-badge&logo=Firebase&logoColor=black)](https://firebase.google.com/)
-[![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-lightgrey?style=for-the-badge)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
-[![go_router](https://img.shields.io/badge/go_router-blueviolet?style=for-the-badge)](https://pub.dev/packages/go_router)
-[![Cubit](https://img.shields.io/badge/Cubit-blue?style=for-the-badge)](https://bloclibrary.dev/#/cubit)
-[![Melos](https://img.shields.io/badge/Melos-2E7D32?style=for-the-badge&logoColor=white)](https://pub.dev/packages/melos)
-
-
 ## Overview
 
 This is a mobile application designed to help users track their monthly bills effectively. It aims to provide a clear and organized way to manage bills, offering features for logging expenses and generating insightful reports.
@@ -23,17 +15,62 @@ This is a mobile application designed to help users track their monthly bills ef
 
 ## Base Architecture
 
-![image](https://github.com/user-attachments/assets/48a2571d-2602-42dc-84dc-de81990d42f2)
+![image](https://github.com/user-attachments/assets/7c3edebb-a85b-4691-9710-03e480dbc936)
 
-## Tech Stack
 
-This application is being built using the following technologies and architectural patterns:
+---
 
-* **Flutter:** A UI toolkit by Google for building natively compiled applications for mobile, web, and desktop from a single codebase.
-* **Firebase:** Google's mobile development platform, being used for:
-    * **Authentication:** Secure user authentication via Firebase Authentication, specifically leveraging Google Sign-In.
-* **Clean Architecture:** The application's codebase is structured following the principles of Clean Architecture to ensure separation of concerns, testability, and maintainability. This approach organizes the code into distinct layers (Entities, Use Cases, Interface Adapters, and Frameworks & Drivers), making it more robust and adaptable to future changes.
-* **go\_router:** A declarative routing package for Flutter that simplifies navigation within the application. It enables type-safe routing, deep linking, and more.
-* **Cubit:** A simple and predictable state management library that extends the BLoC pattern. Cubit is being used to manage the application's state in a reactive and efficient manner.
-* **Melos:** A tool for managing Flutter projects with multiple packages. Melos helps streamline tasks such as dependency management, building, testing, and releasing across the entire project.
+## ✨ Features
+
+- 🔐 **Google Sign-In** with Firebase Auth
+- 🌐 **Multi-language support** with `easy_localization`
+- 🗺️ **Declarative navigation** using `go_router`
+- 📀 **Offline-first data persistence** with Isar
+- 🧠 **State management** with `flutter_bloc` and `get_it`
+- 🖼️ **Animated UI** with Lottie and SVGs
+- 📱 **Responsive design** using `flutter_screenutil`
+- 💡 **Clean architecture** and result-oriented programming with `result_dart`
+
+---
+
+## 📦 Dependencies
+
+### 🔧 Core
+
+| Package                     | Description                                   |
+| --------------------------- | --------------------------------------------- |
+| `firebase_core`             | Core Firebase SDK integration                 |
+| `firebase_auth`             | Firebase Authentication                       |
+| `google_sign_in`            | Google sign-in for Firebase Auth              |
+| `isar`, `isar_flutter_libs` | Local NoSQL database for fast persistence     |
+| `path_provider`             | Get commonly used locations on the filesystem |
+
+### 🌐 Routing & State Management
+
+| Package                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `go_router`            | Declarative routing solution              |
+| `bloc`, `flutter_bloc` | State management using BLoC pattern       |
+| `get_it`               | Dependency injection container            |
+| `equatable`            | Simplifies value comparisons in Dart      |
+| `result_dart`          | Result type for functional error handling |
+
+### 🌍 Internationalization
+
+| Package                    | Description                                 |
+| -------------------------- | ------------------------------------------- |
+| `easy_localization`        | Load and switch between locales easily      |
+| `easy_localization_loader` | YAML/CSV file loader for easy_localization |
+
+### 🎨 UI & Assets
+
+| Package                | Description                              |
+| ---------------------- | ---------------------------------------- |
+| `flutter_svg`          | Render SVG images                        |
+| `lottie`               | Load and play Lottie animations          |
+| `cached_network_image` | Caching for network images               |
+| `google_fonts`         | Access Google Fonts in your Flutter app  |
+| `flutter_screenutil`   | Screen size adaptation for responsive UI |
+
+---
 
