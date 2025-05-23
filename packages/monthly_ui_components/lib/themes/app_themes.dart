@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
-  // Cores base do tema (constantes imutáveis)
   static const Color _primaryColor = Color(0xFF4CAF50);
   static const Color _secondaryColor = Color(0xFFA29BFE);
   static const Color _darkBackground = Color(0xFF1C1C1E);
@@ -10,20 +9,14 @@ class AppThemes {
   static const Color _darkCard = Color(0xFF252525);
   static const Color _errorColor = Color(0xFFCF6679);
 
-  // Tema principal dark atualizado
   static ThemeData get darkTheme {
     final baseTheme = ThemeData.dark(useMaterial3: true);
 
     return baseTheme.copyWith(
       colorScheme: _darkColorScheme,
-      extensions: <ThemeExtension<dynamic>>[
-        const CustomThemeExtension(
-          cardBackground: _darkCard,
-          successColor: Color(0xFF4CAF50),
-          warningColor: Color(0xFFFFC107),
-        ),
-      ],
+      extensions: <ThemeExtension<dynamic>>[customTheme],
       scaffoldBackgroundColor: _darkBackground,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
       appBarTheme: _appBarTheme,
       cardTheme: _cardTheme,
       textTheme: _textTheme,
@@ -41,10 +34,10 @@ class AppThemes {
       tabBarTheme: _tabBarTheme,
       dialogTheme: _dialogTheme,
       listTileTheme: _listTileTheme,
+      bottomAppBarTheme: _bottomAppBarTheme,
     );
   }
 
-  // Esquema de cores atualizado para Material 3
   static ColorScheme get _darkColorScheme => const ColorScheme.dark(
     primary: _primaryColor,
     secondary: _secondaryColor,
@@ -54,7 +47,6 @@ class AppThemes {
     onError: Colors.white,
   );
 
-  // Componentes do tema
   static AppBarTheme get _appBarTheme => AppBarTheme(
     backgroundColor: _darkSurface,
     elevation: 0,
@@ -260,35 +252,50 @@ class AppThemes {
     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
   );
 
-  // Extensão de tema personalizada
   static CustomThemeExtension get customTheme => const CustomThemeExtension(
     cardBackground: _darkCard,
     successColor: Color(0xFF4CAF50),
     warningColor: Color(0xFFFFC107),
+    navIconActiveColor: Color(0xFFFFB74D),
+    navIconInactiveColor: Color(0xFFA5A5A5),
+  );
+
+  static BottomAppBarTheme get _bottomAppBarTheme => const BottomAppBarTheme(
+    color: Color(0xFF2D2D2D),
+    elevation: 8,
+    surfaceTintColor: Colors.transparent,
+    shape: CircularNotchedRectangle(),
   );
 }
 
-// Extensão de tema para propriedades customizadas
 class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   const CustomThemeExtension({
     required this.cardBackground,
     required this.successColor,
     required this.warningColor,
+    required this.navIconActiveColor,
+    required this.navIconInactiveColor,
   });
   final Color cardBackground;
   final Color successColor;
   final Color warningColor;
+  final Color navIconActiveColor;
+  final Color navIconInactiveColor;
 
   @override
   ThemeExtension<CustomThemeExtension> copyWith({
     Color? cardBackground,
     Color? successColor,
     Color? warningColor,
+    Color? navIconActiveColor,
+    Color? navIconInactiveColor,
   }) {
     return CustomThemeExtension(
       cardBackground: cardBackground ?? this.cardBackground,
       successColor: successColor ?? this.successColor,
       warningColor: warningColor ?? this.warningColor,
+      navIconActiveColor: navIconActiveColor ?? this.navIconActiveColor,
+      navIconInactiveColor: navIconInactiveColor ?? this.navIconInactiveColor,
     );
   }
 
@@ -305,6 +312,10 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
       cardBackground: Color.lerp(cardBackground, other.cardBackground, t)!,
       successColor: Color.lerp(successColor, other.successColor, t)!,
       warningColor: Color.lerp(warningColor, other.warningColor, t)!,
+      navIconActiveColor:
+          Color.lerp(navIconActiveColor, other.navIconActiveColor, t)!,
+      navIconInactiveColor:
+          Color.lerp(navIconInactiveColor, other.navIconInactiveColor, t)!,
     );
   }
 }

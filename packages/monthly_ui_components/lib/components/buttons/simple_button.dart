@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_ui_components/sizes/app_size.dart';
+import 'package:monthly_ui_components/dimen/app_sizes.dart';
 
 class SimpleButton extends StatelessWidget {
   const SimpleButton({required this.label, required this.onPressed, super.key});

@@ -1,4 +1,5 @@
 import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_core/translation/core_strings.dart';
 import 'package:monthly_database/monthly_database.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_home/monthly_home.dart';
@@ -17,6 +18,7 @@ class MainDI {
   static void _registerExternal(MonthlyDI di) {
     di
       ..registerLazySingleton(() => FirebaseAuth.instance)
-      ..registerLazySingleton(GoogleSignIn.new);
+      ..registerLazySingleton(GoogleSignIn.new)
+      ..registerLazySingleton<CoreStrings>(CoreStrings.new);
   }
 }

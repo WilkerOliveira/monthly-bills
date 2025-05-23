@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monthly_bills/firebase_options.dart';
 import 'package:monthly_core/monthly_core.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +34,7 @@ class MonthlBillsApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         title: 'Flutter Demo',
         theme: AppThemes.darkTheme,
-        routerConfig: MainRouters.routes,
+        routerConfig: routes,
       ),
     );
   }
