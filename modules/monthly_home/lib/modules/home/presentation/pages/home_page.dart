@@ -6,9 +6,6 @@ import 'package:monthly_home/modules/home/presentation/cubit/home_cubit.dart';
 import 'package:monthly_home/modules/home/presentation/cubit/home_state.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/bills/bills_list_widget.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/profile/profile_widget.dart';
-import 'package:monthly_home/modules/home/presentation/widgets/states/empty_state_widget.dart';
-import 'package:monthly_home/modules/home/presentation/widgets/states/error_state_widget.dart';
-import 'package:monthly_home/modules/home/presentation/widgets/states/loading_state_widget.dart';
 import 'package:monthly_home/modules/home/presentation/widgets/summary/summary_widget.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
@@ -74,16 +71,19 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         if (state.isEmpty)
-                          const EmptyStateWidget()
+                          EmptyStateWidget(
+                            title: strings.homeNoBillsMessage,
+                            message: strings.homeAddFirstBill,
+                          )
                         else if (state.isError)
-                          const ErrorStateWidget()
+                          ErrorStateWidget(message: strings.homeErrorMessage)
                         else
                           BillsListWidget(bills: state.bill!.bills),
                       ],
                     ),
                   );
                 case HomeErrorState():
-                  return const ErrorStateWidget();
+                  return ErrorStateWidget(message: strings.homeLoading);
               }
             },
           ),

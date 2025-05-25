@@ -13,6 +13,7 @@ export 'package:get_it/get_it.dart';
 export 'package:go_router/go_router.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:google_sign_in/google_sign_in.dart';
+export 'package:intl/intl.dart';
 export 'package:lottie/lottie.dart';
 export 'package:mocktail/mocktail.dart';
 export 'package:result_dart/result_dart.dart';

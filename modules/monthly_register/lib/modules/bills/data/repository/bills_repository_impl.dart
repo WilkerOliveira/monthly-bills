@@ -20,4 +20,11 @@ class BillsRepositoryImpl implements BillsRepository {
   Future<void> save(BillEntity bill) {
     return database.saveBill(BillModel.entityToModel(bill).toDbModel());
   }
+
+  @override
+  Future<List<BillEntity>> getByRangeDate(DateTime begin, DateTime end) async {
+    final register = await database.getByRangeDate(begin, end);
+
+    return register.map((item) => BillModel.toModel(item).toEntity()).toList();
+  }
 }

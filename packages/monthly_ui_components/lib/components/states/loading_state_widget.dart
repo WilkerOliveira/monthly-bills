@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_common/monthly_common.dart';
-import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class LoadingStateWidget extends StatelessWidget {
-  const LoadingStateWidget({super.key});
+  const LoadingStateWidget({super.key, this.message});
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class LoadingStateWidget extends StatelessWidget {
         ),
         SizedBox(height: vMediumSpace),
         Text(
-          MonthlyDI.I.get<HomeStrings>().homeLoading,
+          message ?? '',
           style: TextStyle(
             fontSize: subTitleTextSize,
             fontWeight: FontWeight.w500,

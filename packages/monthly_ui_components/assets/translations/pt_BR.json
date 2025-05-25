@@ -1,0 +1,9 @@
+{
+     "start_date": "Data inicial",
+    "end_date": "Data final",
+    "filter": "Filtrar",
+    "locale": "pt_BR",
+    "invalid_filter_message": "Por favor, preencha os campos data inicial e final.",
+    "required_field": "Campo obrigatório.",
+    "end_date_before_start_date": "A data final não pode ser anterior à data inicial."
+}

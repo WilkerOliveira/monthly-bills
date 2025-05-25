@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
-import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class ErrorStateWidget extends StatefulWidget {
-  const ErrorStateWidget({super.key});
+  const ErrorStateWidget({super.key, this.message});
+
+  final String? message;
 
   @override
   State<ErrorStateWidget> createState() => _ErrorStateWidgetState();
@@ -27,7 +27,6 @@ class _ErrorStateWidgetState extends State<ErrorStateWidget>
 
   @override
   Widget build(BuildContext context) {
-    final strings = MonthlyDI.I.get<HomeStrings>();
     return Column(
       children: [
         SizedBox(height: vBigSpace),
@@ -35,7 +34,7 @@ class _ErrorStateWidgetState extends State<ErrorStateWidget>
           height: largeImage,
           child: Lottie.asset(
             'assets/animations/error_lottie.json',
-            package: 'monthly_home',
+            package: 'monthly_ui_components',
             fit: BoxFit.contain,
             controller: _controller,
             animate: false,
@@ -46,7 +45,7 @@ class _ErrorStateWidgetState extends State<ErrorStateWidget>
         ),
         SizedBox(height: vNormalSpace),
         Text(
-          strings.homeErrorMessage,
+          widget.message ?? '',
           style: TextStyle(
             fontSize: subTitleTextSize,
             color: Colors.red.shade300,

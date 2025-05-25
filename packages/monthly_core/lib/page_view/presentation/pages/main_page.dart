@@ -13,15 +13,17 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NavigationCubit(),
-      child: Scaffold(
-        body: BlocBuilder<NavigationCubit, NavigationState>(
-          builder: (context, state) {
-            return child;
-          },
-        ),
-        floatingActionButton: const NewBillFab(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: const BottomNavBar(),
+      child: BlocBuilder<NavigationCubit, NavigationState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: child,
+
+            floatingActionButton: const NewBillFab(),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: BottomNavBar(currentIndex: state.currentIndex),
+          );
+        },
       ),
     );
   }

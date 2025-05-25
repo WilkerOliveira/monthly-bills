@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
-import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class EmptyStateWidget extends StatefulWidget {
-  const EmptyStateWidget({super.key});
+  const EmptyStateWidget({super.key, this.title, this.message});
+  final String? title;
+  final String? message;
 
   @override
   State<EmptyStateWidget> createState() => _EmptyStateWidgetState();
@@ -14,6 +14,7 @@ class EmptyStateWidget extends StatefulWidget {
 class _EmptyStateWidgetState extends State<EmptyStateWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -27,15 +28,14 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
 
   @override
   Widget build(BuildContext context) {
-    final strings = MonthlyDI.I.get<HomeStrings>();
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: vBigSpace),
         SizedBox(
-          height: largeImage,
+          height: mediumImage,
           child: Lottie.asset(
             'assets/animations/empty.json',
-            package: 'monthly_home',
+            package: 'monthly_ui_components',
             fit: BoxFit.contain,
             controller: _controller,
             animate: false,
@@ -46,12 +46,12 @@ class _EmptyStateWidgetState extends State<EmptyStateWidget>
         ),
         SizedBox(height: vNormalSpace),
         Text(
-          strings.homeNoBillsMessage,
+          widget.title ?? '',
           style: TextStyle(fontSize: subTitleTextSize, color: Colors.grey),
         ),
         SizedBox(height: vTinySpace),
         Text(
-          strings.homeAddFirstBill,
+          widget.message ?? '',
           style: TextStyle(
             fontSize: defaultFontSize,
             color: Colors.grey.shade500,

@@ -1,0 +1,9 @@
+{
+    "start_date": "Start date",
+    "end_date": "End date",
+    "filter": "Filter",
+    "locale": "en_US",
+    "invalid_filter_message": "Please, fill in the start and end date fields.",
+    "required_field": "Required field.",
+    "end_date_before_start_date": "End date cannot be before start date."
+}

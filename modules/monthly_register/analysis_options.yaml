@@ -4,6 +4,7 @@ analyzer:
   errors:
     public_member_api_docs: ignore
     depend_on_referenced_packages: ignore
+    one_member_abstracts: ignore 
     
 linter:
   rules:

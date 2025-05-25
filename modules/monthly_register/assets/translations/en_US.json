@@ -1,0 +1,11 @@
+{
+    "list_bills_title": "Bills",
+    "error_message": "Something went wrong!",
+    "loading": "Waiting, loading data...",
+    "no_bills_message": "No bills to display",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "filter": "Filter",
+    "locale": "en_US",
+    "invalid_filter_message": "Please, fill in the start and end date fields."
+}
