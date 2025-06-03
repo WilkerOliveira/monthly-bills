@@ -15,6 +15,7 @@ class BillCard extends StatelessWidget {
     final daysUntilDue = bill.dueDate.difference(DateTime.now()).inDays;
 
     return Card(
+      color: AppColors.background,
       margin: EdgeInsets.only(bottom: vSmallSpace),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(defaultRadius),
@@ -22,12 +23,12 @@ class BillCard extends StatelessWidget {
       elevation: 2,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: hMediumSpace,
-          vertical: vMediumSpace,
+          horizontal: hSmallSpace,
+          vertical: vSmallSpace,
         ),
         child: Row(
           children: [
-            BillIconWidget(type: bill.name),
+            BillIconWidget(type: bill.category),
             SizedBox(width: hNormalSpace),
             Expanded(
               child: Column(
@@ -38,6 +39,7 @@ class BillCard extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: mediumTextSize,
+                      color: AppColors.cardTitleColor,
                     ),
                   ),
                   SizedBox(height: vSpace4),
@@ -46,24 +48,18 @@ class BillCard extends StatelessWidget {
                       ['%s'],
                       [daysUntilDue.toString()],
                     ),
-                    style: TextStyle(color: Colors.grey.shade600),
+                    style: const TextStyle(color: AppColors.cardSubtTitleColor),
                   ),
                 ],
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '\$${bill.amount.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: mediumTextSize,
-                  ),
-                ),
-                SizedBox(height: vTinySpace),
-                SimpleButton(onPressed: () {}, label: strings.homePay),
-              ],
+            Text(
+              '\$${bill.amount.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: largeTextSize,
+                color: AppColors.highlightedCardColor,
+              ),
             ),
           ],
         ),

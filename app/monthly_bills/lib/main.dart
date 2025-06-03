@@ -33,7 +33,7 @@ class MonthlBillsApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         title: 'Flutter Demo',
-        theme: AppThemes.darkTheme,
+        theme: appTheme(isDark: true),
         routerConfig: routes,
       ),
     );

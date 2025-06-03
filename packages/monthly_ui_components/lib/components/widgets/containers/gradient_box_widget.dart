@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_ui_components/dimen/app_sizes.dart';
+import 'package:monthly_ui_components/themes/app_themes.dart';
 
 class GradientBoxWidget extends StatelessWidget {
   const GradientBoxWidget({required this.child, super.key});
@@ -8,19 +10,34 @@ class GradientBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFF1C1C1E), Color(0xFF2E2E30), Color(0xFF3A3A3C)],
-          stops: [0.0, 0.5, 1.0],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primaryDark.withValues(alpha: 0.7),
+            AppColors.primary,
+            const Color(0xFF0F1A3A),
+          ],
+          stops: const [0.0, 0.5, 1.0],
         ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.4),
+            blurRadius: defaultRadius,
+            spreadRadius: 1,
+            offset: const Offset(0, 6),
+          ),
+        ],
+        border: Border.all(
+          color: AppColors.primaryLight.withValues(alpha: 0.1),
         ),
       ),
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.symmetric(
+        horizontal: hNormalSpace,
+        vertical: vNormalSpace,
+      ),
       child: child,
     );
   }

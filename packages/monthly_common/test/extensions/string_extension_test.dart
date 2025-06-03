@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:monthly_common/enums/bill_types_enum.dart';
 import 'package:monthly_common/extensions/string_extension.dart';
 
 void main() {
@@ -31,18 +30,6 @@ void main() {
       const input = '{a} and {a}';
       final result = input.replace(['{a}'], ['X']);
       expect(result, 'X and X');
-    });
-  });
-
-  group('StringExtension.toBillType', () {
-    test('returns correct BillTypesEnum for matching string', () {
-      expect('electricity'.toBillType(), BillTypesEnum.electricity);
-      expect('WATER'.toBillType(), BillTypesEnum.water);
-      expect('Internet'.toBillType(), BillTypesEnum.internet);
-    });
-
-    test('is case insensitive', () {
-      expect('ElEcTrIcItY'.toBillType(), BillTypesEnum.electricity);
     });
   });
 }

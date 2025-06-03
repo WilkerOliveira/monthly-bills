@@ -7,6 +7,7 @@ class BillModel {
     required this.amount,
     required this.dueDate,
     required this.paid,
+    required this.category,
     this.extraInfo,
     this.paymentDate,
     this.id,
@@ -21,6 +22,7 @@ class BillModel {
       extraInfo: dbModel.extraInfo,
       paymentDate: dbModel.paymentDate,
       id: dbModel.id,
+      category: dbModel.category,
     );
   }
 
@@ -31,6 +33,7 @@ class BillModel {
   final String? extraInfo;
   final bool paid;
   final DateTime? paymentDate;
+  final String category;
 
   BillEntity toEntity() {
     return BillEntity(
@@ -41,6 +44,7 @@ class BillModel {
       id: id,
       paymentDate: paymentDate,
       extraInfo: extraInfo,
+      category: category,
     );
   }
 }

@@ -23,14 +23,9 @@ class _DateRangeFilterWidgetState extends State<DateRangeFilterWidget> {
     final initialDate =
         isStart ? (_startDate ?? DateTime.now()) : (_endDate ?? DateTime.now());
 
-    final picked = await showDatePicker(
+    final picked = await showDatePickerDialog(
       context: context,
       initialDate: initialDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2100),
-      builder: (context, child) {
-        return Theme(data: ThemeData.dark(), child: child!);
-      },
     );
 
     if (picked != null) {

@@ -15,4 +15,14 @@ class RegisterStrings {
   String get filter => _tr('filter');
   String get locale => _tr('locale');
   String get invalidFilterMessage => _tr('invalid_filter_message');
+  String get billTitle => _tr('bill_title');
+  String get description => _tr('description');
+  String get amount => _tr('amount');
+  String get dueDate => _tr('due_Date');
+  String get extraInfo => _tr('extra_info');
+  String get paymentDate => _tr('payment_date');
+  String get requiredField => _tr('required_field');
+  String get invalidDate => _tr('invalid_date');
+  String get billSavedSuccessfully => _tr('bill_saved_successfully');
+  String get errorSavingBill => _tr('error_saving_bill');
 }

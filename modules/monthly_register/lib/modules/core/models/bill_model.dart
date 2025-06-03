@@ -7,6 +7,7 @@ class BillModel {
     required this.amount,
     required this.dueDate,
     required this.paid,
+    required this.category,
     this.extraInfo,
     this.paymentDate,
     this.id,
@@ -21,22 +22,25 @@ class BillModel {
       extraInfo: dbModel.extraInfo,
       paymentDate: dbModel.paymentDate,
       id: dbModel.id,
+      category: dbModel.category,
     );
   }
 
-  factory BillModel.entityToModel(BillEntity dbEntity) {
+  factory BillModel.entityToModel(BillEntity entity) {
     return BillModel(
-      name: dbEntity.name,
-      amount: dbEntity.amount,
-      dueDate: dbEntity.dueDate,
-      paid: dbEntity.paid,
-      extraInfo: dbEntity.extraInfo,
-      paymentDate: dbEntity.paymentDate,
-      id: dbEntity.id,
+      name: entity.name,
+      amount: entity.amount,
+      dueDate: entity.dueDate,
+      paid: entity.paid,
+      extraInfo: entity.extraInfo,
+      paymentDate: entity.paymentDate,
+      id: entity.id,
+      category: entity.category,
     );
   }
 
   final int? id;
+  final String category;
   final String name;
   final double amount;
   final DateTime dueDate;
@@ -53,6 +57,7 @@ class BillModel {
       id: id,
       paymentDate: paymentDate,
       extraInfo: extraInfo,
+      category: category,
     );
   }
 
@@ -64,6 +69,7 @@ class BillModel {
       paid: paid,
       paymentDate: paymentDate,
       extraInfo: extraInfo,
+      category: category,
     );
   }
 }

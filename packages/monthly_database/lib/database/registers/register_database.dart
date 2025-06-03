@@ -20,7 +20,9 @@ class RegisterDatabaseImpl implements RegisterDatabase {
 
   @override
   Future<int> saveBill(BillDbModel bill) async {
-    return _isar.billDbModels.put(bill);
+    return _isar.writeTxn(() async {
+      return _isar.billDbModels.put(bill);
+    });
   }
 
   @override

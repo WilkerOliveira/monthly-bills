@@ -1,6 +1,7 @@
 export 'package:bloc/bloc.dart';
 export 'package:bloc_test/bloc_test.dart';
 export 'package:cached_network_image/cached_network_image.dart';
+export 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 export 'package:easy_localization/easy_localization.dart';
 export 'package:easy_localization_loader/easy_localization_loader.dart';
 export 'package:equatable/equatable.dart';

@@ -1,7 +1,7 @@
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
-import 'package:monthly_register/modules/bills/core/exceptions/bills_exceptions.dart';
 import 'package:monthly_register/modules/bills/domain/repository/bills_repository.dart';
+import 'package:monthly_register/modules/core/exceptions/bills_exceptions.dart';
 
 abstract class GetBillsByRangeUsecase {
   Future<Result<List<BillEntity>>> call({

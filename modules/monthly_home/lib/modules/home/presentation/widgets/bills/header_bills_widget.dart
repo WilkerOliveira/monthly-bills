@@ -25,7 +25,10 @@ class HeaderBillsWidget extends StatelessWidget {
             onPressed: () {},
             child: Text(
               strings.homeSeeAll,
-              style: TextStyle(color: Colors.blue.shade800),
+              style: const TextStyle(
+                color: AppColors.surface,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         ],

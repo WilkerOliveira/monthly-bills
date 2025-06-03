@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:monthly_database/monthly_database.dart';
 import 'package:monthly_domain/entities/bill_entity.dart';
-import 'package:monthly_register/modules/bills/core/exceptions/bills_exceptions.dart';
-import 'package:monthly_register/modules/bills/data/models/bill_model.dart';
-import 'package:monthly_register/modules/bills/data/repository/bills_repository_impl.dart';
+import 'package:monthly_register/modules/bill/data/repository/bill_repository_impl.dart';
+import 'package:monthly_register/modules/core/exceptions/bills_exceptions.dart';
+import 'package:monthly_register/modules/core/models/bill_model.dart';
 
 class MockRegisterDatabase extends Mock implements RegisterDatabase {}
 
@@ -13,7 +13,7 @@ class FakeBillEntity extends Fake implements BillEntity {}
 class FakeBillModel extends Fake implements BillModel {}
 
 void main() {
-  late BillsRepositoryImpl repository;
+  late BillRepositoryImpl repository;
   late MockRegisterDatabase mockDatabase;
 
   setUpAll(() {
@@ -24,13 +24,14 @@ void main() {
         dueDate: DateTime(2024, 6),
         extraInfo: '',
         paid: false,
+        category: 'childcare',
       ),
     );
   });
 
   setUp(() {
     mockDatabase = MockRegisterDatabase();
-    repository = BillsRepositoryImpl(database: mockDatabase);
+    repository = BillRepositoryImpl(database: mockDatabase);
     registerFallbackValue(FakeBillEntity());
     registerFallbackValue(FakeBillModel());
   });
@@ -43,6 +44,7 @@ void main() {
         dueDate: DateTime(2024, 6),
         extraInfo: '',
         paid: false,
+        category: 'childcare',
       );
       when(() => mockDatabase.getById(1)).thenAnswer((_) async => dbModel);
 
@@ -51,6 +53,7 @@ void main() {
       expect(result, isA<BillEntity>());
       expect(result.name, 'Test Bill');
       expect(result.amount, 100.0);
+      expect(result.category, 'childcare');
       expect(result.dueDate, DateTime(2024, 6));
       expect(result.paid, false);
     });
@@ -73,6 +76,7 @@ void main() {
         amount: 100,
         dueDate: DateTime(2024, 6),
         paid: false,
+        category: 'childcare',
       );
       when(
         () => mockDatabase.saveBill(any()),
@@ -87,7 +91,8 @@ void main() {
                 .having((b) => b.name, 'name', 'Test Bill')
                 .having((b) => b.amount, 'amount', 100.0)
                 .having((b) => b.dueDate, 'dueDate', DateTime(2024, 6))
-                .having((b) => b.paid, 'paid', false),
+                .having((b) => b.paid, 'paid', false)
+                .having((b) => b.category, 'category', 'childcare'),
           ),
         ),
       ).called(1);

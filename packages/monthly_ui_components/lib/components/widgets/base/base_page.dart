@@ -13,9 +13,13 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: screenHeight,
       height: screenHeight,
+      margin: EdgeInsets.symmetric(
+        horizontal: hTinySpace,
+        vertical: vTinySpace,
+      ),
       child: widget.child,
     );
   }

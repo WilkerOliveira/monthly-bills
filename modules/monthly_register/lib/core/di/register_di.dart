@@ -1,5 +1,10 @@
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
+import 'package:monthly_register/modules/bill/data/repository/bill_repository_impl.dart';
+import 'package:monthly_register/modules/bill/domain/repository/bill_repository.dart';
+import 'package:monthly_register/modules/bill/domain/usecases/get_bill_usecase.dart';
+import 'package:monthly_register/modules/bill/domain/usecases/save_bill_usecase.dart';
+import 'package:monthly_register/modules/bill/presentation/cubit/bill_cubit.dart';
 import 'package:monthly_register/modules/bills/data/repository/bills_repository_impl.dart';
 import 'package:monthly_register/modules/bills/domain/repository/bills_repository.dart';
 import 'package:monthly_register/modules/bills/domain/usecases/get_bills_by_range_usecase.dart';
@@ -18,19 +23,32 @@ abstract class RegisterDi {
   static void _registerDatabase(MonthlyDI di) {}
 
   static void _registerRepository(MonthlyDI di) {
-    di.registerLazySingleton<BillsRepository>(
-      () => BillsRepositoryImpl(database: di()),
-    );
+    di
+      ..registerLazySingleton<BillsRepository>(
+        () => BillsRepositoryImpl(database: di()),
+      )
+      ..registerLazySingleton<BillRepository>(
+        () => BillRepositoryImpl(database: di()),
+      );
   }
 
   static void _registerUsecase(MonthlyDI di) {
-    di.registerFactory<GetBillsByRangeUsecase>(
-      () => GetBillsByRangeUsecaseImpl(repository: di()),
-    );
+    di
+      ..registerFactory<GetBillsByRangeUsecase>(
+        () => GetBillsByRangeUsecaseImpl(repository: di()),
+      )
+      ..registerFactory<SaveBillUsecase>(
+        () => SaveBillUsecaseImpl(repository: di()),
+      )
+      ..registerFactory<GetBillUsecase>(
+        () => GetBillUsecaseImpl(repository: di()),
+      );
   }
 
   static void _registerCubit(MonthlyDI di) {
-    di.registerFactory<FilterWidgetCubit>(FilterWidgetCubit.new);
+    di
+      ..registerFactory<FilterWidgetCubit>(FilterWidgetCubit.new)
+      ..registerFactory<BillCubit>(() => BillCubit(di(), di()));
   }
 
   static void _registerService(MonthlyDI di) {}

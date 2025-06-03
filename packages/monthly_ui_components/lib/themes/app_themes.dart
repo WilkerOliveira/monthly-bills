@@ -1,282 +1,119 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
-class AppThemes {
-  static const Color _primaryColor = Color(0xFF4CAF50);
-  static const Color _secondaryColor = Color(0xFFA29BFE);
-  static const Color _darkBackground = Color(0xFF1C1C1E);
-  static const Color _darkSurface = Color(0xFF1E1E1E);
-  static const Color _darkCard = Color(0xFF252525);
-  static const Color _errorColor = Color(0xFFCF6679);
+ThemeData appTheme({required bool isDark}) {
+  final primaryColor = isDark ? AppColors.primaryDark : AppColors.primary;
+  final surfaceColor = isDark ? AppColors.onSurface : AppColors.surface;
+  final textColor = isDark ? Colors.white : const Color.fromRGBO(51, 65, 85, 1);
 
-  static ThemeData get darkTheme {
-    final baseTheme = ThemeData.dark(useMaterial3: true);
-
-    return baseTheme.copyWith(
-      colorScheme: _darkColorScheme,
-      extensions: <ThemeExtension<dynamic>>[customTheme],
-      scaffoldBackgroundColor: _darkBackground,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      appBarTheme: _appBarTheme,
-      cardTheme: _cardTheme,
-      textTheme: _textTheme,
-      inputDecorationTheme: _inputDecorationTheme,
-      elevatedButtonTheme: _elevatedButtonTheme,
-      outlinedButtonTheme: _outlinedButtonTheme,
-      textButtonTheme: _textButtonTheme,
-      checkboxTheme: _checkboxTheme,
-      radioTheme: _radioTheme,
-      switchTheme: _switchTheme,
-      dividerTheme: _dividerTheme,
-      floatingActionButtonTheme: _floatingActionButtonTheme,
-      snackBarTheme: _snackBarTheme,
-      bottomNavigationBarTheme: _bottomNavigationBarTheme,
-      tabBarTheme: _tabBarTheme,
-      dialogTheme: _dialogTheme,
-      listTileTheme: _listTileTheme,
-      bottomAppBarTheme: _bottomAppBarTheme,
-    );
-  }
-
-  static ColorScheme get _darkColorScheme => const ColorScheme.dark(
-    primary: _primaryColor,
-    secondary: _secondaryColor,
-    surface: _darkSurface,
-    onPrimary: Colors.white,
-    onSecondary: Colors.white,
-    onError: Colors.white,
-  );
-
-  static AppBarTheme get _appBarTheme => AppBarTheme(
-    backgroundColor: _darkSurface,
-    elevation: 0,
-    centerTitle: true,
-    titleTextStyle: _textTheme.titleLarge?.copyWith(
-      fontWeight: FontWeight.w600,
+  return ThemeData(
+    useMaterial3: true,
+    brightness: isDark ? Brightness.dark : Brightness.light,
+    extensions: <ThemeExtension<dynamic>>[customTheme],
+    colorScheme: ColorScheme(
+      brightness: isDark ? Brightness.dark : Brightness.light,
+      primary: primaryColor,
+      onPrimary: Colors.white,
+      secondary: AppColors.secondary,
+      onSecondary: Colors.white,
+      error: AppColors.error,
+      onError: Colors.white,
+      surface: surfaceColor,
+      onSurface: textColor,
     ),
-    iconTheme: const IconThemeData(color: Colors.white),
-    scrolledUnderElevation: 2,
-  );
-
-  static CardTheme get _cardTheme => CardTheme(
-    color: _darkCard,
-    margin: const EdgeInsets.all(8),
-    elevation: 2,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    surfaceTintColor: Colors.transparent,
-  );
-
-  static TextTheme get _textTheme => GoogleFonts.poppinsTextTheme().copyWith(
-    displayLarge: GoogleFonts.poppins(
-      fontSize: 32,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: primaryColor,
+      foregroundColor: Colors.white,
+      elevation: 0,
+      centerTitle: true,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: primaryColor,
+        statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+      ),
     ),
-    displayMedium: GoogleFonts.poppins(
-      fontSize: 28,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: surfaceColor,
+      selectedItemColor: primaryColor,
+      unselectedItemColor: Colors.grey.shade600,
+      elevation: 4,
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      type: BottomNavigationBarType.fixed,
     ),
-    titleLarge: GoogleFonts.poppins(
-      fontSize: 20,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.secondary,
+      foregroundColor: Colors.white,
     ),
-    bodyLarge: GoogleFonts.poppins(
-      fontSize: 16,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    ),
-    bodyMedium: GoogleFonts.poppins(
-      fontSize: 14,
-      fontWeight: FontWeight.normal,
-      color: Colors.grey[300],
-    ),
-    labelLarge: GoogleFonts.poppins(
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      color: Colors.white,
+    inputDecorationTheme: _inputDecorationTheme,
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.white,
+      selectionColor: AppColors.primaryLight,
+      selectionHandleColor: Colors.white,
     ),
   );
+}
 
-  static InputDecorationTheme get _inputDecorationTheme => InputDecorationTheme(
-    filled: true,
-    fillColor: _darkSurface,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide.none,
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: Colors.transparent),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: _primaryColor, width: 2),
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: _errorColor),
-    ),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-    labelStyle: TextStyle(color: Colors.grey[400]),
-    hintStyle: TextStyle(color: Colors.grey[500]),
-    floatingLabelStyle: const TextStyle(color: _primaryColor),
-  );
+InputDecorationTheme get _inputDecorationTheme => InputDecorationTheme(
+  filled: true,
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(color: AppColors.surface),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(color: Color.fromARGB(255, 132, 130, 130)),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(color: AppColors.secondary, width: 2),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(12),
+    borderSide: const BorderSide(color: AppColors.error),
+  ),
+  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  labelStyle: TextStyle(color: Colors.grey[400]),
+  hintStyle: TextStyle(color: Colors.grey[500]),
+  floatingLabelStyle: const TextStyle(color: Colors.white),
+);
 
-  static ElevatedButtonThemeData get _elevatedButtonTheme =>
-      ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: _primaryColor,
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          textStyle: _textTheme.labelLarge,
-          elevation: 2,
-          shadowColor: Colors.transparent,
-        ),
-      );
+CustomThemeExtension get customTheme => const CustomThemeExtension(
+  successColor: Color(0xFF4CAF50),
+  warningColor: Color(0xFFFFC107),
+  navIconActiveColor: Color(0xFFFFB74D),
+  navIconInactiveColor: Color(0xFFA5A5A5),
+);
 
-  static OutlinedButtonThemeData get _outlinedButtonTheme =>
-      OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: Colors.white,
-          side: BorderSide(color: Colors.grey[700]!),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          textStyle: _textTheme.labelLarge,
-        ),
-      );
+class AppColors {
+  static const Color primary = Color(0xFF1E3A8A);
+  static const Color primaryDark = Color(0xFF172554);
+  static const Color primaryLight = Color(0xFF3B82F6);
 
-  static TextButtonThemeData get _textButtonTheme => TextButtonThemeData(
-    style: TextButton.styleFrom(
-      foregroundColor: _primaryColor,
-      textStyle: _textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
-    ),
-  );
+  static const Color secondary = Color(0xFF0D9488);
+  static const Color secondaryLight = Color(0xFF2DD4BF);
 
-  static CheckboxThemeData get _checkboxTheme => CheckboxThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primaryColor;
-      }
-      return Colors.grey[700]!;
-    }),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-    side: BorderSide(color: Colors.grey[700]!),
-    checkColor: WidgetStateProperty.all(Colors.white),
-  );
+  static const Color background = Color(0xFFF8FAFC);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color onSurface = Color(0xFF1E293B);
+  static const Color onBackground = Color(0xFF334155);
 
-  static RadioThemeData get _radioTheme => RadioThemeData(
-    fillColor: WidgetStateProperty.resolveWith<Color>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primaryColor;
-      }
-      return Colors.grey[700]!;
-    }),
-  );
+  static const Color error = Color(0xFFDC2626);
+  static const Color success = Color(0xFF16A34A);
+  static const Color warning = Color(0xFFF59E0B);
 
-  static SwitchThemeData get _switchTheme => SwitchThemeData(
-    thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primaryColor;
-      }
-      return Colors.grey[700]!;
-    }),
-    trackColor: WidgetStateProperty.resolveWith<Color>((states) {
-      if (states.contains(WidgetState.selected)) {
-        return _primaryColor.withValues(alpha: .5);
-      }
-      return Colors.grey[800]!;
-    }),
-    trackOutlineColor: WidgetStateProperty.resolveWith<Color>((states) {
-      return Colors.transparent;
-    }),
-  );
-
-  static DividerThemeData get _dividerTheme =>
-      DividerThemeData(color: Colors.grey[800], thickness: 1, space: 1);
-
-  static FloatingActionButtonThemeData get _floatingActionButtonTheme =>
-      FloatingActionButtonThemeData(
-        backgroundColor: _primaryColor,
-        foregroundColor: Colors.white,
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      );
-
-  static SnackBarThemeData get _snackBarTheme => SnackBarThemeData(
-    backgroundColor: _darkCard,
-    contentTextStyle: const TextStyle(color: Colors.white),
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-    actionTextColor: _primaryColor,
-  );
-
-  static BottomNavigationBarThemeData get _bottomNavigationBarTheme =>
-      BottomNavigationBarThemeData(
-        backgroundColor: _darkSurface,
-        selectedItemColor: _primaryColor,
-        unselectedItemColor: Colors.grey[500],
-        elevation: 0,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-      );
-
-  static TabBarTheme get _tabBarTheme => TabBarTheme(
-    labelColor: _primaryColor,
-    unselectedLabelColor: Colors.grey[500],
-    indicator: const UnderlineTabIndicator(
-      borderSide: BorderSide(width: 2, color: _primaryColor),
-    ),
-    dividerColor: Colors.transparent,
-    tabAlignment: TabAlignment.fill,
-  );
-
-  static DialogTheme get _dialogTheme => DialogTheme(
-    backgroundColor: _darkSurface,
-    surfaceTintColor: Colors.transparent,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-    titleTextStyle: _textTheme.titleLarge,
-    contentTextStyle: _textTheme.bodyMedium,
-  );
-
-  static ListTileThemeData get _listTileTheme => ListTileThemeData(
-    tileColor: _darkSurface,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-  );
-
-  static CustomThemeExtension get customTheme => const CustomThemeExtension(
-    cardBackground: _darkCard,
-    successColor: Color(0xFF4CAF50),
-    warningColor: Color(0xFFFFC107),
-    navIconActiveColor: Color(0xFFFFB74D),
-    navIconInactiveColor: Color(0xFFA5A5A5),
-  );
-
-  static BottomAppBarTheme get _bottomAppBarTheme => const BottomAppBarTheme(
-    color: Color(0xFF2D2D2D),
-    elevation: 8,
-    surfaceTintColor: Colors.transparent,
-    shape: CircularNotchedRectangle(),
-  );
+  static const Color cardTitleColor = Color(0xFF172554);
+  static const Color cardSubtTitleColor = Color(0xFF4F4F50);
+  static const Color highlightedCardColor = Color(0xFF007BFF);
 }
 
 class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
   const CustomThemeExtension({
-    required this.cardBackground,
     required this.successColor,
     required this.warningColor,
     required this.navIconActiveColor,
     required this.navIconInactiveColor,
   });
-  final Color cardBackground;
   final Color successColor;
   final Color warningColor;
   final Color navIconActiveColor;
@@ -291,7 +128,6 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     Color? navIconInactiveColor,
   }) {
     return CustomThemeExtension(
-      cardBackground: cardBackground ?? this.cardBackground,
       successColor: successColor ?? this.successColor,
       warningColor: warningColor ?? this.warningColor,
       navIconActiveColor: navIconActiveColor ?? this.navIconActiveColor,
@@ -309,7 +145,6 @@ class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {
     }
 
     return CustomThemeExtension(
-      cardBackground: Color.lerp(cardBackground, other.cardBackground, t)!,
       successColor: Color.lerp(successColor, other.successColor, t)!,
       warningColor: Color.lerp(warningColor, other.warningColor, t)!,
       navIconActiveColor:

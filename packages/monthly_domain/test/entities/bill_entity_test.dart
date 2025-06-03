@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:monthly_domain/entities/bill_entity.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 void main() {
   group('BillEntity', () {
@@ -11,6 +12,7 @@ void main() {
         dueDate: DateTime(2024, 7),
         extraInfo: 'Monthly bill',
         paid: false,
+        category: BillTypesEnum.electricity.key,
       );
       final bill2 = BillEntity(
         id: 1,
@@ -19,6 +21,7 @@ void main() {
         dueDate: DateTime(2024, 7),
         extraInfo: 'Monthly bill',
         paid: false,
+        category: BillTypesEnum.electricity.key,
       );
       expect(bill1, equals(bill2));
     });
@@ -32,6 +35,7 @@ void main() {
         extraInfo: 'Quarterly',
         paid: true,
         paymentDate: DateTime(2024, 7, 5),
+        category: BillTypesEnum.childcare.key,
       );
       expect(bill.props, [
         2,
@@ -41,6 +45,7 @@ void main() {
         'Quarterly',
         true,
         DateTime(2024, 7, 5),
+        'childcare',
       ]);
     });
 
@@ -49,10 +54,12 @@ void main() {
         name: 'Internet',
         amount: 75,
         dueDate: DateTime(2024, 7, 15),
+        category: BillTypesEnum.childcare.key,
         paid: false,
       );
       expect(bill.name, 'Internet');
       expect(bill.amount, 75.0);
+      expect(bill.category, 'childcare');
       expect(bill.dueDate, DateTime(2024, 7, 15));
       expect(bill.paid, false);
       expect(bill.extraInfo, isNull);

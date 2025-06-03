@@ -7,5 +7,15 @@
     "end_date": "Data final",
     "filter": "Filtrar",
     "locale": "pt_BR",
-    "invalid_filter_message": "Por favor, preencha os campos data inicial e final."
+    "invalid_filter_message": "Por favor, preencha os campos data inicial e final.",
+    "bill_title": "Conta",
+    "description": "Descrição",
+    "amount": "Valor",
+    "due_Date": "Vencimento",
+    "extra_info": "Informações",
+    "payment_date": "Data pagamento",
+    "required_field": "Campo obrigatório",
+    "invalid_date": "Data inváiida",
+    "bill_saved_successfully": "Conta salva com sucesso!",
+    "error_saving_bill": "Desculpe, não foi possível salvar sua conta. Tente novamente!"
 }

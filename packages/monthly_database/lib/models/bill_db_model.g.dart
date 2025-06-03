@@ -22,33 +22,38 @@ const BillDbModelSchema = CollectionSchema(
       name: r'amount',
       type: IsarType.double,
     ),
-    r'dueDate': PropertySchema(
+    r'category': PropertySchema(
       id: 1,
+      name: r'category',
+      type: IsarType.string,
+    ),
+    r'dueDate': PropertySchema(
+      id: 2,
       name: r'dueDate',
       type: IsarType.dateTime,
     ),
     r'extraInfo': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'extraInfo',
       type: IsarType.string,
     ),
     r'monthYear': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'monthYear',
       type: IsarType.long,
     ),
     r'name': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'name',
       type: IsarType.string,
     ),
     r'paid': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'paid',
       type: IsarType.bool,
     ),
     r'paymentDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'paymentDate',
       type: IsarType.dateTime,
     )
@@ -105,6 +110,7 @@ int _billDbModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.category.length * 3;
   {
     final value = object.extraInfo;
     if (value != null) {
@@ -122,12 +128,13 @@ void _billDbModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeDouble(offsets[0], object.amount);
-  writer.writeDateTime(offsets[1], object.dueDate);
-  writer.writeString(offsets[2], object.extraInfo);
-  writer.writeLong(offsets[3], object.monthYear);
-  writer.writeString(offsets[4], object.name);
-  writer.writeBool(offsets[5], object.paid);
-  writer.writeDateTime(offsets[6], object.paymentDate);
+  writer.writeString(offsets[1], object.category);
+  writer.writeDateTime(offsets[2], object.dueDate);
+  writer.writeString(offsets[3], object.extraInfo);
+  writer.writeLong(offsets[4], object.monthYear);
+  writer.writeString(offsets[5], object.name);
+  writer.writeBool(offsets[6], object.paid);
+  writer.writeDateTime(offsets[7], object.paymentDate);
 }
 
 BillDbModel _billDbModelDeserialize(
@@ -138,11 +145,12 @@ BillDbModel _billDbModelDeserialize(
 ) {
   final object = BillDbModel(
     amount: reader.readDouble(offsets[0]),
-    dueDate: reader.readDateTime(offsets[1]),
-    extraInfo: reader.readStringOrNull(offsets[2]),
-    name: reader.readString(offsets[4]),
-    paid: reader.readBool(offsets[5]),
-    paymentDate: reader.readDateTimeOrNull(offsets[6]),
+    category: reader.readString(offsets[1]),
+    dueDate: reader.readDateTime(offsets[2]),
+    extraInfo: reader.readStringOrNull(offsets[3]),
+    name: reader.readString(offsets[5]),
+    paid: reader.readBool(offsets[6]),
+    paymentDate: reader.readDateTimeOrNull(offsets[7]),
   );
   return object;
 }
@@ -157,16 +165,18 @@ P _billDbModelDeserializeProp<P>(
     case 0:
       return (reader.readDouble(offset)) as P;
     case 1:
-      return (reader.readDateTime(offset)) as P;
-    case 2:
-      return (reader.readStringOrNull(offset)) as P;
-    case 3:
-      return (reader.readLong(offset)) as P;
-    case 4:
       return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readDateTime(offset)) as P;
+    case 3:
+      return (reader.readStringOrNull(offset)) as P;
+    case 4:
+      return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readBool(offset)) as P;
+    case 7:
       return (reader.readDateTimeOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -618,6 +628,141 @@ extension BillDbModelQueryFilter
         upper: upper,
         includeUpper: includeUpper,
         epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> categoryEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> categoryBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'category',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'category',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> categoryMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'category',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'category',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      categoryIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'category',
+        value: '',
       ));
     });
   }
@@ -1175,6 +1320,18 @@ extension BillDbModelQuerySortBy
     });
   }
 
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByCategory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByCategoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.desc);
+    });
+  }
+
   QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByDueDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dueDate', Sort.asc);
@@ -1259,6 +1416,18 @@ extension BillDbModelQuerySortThenBy
   QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByCategory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByCategoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.desc);
     });
   }
 
@@ -1355,6 +1524,13 @@ extension BillDbModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<BillDbModel, BillDbModel, QDistinct> distinctByCategory(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'category', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<BillDbModel, BillDbModel, QDistinct> distinctByDueDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dueDate');
@@ -1405,6 +1581,12 @@ extension BillDbModelQueryProperty
   QueryBuilder<BillDbModel, double, QQueryOperations> amountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'amount');
+    });
+  }
+
+  QueryBuilder<BillDbModel, String, QQueryOperations> categoryProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'category');
     });
   }
 

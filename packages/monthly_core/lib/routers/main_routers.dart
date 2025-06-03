@@ -46,7 +46,7 @@ final GoRouter routes = GoRouter(
     ),
     ...loginRoutes,
     //...homeRoutes,
-    //...registerRoutes,
+    ...registerRoutes,
     ...reportRoutes,
   ],
   redirect: (context, state) {

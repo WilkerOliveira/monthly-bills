@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_ui_components/components/dropdowm/bill_type_enum.dart';
 import 'package:monthly_ui_components/components/icons/circle_icon.dart';
 
 class BillIconWidget extends StatelessWidget {
@@ -10,7 +10,10 @@ class BillIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleIcon(
-      icon: Icon(type.toBillType().icon, color: Colors.blue.shade800),
+      icon: Icon(
+        BillTypesEnum.toBillType(type).icon,
+        color: Colors.blue.shade800,
+      ),
     );
   }
 }

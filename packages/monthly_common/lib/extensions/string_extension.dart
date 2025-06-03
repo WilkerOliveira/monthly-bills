@@ -1,4 +1,4 @@
-import 'package:monthly_common/enums/bill_types_enum.dart';
+import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 extension StringExtension on String {
   String replace(List<String> replacements, List<String> values) {
@@ -15,13 +15,47 @@ extension StringExtension on String {
     return result;
   }
 
-  BillTypesEnum toBillType() {
+  double parseCurrencyToDouble(String locale) {
     try {
-      return BillTypesEnum.values.firstWhere(
-        (e) => e.name.toLowerCase() == toLowerCase(),
-      );
-    } on Exception catch (_) {
-      return BillTypesEnum.other;
+      final format = NumberFormat.simpleCurrency(locale: locale);
+      var cleanedString = this;
+      if (format.currencySymbol.isNotEmpty &&
+          cleanedString.startsWith(format.currencySymbol)) {
+        cleanedString =
+            cleanedString.substring(format.currencySymbol.length).trim();
+      }
+      cleanedString = cleanedString.replaceAll(' ', '');
+
+      return format.parse(cleanedString).toDouble();
+    } on Exception {
+      var cleanedStringForFallback = replaceAll(RegExp(r'[^\d.,]'), '');
+      if (locale.contains('pt_BR') || locale.contains('es_')) {
+        cleanedStringForFallback = cleanedStringForFallback.replaceAll('.', '');
+        cleanedStringForFallback = cleanedStringForFallback.replaceAll(
+          ',',
+          '.',
+        );
+      }
+      try {
+        return double.parse(cleanedStringForFallback);
+      } on Exception {
+        return 0;
+      }
+    }
+  }
+
+  DateTime? parseToDateTime(String locale) {
+    DateFormat? dateFormat;
+
+    if (locale == 'pt_BR') {
+      dateFormat = DateFormat('dd/MM/yyyy');
+    }
+    dateFormat = DateFormat('yyyy/MM/dd');
+
+    try {
+      return dateFormat.parseStrict(this);
+    } on Exception {
+      return null;
     }
   }
 }

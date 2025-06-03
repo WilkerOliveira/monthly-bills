@@ -7,5 +7,16 @@
     "end_date": "End date",
     "filter": "Filter",
     "locale": "en_US",
-    "invalid_filter_message": "Please, fill in the start and end date fields."
+    "invalid_filter_message": "Please, fill in the start and end date fields.",
+    "bill_title": "Bill",
+    "description": "Description",
+    "amount": "Amount",
+    "due_Date": "Due Date",
+    "extra_info": "Extra Info",
+    "payment_date": "Payment Date",
+    "required_field": "Required field",
+    "invalid_date": "Invalid date",
+    "bill_saved_successfully": "Bill saved successfully",
+    "error_saving_bill": "Sorry, we were unable to save your account. Please try again!"
+
 }

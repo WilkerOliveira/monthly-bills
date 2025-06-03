@@ -1,6 +1,9 @@
 export 'package:monthly_ui_components/components/bottomNavBar/bottom_nav_item.dart';
 export 'package:monthly_ui_components/components/buttons/custom_icon_button.dart';
 export 'package:monthly_ui_components/components/buttons/simple_button.dart';
+export 'package:monthly_ui_components/components/cards/bill_card_widget.dart';
+export 'package:monthly_ui_components/components/dropdowm/bill_type_dropdown.dart';
+export 'package:monthly_ui_components/components/dropdowm/bill_type_enum.dart';
 export 'package:monthly_ui_components/components/icons/bill_icon_widget.dart';
 export 'package:monthly_ui_components/components/icons/circle_icon.dart';
 export 'package:monthly_ui_components/components/logo/logo_widget.dart';
