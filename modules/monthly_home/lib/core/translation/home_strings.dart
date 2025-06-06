@@ -15,7 +15,7 @@ class HomeStrings {
   String get homeNoBillsMessage => _tr('home_no_bills_message');
   String get homeErrorMessage => _tr('home_error_message');
   String get homeAddFirstBill => _tr('home_add_first_bill');
-  String get homeDueUntil => _tr('home_due_until');
   String get homePay => _tr('home_pay');
   String get homeLoading => _tr('home_loading');
+  String get locale => _tr('locale');
 }

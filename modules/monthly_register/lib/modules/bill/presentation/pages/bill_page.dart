@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
 import 'package:monthly_register/modules/bill/presentation/cubit/bill_cubit.dart';
 import 'package:monthly_register/modules/bill/presentation/cubit/bill_state.dart';
+import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_cubit.dart';
+import 'package:monthly_register/modules/bill/presentation/pages/widgets/description_autocomplete_widget.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class BillPage extends StatefulWidget {
@@ -17,11 +20,13 @@ class BillPage extends StatefulWidget {
 class _BillPageState extends State<BillPage> with FormValidationsMixin {
   late RegisterStrings strings;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _recurringMonthsController =
+      TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
   final TextEditingController _extraInfoController = TextEditingController();
   final TextEditingController _paymentController = TextEditingController();
+  bool _isPaid = false;
   BillEntity _bill = BillEntity.empty();
   @override
   void initState() {
@@ -31,29 +36,37 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
 
   @override
   void dispose() {
-    _descriptionController.dispose();
     _amountController.dispose();
     _dueDateController.dispose();
     _paymentController.dispose();
     _extraInfoController.dispose();
+    _recurringMonthsController.dispose();
     super.dispose();
   }
 
   void _clearAll() {
     setState(() {
-      _descriptionController.clear();
       _amountController.clear();
       _dueDateController.clear();
       _paymentController.clear();
       _extraInfoController.clear();
+      _recurringMonthsController.clear();
       _bill = BillEntity.empty();
+      _isPaid = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => MonthlyDI.I.get<BillCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => MonthlyDI.I.get<BillCubit>()),
+        BlocProvider(
+          create:
+              (context) =>
+                  MonthlyDI.I.get<DescriptionAutocompleteCubit>()..init(),
+        ),
+      ],
       child: BlocListener<BillCubit, BillState>(
         listener: (context, state) {
           if (state is BillSavedState) {
@@ -105,14 +118,13 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                 },
                               ),
                               SizedBox(height: vSmallSpace),
-                              TextFormField(
-                                key: const Key('description'),
-                                controller: _descriptionController,
-                                maxLines: 2,
-                                decoration: InputDecoration(
-                                  labelText: strings.description,
-                                  suffixIcon: const Icon(Icons.description),
-                                ),
+                              DescriptionAutocompleteWidget(
+                                labelText: strings.description,
+                                onSelected: (String value) {
+                                  setState(() {
+                                    _bill = _bill.copyWith(name: value);
+                                  });
+                                },
                                 validator:
                                     (value) => validateRequiredField(
                                       message: strings.requiredField,
@@ -203,39 +215,89 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                               ),
                               SizedBox(height: vSmallSpace),
                               TextFormField(
-                                key: const Key('paymentDate'),
-                                controller: _paymentController,
+                                key: const Key('recurringMonths'),
+                                controller: _recurringMonthsController,
                                 decoration: InputDecoration(
-                                  labelText: strings.paymentDate,
-                                  suffixIcon: GestureDetector(
-                                    onTap:
-                                        () => _openCalendar(_paymentController),
-                                    child: const Icon(Icons.event_available),
-                                  ),
+                                  labelText: strings.recurringMonths,
+                                  suffixIcon: const Icon(Icons.refresh),
                                 ),
                                 keyboardType: TextInputType.number,
-                                validator:
-                                    (value) => validateDateField(
-                                      locale: strings.locale,
-                                      requiredFieldMessage:
-                                          strings.requiredField,
-                                      invalidDateMessage: strings.invalidDate,
-                                      required: false,
-                                      value: value,
-                                    ),
                                 onSaved: (newValue) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(
-                                      paymentDate: newValue?.parseToDateTime(
-                                        strings.locale,
-                                      ),
-                                    );
-                                  });
+                                  if (newValue != null && newValue.isNotEmpty) {
+                                    setState(() {
+                                      _bill = _bill.copyWith(
+                                        recurrences: int.parse(newValue),
+                                      );
+                                    });
+                                  }
                                 },
                                 inputFormatters: [
-                                  DateInputFormatter(locale: strings.locale),
+                                  FilteringTextInputFormatter.digitsOnly,
                                 ],
                               ),
+                              SizedBox(height: vSmallSpace),
+                              Row(
+                                children: [
+                                  Text(strings.isPaid),
+                                  Checkbox(
+                                    key: const Key('isPaid'),
+                                    value: _isPaid,
+                                    onChanged: (bool? checked) {
+                                      setState(() {
+                                        _isPaid = checked ?? false;
+                                        _bill = _bill.copyWith(
+                                          paid: checked ?? false,
+                                        );
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: TextFormField(
+                                      key: const Key('paymentDate'),
+                                      controller: _paymentController,
+                                      decoration: InputDecoration(
+                                        labelText: strings.paymentDate,
+                                        suffixIcon: GestureDetector(
+                                          onTap:
+                                              () => _openCalendar(
+                                                _paymentController,
+                                              ),
+                                          child: const Icon(
+                                            Icons.event_available,
+                                          ),
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      validator:
+                                          (value) => validateDateField(
+                                            locale: strings.locale,
+                                            requiredFieldMessage:
+                                                strings.requiredField,
+                                            invalidDateMessage:
+                                                strings.invalidDate,
+                                            required: false,
+                                            value: value,
+                                          ),
+                                      onSaved: (newValue) {
+                                        setState(() {
+                                          _bill = _bill.copyWith(
+                                            paymentDate: newValue
+                                                ?.parseToDateTime(
+                                                  strings.locale,
+                                                ),
+                                          );
+                                        });
+                                      },
+                                      inputFormatters: [
+                                        DateInputFormatter(
+                                          locale: strings.locale,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+
                               SizedBox(height: vNormalSpace),
                             ],
                           ),

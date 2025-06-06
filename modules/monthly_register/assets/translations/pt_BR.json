@@ -17,5 +17,7 @@
     "required_field": "Campo obrigatório",
     "invalid_date": "Data inváiida",
     "bill_saved_successfully": "Conta salva com sucesso!",
-    "error_saving_bill": "Desculpe, não foi possível salvar sua conta. Tente novamente!"
+    "error_saving_bill": "Desculpe, não foi possível salvar sua conta. Tente novamente!",
+    "id_paid": "Pago?",
+    "recurring_months": "Repita por (meses)"
 }

@@ -11,7 +11,8 @@
     "electricity": "Electricity",
     "water": "Water",
     "rent": "Rent",
-    "mortgage": "Mortgage",
+    "financing": "Financing",
+    "personal_loan": "Personal Loan",
     "groceries": "Groceries",
     "diningOut": "Dining Out",
     "transportation": "Transportation",
@@ -39,5 +40,6 @@
     "investments": "Investments",
     "miscellaneous": "Miscellaneous",
     "other": "Other",
-    "creditCard": "Credit card"
+    "creditCard": "Credit card",
+    "due_date": "Due date"
 }

@@ -1,6 +1,5 @@
 import 'package:monthly_database/monthly_database.dart';
 import 'package:monthly_domain/monthly_domain.dart';
-import 'package:monthly_home/modules/home/data/models/bill_model.dart';
 import 'package:monthly_home/modules/home/domain/repositories/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {

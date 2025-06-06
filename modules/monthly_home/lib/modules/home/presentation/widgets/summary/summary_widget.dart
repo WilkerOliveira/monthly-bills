@@ -22,7 +22,7 @@ class SummaryWidget extends StatelessWidget {
         Expanded(
           child: SummaryCard(
             icon: Icons.receipt,
-            value: totalAmount.toStringAsFixed(2),
+            value: totalAmount.formatToCurrency(strings.locale),
             label: strings.homeTotalDue,
             color: Colors.white,
           ),

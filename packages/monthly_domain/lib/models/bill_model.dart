@@ -8,9 +8,11 @@ class BillModel {
     required this.dueDate,
     required this.paid,
     required this.category,
+    this.recurrences,
     this.extraInfo,
     this.paymentDate,
     this.id,
+    this.recurrenceId,
   });
 
   factory BillModel.toModel(BillDbModel dbModel) {
@@ -23,17 +25,36 @@ class BillModel {
       paymentDate: dbModel.paymentDate,
       id: dbModel.id,
       category: dbModel.category,
+      recurrences: dbModel.recurrences,
+      recurrenceId: dbModel.recurrenceId,
+    );
+  }
+
+  factory BillModel.entityToModel(BillEntity entity) {
+    return BillModel(
+      name: entity.name,
+      amount: entity.amount,
+      dueDate: entity.dueDate,
+      paid: entity.paid,
+      extraInfo: entity.extraInfo,
+      paymentDate: entity.paymentDate,
+      id: entity.id,
+      category: entity.category,
+      recurrences: entity.recurrences,
+      recurrenceId: entity.recurrenceId,
     );
   }
 
   final int? id;
+  final String category;
   final String name;
   final double amount;
   final DateTime dueDate;
   final String? extraInfo;
   final bool paid;
   final DateTime? paymentDate;
-  final String category;
+  final int? recurrences;
+  final int? recurrenceId;
 
   BillEntity toEntity() {
     return BillEntity(
@@ -45,6 +66,22 @@ class BillModel {
       paymentDate: paymentDate,
       extraInfo: extraInfo,
       category: category,
+      recurrences: recurrences,
+      recurrenceId: recurrenceId,
+    );
+  }
+
+  BillDbModel toDbModel() {
+    return BillDbModel(
+      name: name,
+      amount: amount,
+      dueDate: dueDate,
+      paid: paid,
+      paymentDate: paymentDate,
+      extraInfo: extraInfo,
+      category: category,
+      recurrences: recurrences,
+      recurrenceId: recurrenceId,
     );
   }
 }

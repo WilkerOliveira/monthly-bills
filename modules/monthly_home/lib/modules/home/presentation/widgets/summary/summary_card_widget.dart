@@ -31,12 +31,15 @@ class SummaryCard extends StatelessWidget {
         children: [
           Icon(icon, color: color),
           SizedBox(height: vTinySpace),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: largeTextSize,
-              fontWeight: FontWeight.bold,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: TextStyle(
+                fontSize: largeTextSize,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
             ),
           ),
           SizedBox(height: vSpace4),

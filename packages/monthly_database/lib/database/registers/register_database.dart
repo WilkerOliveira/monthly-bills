@@ -3,9 +3,11 @@ import 'package:monthly_database/models/bill_db_model.dart';
 
 abstract class RegisterDatabase {
   Future<int> saveBill(BillDbModel bill);
+  Future<List<int>> saveAll(List<BillDbModel> bills);
   Future<BillDbModel?> getById(int id);
   Future<List<BillDbModel>> getByMonth(int month, int year);
   Future<List<BillDbModel>> getByRangeDate(DateTime begin, DateTime end);
+  Future<List<String>> getAllDescriptions();
 }
 
 class RegisterDatabaseImpl implements RegisterDatabase {
@@ -40,5 +42,19 @@ class RegisterDatabaseImpl implements RegisterDatabase {
         .filter()
         .dueDateBetween(begin, end)
         .findAll();
+  }
+
+  @override
+  Future<List<String>> getAllDescriptions() async {
+    return (await _isar.billDbModels.where().findAll())
+        .map((item) => item.name)
+        .toList();
+  }
+
+  @override
+  Future<List<int>> saveAll(List<BillDbModel> bills) async {
+    return _isar.writeTxn(() async {
+      return _isar.billDbModels.putAll(bills);
+    });
   }
 }

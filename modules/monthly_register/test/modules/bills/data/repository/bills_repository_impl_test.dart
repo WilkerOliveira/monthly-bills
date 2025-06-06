@@ -1,9 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:monthly_database/monthly_database.dart';
-import 'package:monthly_domain/entities/bill_entity.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/modules/bills/data/repository/bills_repository_impl.dart';
-import 'package:monthly_register/modules/core/models/bill_model.dart';
 
 class MockRegisterDatabase extends Mock implements RegisterDatabase {}
 

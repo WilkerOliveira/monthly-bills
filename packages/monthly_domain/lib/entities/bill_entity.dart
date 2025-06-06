@@ -7,9 +7,11 @@ class BillEntity extends Equatable {
     required this.dueDate,
     required this.paid,
     required this.category,
+    this.recurrences,
     this.extraInfo,
     this.paymentDate,
     this.id,
+    this.recurrenceId,
   });
 
   factory BillEntity.empty() {
@@ -30,6 +32,8 @@ class BillEntity extends Equatable {
   final String? extraInfo;
   final bool paid;
   final DateTime? paymentDate;
+  final int? recurrences;
+  final int? recurrenceId;
 
   @override
   List<Object?> get props => [
@@ -41,6 +45,8 @@ class BillEntity extends Equatable {
     paid,
     paymentDate,
     category,
+    recurrences,
+    recurrenceId,
   ];
 
   BillEntity copyWith({
@@ -52,6 +58,8 @@ class BillEntity extends Equatable {
     String? extraInfo,
     bool? paid,
     DateTime? paymentDate,
+    int? recurrences,
+    int? recurrenceId,
   }) {
     return BillEntity(
       id: id ?? this.id,
@@ -62,6 +70,38 @@ class BillEntity extends Equatable {
       extraInfo: extraInfo ?? this.extraInfo,
       paid: paid ?? this.paid,
       paymentDate: paymentDate ?? this.paymentDate,
+      recurrences: recurrences ?? this.recurrences,
+      recurrenceId: recurrenceId ?? this.recurrenceId,
     );
   }
+
+  BillEntity newRecurrence({
+    required DateTime dueDate,
+    required int recurrenceId,
+  }) {
+    return BillEntity(
+      name: name,
+      category: category,
+      amount: amount,
+      dueDate: dueDate,
+      extraInfo: extraInfo,
+      paid: false,
+      recurrenceId: recurrenceId,
+    );
+  }
+
+  bool get isDueDateExpiringToday =>
+      DateTime(dueDate.year, dueDate.month, dueDate.day).compareTo(
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      ) ==
+      0;
+
+  bool get isDueDateExpired =>
+      DateTime(dueDate.year, dueDate.month, dueDate.day).isBefore(
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      );
+  bool get isFutureDueDate =>
+      DateTime(dueDate.year, dueDate.month, dueDate.day).isAfter(
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      );
 }

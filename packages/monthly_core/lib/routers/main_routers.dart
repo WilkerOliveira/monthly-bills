@@ -45,7 +45,6 @@ final GoRouter routes = GoRouter(
       ],
     ),
     ...loginRoutes,
-    //...homeRoutes,
     ...registerRoutes,
     ...reportRoutes,
   ],

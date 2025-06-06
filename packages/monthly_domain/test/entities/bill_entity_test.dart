@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:monthly_domain/entities/bill_entity.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 void main() {
@@ -36,6 +36,7 @@ void main() {
         paid: true,
         paymentDate: DateTime(2024, 7, 5),
         category: BillTypesEnum.childcare.key,
+        recurrenceId: 1,
       );
       expect(bill.props, [
         2,
@@ -46,6 +47,8 @@ void main() {
         true,
         DateTime(2024, 7, 5),
         'childcare',
+        false,
+        1,
       ]);
     });
 
@@ -61,7 +64,7 @@ void main() {
       expect(bill.amount, 75.0);
       expect(bill.category, 'childcare');
       expect(bill.dueDate, DateTime(2024, 7, 15));
-      expect(bill.paid, false);
+      expect(bill.paid, isFalse);
       expect(bill.extraInfo, isNull);
       expect(bill.paymentDate, isNull);
       expect(bill.id, isNull);

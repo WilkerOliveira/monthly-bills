@@ -45,3 +45,6 @@ final navBarIconSize = 24.h;
 
 //Progress Indicator
 final progressIndicatorSize = 50.h;
+
+//Autocomplete
+final autoCompleteHeight = 200.h;

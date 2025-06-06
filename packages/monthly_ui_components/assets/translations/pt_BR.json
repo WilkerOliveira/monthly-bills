@@ -11,7 +11,8 @@
     "electricity": "Eletricidade",
     "water": "Água",
     "rent": "Aluguel",
-    "mortgage": "Hipoteca",
+    "financing": "Financiamento",
+    "personal_loan": "Empréstimos",
     "groceries": "Mantimentos",
     "diningOut": "Comer Fora",
     "transportation": "Transporte",
@@ -39,5 +40,6 @@
     "investments": "Investimentos",
     "miscellaneous": "Diversos",
     "other": "Outros",
-    "creditCard": "Cartão de crédito"
+    "creditCard": "Cartão de crédito",
+    "due_date": "Vencimento"
 }

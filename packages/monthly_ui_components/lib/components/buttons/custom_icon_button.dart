@@ -18,6 +18,17 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.blue.shade800,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(
+          horizontal: hSmallSpace,
+          vertical: vSpace6,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(buttonRadius),
+        ),
+      ),
       onPressed: onPressed,
       icon: icon,
       label: Text(

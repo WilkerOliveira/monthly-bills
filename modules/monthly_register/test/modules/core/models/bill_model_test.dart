@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:monthly_database/monthly_database.dart';
 import 'package:monthly_domain/monthly_domain.dart';
-import 'package:monthly_register/modules/core/models/bill_model.dart';
 
 class MockBillDbModel extends Mock implements BillDbModel {}
 
@@ -26,7 +25,7 @@ void main() {
       expect(model.name, 'Internet');
       expect(model.amount, 50.0);
       expect(model.dueDate, testDate);
-      expect(model.paid, false);
+      expect(model.paid, isFalse);
       expect(model.category, 'internet');
       expect(model.extraInfo, 'Monthly bill');
       expect(model.paymentDate, null);
@@ -49,7 +48,7 @@ void main() {
       expect(model.amount, 30.0);
       expect(model.dueDate, testDate);
       expect(model.paid, true);
-      expect(model.category, 'category');
+      expect(model.category, 'water');
       expect(model.id, 1);
       expect(model.paymentDate, testDate);
       expect(model.extraInfo, 'Paid early');

@@ -51,6 +51,16 @@ ThemeData appTheme({required bool isDark}) {
       selectionColor: AppColors.primaryLight,
       selectionHandleColor: Colors.white,
     ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: WidgetStateProperty.resolveWith<Color?>((
+        Set<WidgetState> states,
+      ) {
+        if (states.contains(WidgetState.selected)) {
+          return AppColors.primaryLight;
+        }
+        return Colors.transparent;
+      }),
+    ),
   );
 }
 
@@ -105,6 +115,10 @@ class AppColors {
   static const Color cardTitleColor = Color(0xFF172554);
   static const Color cardSubtTitleColor = Color(0xFF4F4F50);
   static const Color highlightedCardColor = Color(0xFF007BFF);
+
+  static const Color expiredColor = Color.fromARGB(255, 168, 19, 19);
+  static const Color futureExpireColor = Color.fromARGB(255, 13, 125, 54);
+  static const Color expiringColor = Color.fromARGB(255, 173, 112, 6);
 }
 
 class CustomThemeExtension extends ThemeExtension<CustomThemeExtension> {

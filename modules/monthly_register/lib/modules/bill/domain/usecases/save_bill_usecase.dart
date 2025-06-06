@@ -14,7 +14,26 @@ class SaveBillUsecaseImpl implements SaveBillUsecase {
   @override
   Future<Result<bool>> call(BillEntity bill) async {
     try {
-      await repository.save(bill);
+      final billId = await repository.save(bill);
+      final bills = <BillEntity>[];
+
+      if (bill.recurrences != null) {
+        for (var i = 1; i >= bill.recurrences!; i++) {
+          bills.add(
+            bill.newRecurrence(
+              recurrenceId: billId,
+              dueDate: DateTime(
+                bill.dueDate.year,
+                bill.dueDate.month + i,
+                bill.dueDate.day,
+              ),
+            ),
+          );
+        }
+
+        await repository.saveAll(bills);
+      }
+
       return const Success(true);
     } on Exception catch (e) {
       return Failure(e);

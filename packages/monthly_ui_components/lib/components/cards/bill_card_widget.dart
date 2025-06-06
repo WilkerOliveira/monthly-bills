@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_domain/monthly_domain.dart';
-import 'package:monthly_home/core/translation/home_strings.dart';
+import 'package:monthly_ui_components/core/translation/ui_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class BillCard extends StatelessWidget {
@@ -10,10 +10,6 @@ class BillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final strings = MonthlyDI.I.get<HomeStrings>();
-
-    final daysUntilDue = bill.dueDate.difference(DateTime.now()).inDays;
-
     return Card(
       color: AppColors.background,
       margin: EdgeInsets.only(bottom: vSmallSpace),
@@ -33,6 +29,7 @@ class BillCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     bill.name,
@@ -42,28 +39,65 @@ class BillCard extends StatelessWidget {
                       color: AppColors.cardTitleColor,
                     ),
                   ),
-                  SizedBox(height: vSpace4),
-                  Text(
-                    strings.homeDueUntil.replace(
-                      ['%s'],
-                      [daysUntilDue.toString()],
+                  SizedBox(height: vSpace6),
+                  RichText(
+                    text: TextSpan(
+                      text: '${UIStrings.I.dueDate} ',
+                      style: const TextStyle(
+                        color: AppColors.cardSubtTitleColor,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: bill.dueDate.toLocaleDateFormat(
+                            UIStrings.I.locale,
+                          ),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _getDueDateColor(bill),
+                          ),
+                        ),
+                      ],
                     ),
-                    style: const TextStyle(color: AppColors.cardSubtTitleColor),
+                  ),
+                  SizedBox(height: vTinySpace),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          bill.amount.formatToCurrency(UIStrings.I.locale),
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: largeTextSize,
+                            color: AppColors.highlightedCardColor,
+                          ),
+                        ),
+                      ),
+                      if (bill.paid)
+                        Icon(Icons.check_circle, color: _getDueDateColor(bill))
+                      else
+                        Icon(Icons.pending, color: _getDueDateColor(bill)),
+                    ],
                   ),
                 ],
-              ),
-            ),
-            Text(
-              '\$${bill.amount.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: largeTextSize,
-                color: AppColors.highlightedCardColor,
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Color _getDueDateColor(BillEntity bill) {
+    if (bill.paid || bill.isFutureDueDate) {
+      return AppColors.futureExpireColor;
+    }
+
+    if (bill.isDueDateExpired) {
+      return AppColors.expiredColor;
+    }
+
+    return AppColors.expiringColor;
   }
 }

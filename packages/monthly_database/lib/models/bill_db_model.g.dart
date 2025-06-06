@@ -56,6 +56,16 @@ const BillDbModelSchema = CollectionSchema(
       id: 7,
       name: r'paymentDate',
       type: IsarType.dateTime,
+    ),
+    r'recurrenceId': PropertySchema(
+      id: 8,
+      name: r'recurrenceId',
+      type: IsarType.long,
+    ),
+    r'recurrences': PropertySchema(
+      id: 9,
+      name: r'recurrences',
+      type: IsarType.long,
     )
   },
   estimateSize: _billDbModelEstimateSize,
@@ -135,6 +145,8 @@ void _billDbModelSerialize(
   writer.writeString(offsets[5], object.name);
   writer.writeBool(offsets[6], object.paid);
   writer.writeDateTime(offsets[7], object.paymentDate);
+  writer.writeLong(offsets[8], object.recurrenceId);
+  writer.writeLong(offsets[9], object.recurrences);
 }
 
 BillDbModel _billDbModelDeserialize(
@@ -151,6 +163,8 @@ BillDbModel _billDbModelDeserialize(
     name: reader.readString(offsets[5]),
     paid: reader.readBool(offsets[6]),
     paymentDate: reader.readDateTimeOrNull(offsets[7]),
+    recurrenceId: reader.readLongOrNull(offsets[8]),
+    recurrences: reader.readLongOrNull(offsets[9]),
   );
   return object;
 }
@@ -178,6 +192,10 @@ P _billDbModelDeserializeProp<P>(
       return (reader.readBool(offset)) as P;
     case 7:
       return (reader.readDateTimeOrNull(offset)) as P;
+    case 8:
+      return (reader.readLongOrNull(offset)) as P;
+    case 9:
+      return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -1298,6 +1316,154 @@ extension BillDbModelQueryFilter
       ));
     });
   }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'recurrenceId',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'recurrenceId',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recurrenceId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recurrenceId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recurrenceId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrenceIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recurrenceId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'recurrences',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'recurrences',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recurrences',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recurrences',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recurrences',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition>
+      recurrencesBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recurrences',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension BillDbModelQueryObject
@@ -1401,6 +1567,31 @@ extension BillDbModelQuerySortBy
   QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByPaymentDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'paymentDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByRecurrenceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrenceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy>
+      sortByRecurrenceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrenceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByRecurrences() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrences', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> sortByRecurrencesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrences', Sort.desc);
     });
   }
 }
@@ -1514,6 +1705,31 @@ extension BillDbModelQuerySortThenBy
       return query.addSortBy(r'paymentDate', Sort.desc);
     });
   }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByRecurrenceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrenceId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy>
+      thenByRecurrenceIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrenceId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByRecurrences() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrences', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterSortBy> thenByRecurrencesDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrences', Sort.desc);
+    });
+  }
 }
 
 extension BillDbModelQueryWhereDistinct
@@ -1566,6 +1782,18 @@ extension BillDbModelQueryWhereDistinct
   QueryBuilder<BillDbModel, BillDbModel, QDistinct> distinctByPaymentDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'paymentDate');
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QDistinct> distinctByRecurrenceId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recurrenceId');
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QDistinct> distinctByRecurrences() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recurrences');
     });
   }
 }
@@ -1623,6 +1851,18 @@ extension BillDbModelQueryProperty
   QueryBuilder<BillDbModel, DateTime?, QQueryOperations> paymentDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'paymentDate');
+    });
+  }
+
+  QueryBuilder<BillDbModel, int?, QQueryOperations> recurrenceIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recurrenceId');
+    });
+  }
+
+  QueryBuilder<BillDbModel, int?, QQueryOperations> recurrencesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recurrences');
     });
   }
 }

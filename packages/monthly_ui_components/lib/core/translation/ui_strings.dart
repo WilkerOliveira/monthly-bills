@@ -22,7 +22,8 @@ class UIStrings {
   String get electricity => _tr('electricity');
   String get water => _tr('water');
   String get rent => _tr('rent');
-  String get mortgage => _tr('mortgage');
+  String get financing => _tr('financing');
+  String get personalLoan => _tr('personal_loan');
   String get groceries => _tr('groceries');
   String get diningOut => _tr('diningOut');
   String get transportation => _tr('transportation');
@@ -51,4 +52,5 @@ class UIStrings {
   String get miscellaneous => _tr('miscellaneous');
   String get other => _tr('other');
   String get creditCard => _tr('creditCard');
+  String get dueDate => _tr('due_date');
 }

@@ -22,7 +22,8 @@ enum BillTypesEnum {
   investments('investments', Icons.trending_up),
   medications('medications', Icons.medication),
   miscellaneous('miscellaneous', Icons.more_horiz),
-  mortgage('mortgage', Icons.credit_score),
+  financing('financing', Icons.credit_score),
+  personalLoan('personalLoan', Icons.money_outlined),
   other('other', Icons.receipt),
   petCare('petCare', Icons.pets),
   phoneBill('phoneBill', Icons.phone_android),
@@ -58,8 +59,10 @@ enum BillTypesEnum {
         return UIStrings.I.water;
       case BillTypesEnum.rent:
         return UIStrings.I.rent;
-      case BillTypesEnum.mortgage:
-        return UIStrings.I.mortgage;
+      case BillTypesEnum.financing:
+        return UIStrings.I.financing;
+      case BillTypesEnum.personalLoan:
+        return UIStrings.I.personalLoan;
       case BillTypesEnum.groceries:
         return UIStrings.I.groceries;
       case BillTypesEnum.diningOut:

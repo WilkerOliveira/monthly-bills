@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
-import 'package:monthly_register/modules/bills/domain/usecases/get_bills_by_range_usecase.dart';
 import 'package:monthly_register/modules/bills/presentation/cubit/filter_widget_cubit.dart';
 import 'package:monthly_register/modules/bills/presentation/cubit/list_bills_cubit.dart';
 import 'package:monthly_register/modules/bills/presentation/cubit/list_bills_state.dart';
@@ -19,16 +18,19 @@ class BillsPage extends StatefulWidget {
 class _BillsPageState extends State<BillsPage> {
   late RegisterStrings strings;
   late FilterWidgetCubit filterWidgetCubit;
+  late ListBillsCubit listBillsCubit;
   @override
   void initState() {
     super.initState();
     strings = MonthlyDI.I.get<RegisterStrings>();
     filterWidgetCubit = MonthlyDI.I.get<FilterWidgetCubit>();
+    listBillsCubit = MonthlyDI.I.get<ListBillsCubit>();
   }
 
   @override
   void dispose() {
     filterWidgetCubit.close();
+    listBillsCubit.close();
     super.dispose();
   }
 
@@ -50,39 +52,30 @@ class _BillsPageState extends State<BillsPage> {
       body: BasePage(
         child: Stack(
           children: [
-            BlocProvider(
-              create:
-                  (context) => ListBillsCubit(
-                    getBillsByRangeUsecase:
-                        MonthlyDI.I.get<GetBillsByRangeUsecase>(),
-                  )..fetchBills(
-                    DateTime(DateTime.now().year, DateTime.now().month),
-                    DateTime.now(),
-                  ),
-              child: BlocBuilder<ListBillsCubit, ListBillsState>(
-                builder: (context, state) {
-                  switch (state) {
-                    case ListBillsInitialState():
-                    case ListBillsLoadingState():
-                      return const LoadingStateWidget();
-                    case ListBillsLoadedState():
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.bills.length,
-                        itemBuilder: (context, index) {
-                          return BillCard(bill: state.bills[index]);
-                        },
-                      );
-                    case ListBillsErrorState():
-                      return ErrorStateWidget(message: strings.errorMessage);
-                    case ListBillsEmpty():
-                      return Center(
-                        child: EmptyStateWidget(title: strings.noBillsMessage),
-                      );
-                  }
-                },
-              ),
+            BlocBuilder<ListBillsCubit, ListBillsState>(
+              bloc: listBillsCubit,
+              builder: (context, state) {
+                switch (state) {
+                  case ListBillsInitialState():
+                  case ListBillsLoadingState():
+                    return const LoadingStateWidget();
+                  case ListBillsLoadedState():
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.bills.length,
+                      itemBuilder: (context, index) {
+                        return BillCard(bill: state.bills[index]);
+                      },
+                    );
+                  case ListBillsErrorState():
+                    return ErrorStateWidget(message: strings.errorMessage);
+                  case ListBillsEmpty():
+                    return Center(
+                      child: EmptyStateWidget(title: strings.noBillsMessage),
+                    );
+                }
+              },
             ),
             BlocBuilder<FilterWidgetCubit, FilterWidgetState>(
               bloc: filterWidgetCubit,
@@ -92,10 +85,7 @@ class _BillsPageState extends State<BillsPage> {
                   child: DateRangeFilterWidget(
                     onFilter: (DateTime startDate, DateTime endDate) {
                       filterWidgetCubit.showFilter();
-                      context.read<ListBillsCubit>().fetchBills(
-                        startDate,
-                        endDate,
-                      );
+                      listBillsCubit.fetchBills(startDate, endDate);
                     },
                   ),
                 );

@@ -11,7 +11,9 @@ class BillDbModel {
     required this.extraInfo,
     required this.paid,
     required this.category,
+    this.recurrences,
     this.paymentDate,
+    this.recurrenceId,
   });
 
   final Id id = Isar.autoIncrement;
@@ -23,6 +25,8 @@ class BillDbModel {
   final bool paid;
   final DateTime? paymentDate;
   final String category;
+  final int? recurrences;
+  final int? recurrenceId;
 
   @Index(composite: [CompositeIndex('dueDate', type: IndexType.value)])
   int get monthYear => dueDate.month + dueDate.year * 100;
