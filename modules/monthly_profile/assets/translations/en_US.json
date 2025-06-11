@@ -1,0 +1,12 @@
+{   
+    "locale": "en_US",
+    "profile_title": "Profile",
+    "config_date_description": "Set when \"monthly bills\" start",
+    "start_day": "Start day",
+    "end_day": "End day",
+    "required_field": "Required field",
+    "invalid_date": "Invalid date",
+    "save": "Save",
+    "saved_successfully": "Saved Successfully!",
+    "error_save_message": "Sorry, we were unable to save. Please try again!"
+}

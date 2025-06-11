@@ -66,6 +66,8 @@ class BottomNavBar extends StatelessWidget {
         context.go(MainRoutes.bills);
       case 2:
         context.go(MainRoutes.monthlyReport);
+      case 3:
+        context.go(MainRoutes.profile);
     }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:monthly_database/models/bill_db_model.dart';
+import 'package:monthly_database/models/bill/bill_db_model.dart';
 
 abstract class RegisterDatabase {
   Future<int> saveBill(BillDbModel bill);

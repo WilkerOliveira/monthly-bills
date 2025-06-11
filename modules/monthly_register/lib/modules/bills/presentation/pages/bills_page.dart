@@ -57,8 +57,9 @@ class _BillsPageState extends State<BillsPage> {
               builder: (context, state) {
                 switch (state) {
                   case ListBillsInitialState():
+                    return const SizedBox.shrink();
                   case ListBillsLoadingState():
-                    return const LoadingStateWidget();
+                    return const Center(child: LoadingStateWidget());
                   case ListBillsLoadedState():
                     return ListView.builder(
                       shrinkWrap: true,

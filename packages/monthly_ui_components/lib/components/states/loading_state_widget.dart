@@ -13,7 +13,7 @@ class LoadingStateWidget extends StatelessWidget {
         SizedBox(
           width: progressIndicatorSize,
           height: progressIndicatorSize,
-          child: const CircularProgressIndicator(),
+          child: const CircularProgressIndicator(color: AppColors.surface),
         ),
         SizedBox(height: vMediumSpace),
         Text(

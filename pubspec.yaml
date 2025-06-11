@@ -14,6 +14,7 @@ workspace:
   - modules/monthly_login
   - modules/monthly_register
   - modules/monthly_report    
+  - modules/monthly_profile
 
 dev_dependencies:
   melos: ^6.3.2

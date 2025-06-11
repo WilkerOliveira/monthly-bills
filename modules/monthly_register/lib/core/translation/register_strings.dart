@@ -27,4 +27,5 @@ class RegisterStrings {
   String get errorSavingBill => _tr('error_saving_bill');
   String get isPaid => _tr('id_paid');
   String get recurringMonths => _tr('recurring_months');
+  String get save => _tr('save');
 }

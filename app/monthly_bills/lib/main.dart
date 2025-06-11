@@ -30,9 +30,10 @@ class MonthlBillsApp extends StatelessWidget {
     return ScreenUtilInit(
       minTextAdapt: true,
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
-        title: 'Flutter Demo',
+        title: 'Monthly Bills',
         theme: appTheme(isDark: true),
         routerConfig: routes,
       ),

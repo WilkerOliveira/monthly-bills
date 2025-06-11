@@ -5,6 +5,7 @@ import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_home/monthly_home.dart';
 import 'package:monthly_login/monthly_login.dart';
+import 'package:monthly_profile/monthly_profile.dart';
 import 'package:monthly_register/monthly_register.dart';
 import 'package:monthly_report/monthly_report.dart';
 
@@ -38,9 +39,9 @@ final GoRouter routes = GoRouter(
               (context, state) => const NoTransitionPage(child: HomePage()),
         ),
         GoRoute(
-          path: '/config',
+          path: MainRoutes.profile,
           pageBuilder:
-              (context, state) => const NoTransitionPage(child: HomePage()),
+              (context, state) => const NoTransitionPage(child: ProfilePage()),
         ),
       ],
     ),

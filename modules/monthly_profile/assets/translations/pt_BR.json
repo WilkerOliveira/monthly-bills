@@ -1,0 +1,12 @@
+{    
+    "locale": "pt_BR",
+    "profile_title": "Profile",
+    "config_date_description": "Defina quando as \"contas mensais\" começam",
+    "start_day": "Dia inicial",
+    "end_day": "Dia final",
+    "required_field": "Campo obrigatório",
+    "invalid_date": "Data inválida",
+    "save": "Salvar",
+    "saved_successfully": "Salvo com sucesso!",
+    "error_save_message": "Desculpe, não foi possível salvar os dados. Tente novamente!"
+}

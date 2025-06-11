@@ -23,6 +23,7 @@ final hSpace6 = 6.w;
 final vSpace6 = 6.h;
 final hSpace4 = 4.w;
 final vSpace4 = 4.h;
+final defaultBottomSpace = 50.h;
 
 //Text size
 final titleTextSize = 26.sp;
@@ -33,10 +34,11 @@ final defaultFontSize = 14.sp;
 
 //Buttons
 final defaultButtonHeight = 24.h;
+final minimumButtonHeight = 50.h;
 
 //Radius
 final defaultRadius = 12.r;
-final buttonRadius = 20.r;
+final buttonRadius = 10.r;
 
 //Icons/Images
 final largeImage = 200.h;
@@ -44,7 +46,7 @@ final mediumImage = 150.h;
 final navBarIconSize = 24.h;
 
 //Progress Indicator
-final progressIndicatorSize = 50.h;
+final progressIndicatorSize = 80.h;
 
 //Autocomplete
 final autoCompleteHeight = 200.h;

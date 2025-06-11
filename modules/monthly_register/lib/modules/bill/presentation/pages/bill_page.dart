@@ -304,27 +304,14 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                         ),
                       ),
                     ),
-                    ElevatedButton(
+                    SimpleButton(
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
                           _formKey.currentState?.save();
                           context.read<BillCubit>().saveBill(_bill);
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size.fromHeight(50),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 5,
-                      ),
-                      child: const Text(
-                        'Salvar',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      label: strings.save,
                     ),
                   ],
                 ),

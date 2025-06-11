@@ -41,5 +41,6 @@
     "miscellaneous": "Miscellaneous",
     "other": "Other",
     "creditCard": "Credit card",
-    "due_date": "Due date"
+    "due_date": "Due date",
+    "day_of_month": "Day of the Month"
 }

@@ -19,6 +19,7 @@
     "bill_saved_successfully": "Bill saved successfully",
     "error_saving_bill": "Sorry, we were unable to save your account. Please try again!",
     "id_paid": "Is Paid?",
-    "recurring_months": "Repeat for (months)"
+    "recurring_months": "Repeat for (months)",
+    "save": "Save"
 
 }

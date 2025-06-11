@@ -6,8 +6,18 @@ class MonthlyDI {
   static MonthlyDI _instance = MonthlyDI._internal();
   static MonthlyDI get I => _instance;
 
-  void registerLazySingleton<T extends Object>(T Function() factory) {
-    GetIt.I.registerLazySingleton<T>(factory);
+  void registerLazySingleton<T extends Object>(
+    T Function() factory, [
+    void Function(T)? disposeFunction,
+  ]) {
+    GetIt.I.registerLazySingleton<T>(
+      factory,
+      dispose: (param) {
+        if (disposeFunction != null) {
+          disposeFunction(param);
+        }
+      },
+    );
   }
 
   void registerFactory<T extends Object>(T Function() factory) {

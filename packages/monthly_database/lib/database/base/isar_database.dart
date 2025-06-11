@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:monthly_database/models/bill_db_model.dart';
+import 'package:monthly_database/monthly_database.dart';
 import 'package:path_provider/path_provider.dart';
 
 class IsarDatabase {
@@ -8,6 +8,7 @@ class IsarDatabase {
   static Future<Isar> get instance async {
     _instance ??= await Isar.open([
       BillDbModelSchema,
+      AppConfigDbModelSchema,
     ], directory: (await getApplicationSupportDirectory()).path);
     return _instance!;
   }

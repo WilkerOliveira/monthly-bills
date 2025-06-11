@@ -53,4 +53,5 @@ class UIStrings {
   String get other => _tr('other');
   String get creditCard => _tr('creditCard');
   String get dueDate => _tr('due_date');
+  String get dayOfMonth => _tr('day_of_month');
 }

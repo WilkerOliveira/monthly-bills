@@ -41,5 +41,6 @@
     "miscellaneous": "Diversos",
     "other": "Outros",
     "creditCard": "Cartão de crédito",
-    "due_date": "Vencimento"
+    "due_date": "Vencimento",
+    "day_of_month": "Dia do mês"
 }
