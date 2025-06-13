@@ -31,7 +31,9 @@ abstract class HomeDI {
   }
 
   static void _registerCubit(MonthlyDI di) {
-    di.registerFactory<HomeCubit>(() => HomeCubit(di.get<SummaryUsecase>()));
+    di.registerFactory<HomeCubit>(
+      () => HomeCubit(di.get<SummaryUsecase>(), di()),
+    );
   }
 
   static void _registerService(MonthlyDI di) {}

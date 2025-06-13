@@ -13,10 +13,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (appConfig == null) {
       const newConfig = AppConfigEntity(startDay: 1, endDay: 31);
 
-      await database.saveConfig(
+      final id = await database.saveConfig(
         AppConfigModel.entityToModel(newConfig).toDbModel(),
       );
-      return newConfig;
+      return newConfig.copyWith(id: id);
     }
     return AppConfigModel.toModel(appConfig).toEntity();
   }

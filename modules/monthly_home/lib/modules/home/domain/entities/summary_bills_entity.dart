@@ -6,19 +6,31 @@ class SummaryBillsEntity extends Equatable {
     required this.totalAmount,
     required this.upcomingBills,
     required this.bills,
+    required this.startDate,
+    required this.endDate,
   });
   factory SummaryBillsEntity.empty() {
-    return const SummaryBillsEntity(
+    return SummaryBillsEntity(
       totalAmount: 0,
       upcomingBills: 0,
-      bills: [],
+      bills: const [],
+      startDate: DateTime.now(),
+      endDate: DateTime.now(),
     );
   }
 
   final double totalAmount;
   final int upcomingBills;
   final List<BillEntity> bills;
+  final DateTime startDate;
+  final DateTime endDate;
 
   @override
-  List<Object?> get props => [totalAmount, upcomingBills, bills];
+  List<Object?> get props => [
+    totalAmount,
+    upcomingBills,
+    bills,
+    startDate,
+    endDate,
+  ];
 }

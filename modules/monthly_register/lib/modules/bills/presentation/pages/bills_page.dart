@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
 import 'package:monthly_register/modules/bills/presentation/cubit/filter_widget_cubit.dart';
 import 'package:monthly_register/modules/bills/presentation/cubit/list_bills_cubit.dart';
@@ -19,12 +20,20 @@ class _BillsPageState extends State<BillsPage> {
   late RegisterStrings strings;
   late FilterWidgetCubit filterWidgetCubit;
   late ListBillsCubit listBillsCubit;
+  late AppConfigServiceContract appConfigService;
   @override
   void initState() {
     super.initState();
     strings = MonthlyDI.I.get<RegisterStrings>();
     filterWidgetCubit = MonthlyDI.I.get<FilterWidgetCubit>();
     listBillsCubit = MonthlyDI.I.get<ListBillsCubit>();
+    _loadConfigs();
+  }
+
+  Future<void> _loadConfigs() async {
+    final appConfig =
+        await MonthlyDI.I.get<AppConfigServiceContract>().getAppConfig();
+    await listBillsCubit.fetchBills(appConfig.startDate, appConfig.endDate);
   }
 
   @override

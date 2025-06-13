@@ -69,6 +69,7 @@ AppConfigDbModel _appConfigDbModelDeserialize(
 ) {
   final object = AppConfigDbModel(
     endDay: reader.readLong(offsets[0]),
+    id: id,
     startDay: reader.readLong(offsets[1]),
   );
   return object;

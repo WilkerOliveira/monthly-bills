@@ -10,7 +10,6 @@ class HomeStrings {
   String get homeWelcome => _tr('home_welcome');
   String get homeTotalDue => _tr('home_total_due');
   String get homeUpcoming => _tr('home_upcoming');
-  String get homeSubtitle => _tr('home_subtitle');
   String get homeSeeAll => _tr('home_see_all');
   String get homeNoBillsMessage => _tr('home_no_bills_message');
   String get homeErrorMessage => _tr('home_error_message');
@@ -18,4 +17,6 @@ class HomeStrings {
   String get homePay => _tr('home_pay');
   String get homeLoading => _tr('home_loading');
   String get locale => _tr('locale');
+  String get dueDate => _tr('due_date');
+  String get dueDateTo => _tr('due_date_to');
 }

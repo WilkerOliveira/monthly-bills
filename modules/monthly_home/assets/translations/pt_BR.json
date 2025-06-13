@@ -2,13 +2,14 @@
     "home_title": "Controle de Despesas",
     "home_welcome": "Olá",
     "home_total_due": "Total devido",
-    "home_upcoming": "A vencer",
-    "home_subtitle": "Suas contas mensais",
+    "home_upcoming": "A vencer",    
     "home_see_all": "Ver todas",
     "home_no_bills_message": "Nenhuma conta para exibir!",
     "home_add_first_bill": "Adicione sua primeira conta para começar",    
     "home_pay": "Pagar",
     "home_error_message": "Algo deu errado!",
     "home_loading": "Aguarde, carregando dados...",
-    "locale": "pt_BR"
+    "locale": "pt_BR",
+    "due_date": "Vencimento",
+    "due_date_to": "até"
 }

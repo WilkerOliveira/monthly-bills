@@ -2,13 +2,15 @@
     "home_title": "Expense Control",
     "home_welcome": "Hello",
     "home_total_due": "Total Due",
-    "home_upcoming": "Upcoming",
-    "home_subtitle": "Your Monthly Bills",
+    "home_upcoming": "Upcoming",    
     "home_see_all": "See All",
     "home_no_bills_message": "No bills to display",
     "home_add_first_bill": "Add your first bill to get started",    
     "home_pay": "Pay",
     "home_error_message": "Something went wrong!",
     "home_loading": "Waiting, loading data...",
-    "locale": "en_US"
+    "locale": "en_US",
+    "due_date": "Due Date",
+    "due_date_to": "to"
+
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_home/core/translation/home_strings.dart';
 import 'package:monthly_home/modules/home/presentation/cubit/home_cubit.dart';
 import 'package:monthly_home/modules/home/presentation/cubit/home_state.dart';
@@ -26,13 +27,22 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     strings = MonthlyDI.I.get<HomeStrings>();
     _cubit = MonthlyDI.I.get<HomeCubit>();
-    _cubit.loadData();
+    _cubit.loadData(null);
+    _listenEvents();
   }
 
   @override
   void dispose() {
     _cubit.close();
     super.dispose();
+  }
+
+  void _listenEvents() {
+    MonthlyDI.I.get<MonthlyEventBus>().on<AppConigUpdatedEvent>().listen((
+      event,
+    ) {
+      _cubit.loadData(event.appConfig);
+    });
   }
 
   @override
@@ -55,6 +65,7 @@ class _HomePageState extends State<HomePage> {
                 case HomeLoadingState():
                   return const LoadingStateWidget();
                 case HomeSuccessState():
+                  final bill = state.bill;
                   return SingleChildScrollView(
                     child: Column(
                       children: [
@@ -62,10 +73,21 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               const ProfileWidget(),
-                              SizedBox(height: vMediumSpace),
+                              SizedBox(height: vSmallSpace),
+                              Text(
+                                '${_formatDate(bill?.startDate)} '
+                                '${strings.dueDateTo} '
+                                '${_formatDate(bill?.endDate)}',
+                                style: TextStyle(
+                                  fontSize: subTitleTextSize,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.background,
+                                ),
+                              ),
+                              SizedBox(height: vSmallSpace),
                               SummaryWidget(
-                                totalAmount: state.bill?.totalAmount ?? 0,
-                                upcomingBills: state.bill?.upcomingBills ?? 0,
+                                totalAmount: bill?.totalAmount ?? 0,
+                                upcomingBills: bill?.upcomingBills ?? 0,
                               ),
                             ],
                           ),
@@ -78,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                         else if (state.isError)
                           ErrorStateWidget(message: strings.homeErrorMessage)
                         else
-                          BillsListWidget(bills: state.bill!.bills),
+                          BillsListWidget(bills: bill!.bills),
                       ],
                     ),
                   );
@@ -90,5 +112,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) {
+      return ' ';
+    }
+    return date.toDayAndMonthFormat(strings.locale);
   }
 }

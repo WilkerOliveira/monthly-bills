@@ -1,6 +1,7 @@
 export 'package:monthly_common/assets_loader/base_loader.dart';
 export 'package:monthly_common/date_picker/date_picker.dart';
 export 'package:monthly_common/di/main_di.dart';
+export 'package:monthly_common/event_bus/monthly_event_bus.dart';
 export 'package:monthly_common/extensions/datetime_extension.dart';
 export 'package:monthly_common/extensions/double_extension.dart';
 export 'package:monthly_common/extensions/string_extension.dart';

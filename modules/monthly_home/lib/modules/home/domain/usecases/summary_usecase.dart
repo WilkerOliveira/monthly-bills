@@ -26,6 +26,8 @@ class SummaryUsecaseImpl implements SummaryUsecase {
           totalAmount: totalAmount,
           upcomingBills: upcomingBills,
           bills: bills,
+          startDate: begin,
+          endDate: end,
         ),
       );
     } on Exception catch (_) {

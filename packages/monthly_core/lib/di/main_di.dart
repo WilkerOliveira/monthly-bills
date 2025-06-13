@@ -21,6 +21,7 @@ class MainDI {
     di
       ..registerLazySingleton(() => FirebaseAuth.instance)
       ..registerLazySingleton(GoogleSignIn.new)
+      ..registerLazySingleton<MonthlyEventBus>(MonthlyEventBusImpl.new)
       ..registerLazySingleton<CoreStrings>(CoreStrings.new);
   }
 }

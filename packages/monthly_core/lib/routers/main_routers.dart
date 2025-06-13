@@ -10,38 +10,75 @@ import 'package:monthly_register/monthly_register.dart';
 import 'package:monthly_report/monthly_report.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey<NavigatorState>();
 
 final GoRouter routes = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: LoginRoutersPath.login,
   routes: <RouteBase>[
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) {
-        return MainPage(child: child);
+    StatefulShellRoute(
+      navigatorContainerBuilder: (
+        BuildContext context,
+        StatefulNavigationShell navigationShell,
+        List<Widget> children,
+      ) {
+        return IndexedStack(
+          index: navigationShell.currentIndex,
+          children: children,
+        );
       },
-      routes: [
-        GoRoute(
-          path: MainRoutes.home,
-          pageBuilder:
-              (context, state) => const NoTransitionPage(child: HomePage()),
+      builder: (
+        BuildContext context,
+        GoRouterState state,
+        StatefulNavigationShell navigationShell,
+      ) {
+        return MainPage(child: navigationShell);
+      },
+      branches: <StatefulShellBranch>[
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(debugLabel: MainRoutes.home),
+          routes: <RouteBase>[
+            GoRoute(
+              path: MainRoutes.home,
+              pageBuilder:
+                  (context, state) => const NoTransitionPage(child: HomePage()),
+            ),
+          ],
         ),
-        GoRoute(
-          path: MainRoutes.bills,
-          pageBuilder:
-              (context, state) => const NoTransitionPage(child: BillsPage()),
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(debugLabel: MainRoutes.bills),
+          routes: <RouteBase>[
+            GoRoute(
+              path: MainRoutes.bills,
+              pageBuilder:
+                  (context, state) =>
+                      const NoTransitionPage(child: BillsPage()),
+            ),
+          ],
         ),
-        GoRoute(
-          path: MainRoutes.monthlyReport,
-          pageBuilder:
-              (context, state) => const NoTransitionPage(child: HomePage()),
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(
+            debugLabel: MainRoutes.monthlyReport,
+          ),
+          routes: <RouteBase>[
+            GoRoute(
+              path: MainRoutes.monthlyReport,
+              pageBuilder:
+                  (context, state) => const NoTransitionPage(child: HomePage()),
+            ),
+          ],
         ),
-        GoRoute(
-          path: MainRoutes.profile,
-          pageBuilder:
-              (context, state) => const NoTransitionPage(child: ProfilePage()),
+        StatefulShellBranch(
+          navigatorKey: GlobalKey<NavigatorState>(
+            debugLabel: MainRoutes.profile,
+          ),
+          routes: <RouteBase>[
+            GoRoute(
+              path: MainRoutes.profile,
+              pageBuilder:
+                  (context, state) =>
+                      const NoTransitionPage(child: ProfilePage()),
+            ),
+          ],
         ),
       ],
     ),

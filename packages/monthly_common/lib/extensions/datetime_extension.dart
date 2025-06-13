@@ -7,4 +7,11 @@ extension DateTimeExtension on DateTime {
     }
     return DateFormat('yyyy/MM/dd').format(this);
   }
+
+  String toDayAndMonthFormat(String locale) {
+    if (locale == 'pt_BR') {
+      return DateFormat('dd/MM').format(this);
+    }
+    return DateFormat('MM/dd').format(this);
+  }
 }

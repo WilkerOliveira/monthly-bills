@@ -1,3 +1,4 @@
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_profile/modules/profile/domain/usecases/get_config_usecase.dart';
@@ -10,6 +11,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   final SaveConfigUsecase _saveConfigUsecase;
   final GetConfigUsecase _getConfigUsecase;
+  AppConfigEntity? oldAppConfig;
 
   Future<void> loadConfigs() async {
     emit(ProfileLoadingState());
@@ -18,6 +20,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final result = await _getConfigUsecase();
 
       result.fold((AppConfigEntity configs) {
+        oldAppConfig = configs;
         emit(ProfileLoadedState(appConfig: configs));
       }, (onFailure) => emit(ProfileErrorState()));
     } on Exception {
@@ -33,6 +36,12 @@ class ProfileCubit extends Cubit<ProfileState> {
 
       result.fold((bool success) {
         if (success) {
+          if (oldAppConfig != null && oldAppConfig != config) {
+            MonthlyDI.I.get<MonthlyEventBus>().fire(
+              AppConigUpdatedEvent(appConfig: config),
+            );
+          }
+
           emit(ProfileSuccessState());
         } else {
           emit(ProfileErrorState());

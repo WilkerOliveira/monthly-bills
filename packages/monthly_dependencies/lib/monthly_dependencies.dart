@@ -5,6 +5,7 @@ export 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 export 'package:easy_localization/easy_localization.dart';
 export 'package:easy_localization_loader/easy_localization_loader.dart';
 export 'package:equatable/equatable.dart';
+export 'package:event_bus/event_bus.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_core/firebase_core.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';

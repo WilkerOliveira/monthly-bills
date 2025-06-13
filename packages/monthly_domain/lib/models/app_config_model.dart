@@ -2,24 +2,36 @@ import 'package:monthly_database/monthly_database.dart';
 import 'package:monthly_domain/entities/app_config_entity.dart';
 
 class AppConfigModel {
-  AppConfigModel({required this.startDay, required this.endDay});
+  AppConfigModel({required this.startDay, required this.endDay, this.id});
 
   factory AppConfigModel.toModel(AppConfigDbModel dbModel) {
-    return AppConfigModel(startDay: dbModel.startDay, endDay: dbModel.endDay);
+    return AppConfigModel(
+      id: dbModel.id,
+      startDay: dbModel.startDay,
+      endDay: dbModel.endDay,
+    );
   }
 
   factory AppConfigModel.entityToModel(AppConfigEntity entity) {
-    return AppConfigModel(startDay: entity.startDay, endDay: entity.endDay);
+    return AppConfigModel(
+      id: entity.id,
+      startDay: entity.startDay,
+      endDay: entity.endDay,
+    );
   }
 
   final int startDay;
   final int endDay;
+  final int? id;
 
   AppConfigEntity toEntity() {
-    return AppConfigEntity(startDay: startDay, endDay: endDay);
+    return AppConfigEntity(id: id, startDay: startDay, endDay: endDay);
   }
 
   AppConfigDbModel toDbModel() {
-    return AppConfigDbModel(startDay: startDay, endDay: endDay);
+    if (id == null) {
+      return AppConfigDbModel(startDay: startDay, endDay: endDay);
+    }
+    return AppConfigDbModel(id: id!, startDay: startDay, endDay: endDay);
   }
 }

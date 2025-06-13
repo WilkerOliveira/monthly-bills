@@ -1,6 +1,8 @@
+export 'package:monthly_domain/contracts/app_config/app_config_service_contract.dart';
 export 'package:monthly_domain/contracts/auth/auth_service_contract.dart';
 export 'package:monthly_domain/entities/app_config_entity.dart';
 export 'package:monthly_domain/entities/bill_entity.dart';
 export 'package:monthly_domain/entities/user.dart';
+export 'package:monthly_domain/events/app_conig_updated_event.dart';
 export 'package:monthly_domain/models/app_config_model.dart';
 export 'package:monthly_domain/models/bill_model.dart';

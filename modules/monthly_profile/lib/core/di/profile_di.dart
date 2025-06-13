@@ -1,10 +1,12 @@
 import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_profile/core/translation/profile_strings.dart';
 import 'package:monthly_profile/modules/profile/data/repository/profile_repository_impl.dart';
 import 'package:monthly_profile/modules/profile/domain/repository/profile_repository.dart';
 import 'package:monthly_profile/modules/profile/domain/usecases/get_config_usecase.dart';
 import 'package:monthly_profile/modules/profile/domain/usecases/save_config_usecase.dart';
 import 'package:monthly_profile/modules/profile/presentation/cubit/profile_cubit.dart';
+import 'package:monthly_profile/services/app_config_service_impl.dart';
 
 abstract class ProfileDI {
   static void setup(MonthlyDI di) {
@@ -40,7 +42,11 @@ abstract class ProfileDI {
     );
   }
 
-  static void _registerService(MonthlyDI di) {}
+  static void _registerService(MonthlyDI di) {
+    di.registerLazySingleton<AppConfigServiceContract>(
+      () => AppConfigServiceImpl(di()),
+    );
+  }
 
   static void _registerCore(MonthlyDI di) {
     di.registerLazySingleton<ProfileStrings>(ProfileStrings.new);
