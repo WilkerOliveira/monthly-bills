@@ -6,7 +6,7 @@ import 'package:monthly_register/modules/bill/domain/usecases/get_unique_descrip
 import 'package:monthly_register/modules/bill/domain/usecases/get_bill_usecase.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/save_bill_usecase.dart';
 import 'package:monthly_register/modules/bill/presentation/cubit/bill_cubit.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_cubit.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/cubit/description_autocomplete_cubit.dart';
 import 'package:monthly_register/modules/bills/data/repository/bills_repository_impl.dart';
 import 'package:monthly_register/modules/bills/domain/repository/bills_repository.dart';
 import 'package:monthly_register/modules/bills/domain/usecases/get_bills_by_range_usecase.dart';

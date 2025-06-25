@@ -4,13 +4,9 @@ part 'app_config_db_model.g.dart';
 
 @collection
 class AppConfigDbModel {
-  AppConfigDbModel({
-    required this.startDay,
-    required this.endDay,
-    this.id = Isar.autoIncrement,
-  });
+  AppConfigDbModel({required this.startDay, required this.endDay, this.id});
 
-  final Id id;
+  final Id? id;
   final int startDay;
   final int endDay;
 }

@@ -73,6 +73,7 @@ class BillModel {
 
   BillDbModel toDbModel() {
     return BillDbModel(
+      id: id,
       name: name,
       amount: amount,
       dueDate: dueDate,

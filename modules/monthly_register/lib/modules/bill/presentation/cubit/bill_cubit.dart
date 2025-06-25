@@ -1,3 +1,4 @@
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/get_bill_usecase.dart';
@@ -29,10 +30,10 @@ class BillCubit extends Cubit<BillState> {
     emit(const BillLoading());
     try {
       final result = await _saveBillUsecase(bill);
-      result.fold(
-        (success) => emit(const BillSavedState()),
-        (failure) => emit(const BillError()),
-      );
+      result.fold((success) {
+        MonthlyDI.I.get<MonthlyEventBus>().fire(BillEvent(bill: bill));
+        emit(const BillSavedState());
+      }, (failure) => emit(const BillError()));
     } on Exception catch (_) {
       emit(const BillError());
     }

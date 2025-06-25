@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:monthly_common/helpers/constants/app_constants.dart';
 
 class DateInputFormatter extends TextInputFormatter {
   DateInputFormatter({this.locale, this.customPattern})
@@ -15,11 +16,11 @@ class DateInputFormatter extends TextInputFormatter {
     }
     switch (locale) {
       case 'pt_BR':
-        return 'dd/MM/yyyy';
+        return brDateFormat;
       case 'en_US':
-        return 'MM/dd/yyyy';
+        return usDateFormat;
       default:
-        return 'dd/MM/yyyy';
+        return brDateFormat;
     }
   }
 
@@ -42,7 +43,7 @@ class DateInputFormatter extends TextInputFormatter {
     var separatorIndices = <int>[];
     var separatorChar = '/';
 
-    if (effectivePattern == 'dd/MM/yyyy' || effectivePattern == 'MM/dd/yyyy') {
+    if (effectivePattern == brDateFormat || effectivePattern == usDateFormat) {
       separatorIndices = [2, 4];
       separatorChar = '/';
     } else if (effectivePattern == 'yyyy-MM-dd') {

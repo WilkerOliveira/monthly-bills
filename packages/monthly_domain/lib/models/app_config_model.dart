@@ -29,9 +29,6 @@ class AppConfigModel {
   }
 
   AppConfigDbModel toDbModel() {
-    if (id == null) {
-      return AppConfigDbModel(startDay: startDay, endDay: endDay);
-    }
-    return AppConfigDbModel(id: id!, startDay: startDay, endDay: endDay);
+    return AppConfigDbModel(id: id, startDay: startDay, endDay: endDay);
   }
 }

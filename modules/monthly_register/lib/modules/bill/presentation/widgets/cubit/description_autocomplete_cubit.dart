@@ -1,6 +1,6 @@
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/get_unique_descriptions_usecase.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_state.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/cubit/description_autocomplete_state.dart';
 
 class DescriptionAutocompleteCubit extends Cubit<DescriptionAutocompleteState> {
   DescriptionAutocompleteCubit(this._getAllDescriptionUsecase)

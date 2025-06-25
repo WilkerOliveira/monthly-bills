@@ -1,3 +1,4 @@
+import 'package:monthly_common/helpers/constants/app_constants.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 mixin FormValidationsMixin {
@@ -20,9 +21,9 @@ mixin FormValidationsMixin {
       return null;
     }
 
-    var dateFormatte = 'MM/dd/yyyy';
+    var dateFormatte = usDateFormat;
     if (locale == 'pt_BR') {
-      dateFormatte = 'dd/MM/yyyy';
+      dateFormatte = brDateFormat;
     }
 
     if (value == null || value.isEmpty) {

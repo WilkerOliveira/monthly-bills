@@ -6,12 +6,14 @@ import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
 import 'package:monthly_register/modules/bill/presentation/cubit/bill_cubit.dart';
 import 'package:monthly_register/modules/bill/presentation/cubit/bill_state.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_cubit.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/description_autocomplete_widget.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/cubit/description_autocomplete_cubit.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/description_autocomplete_widget.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class BillPage extends StatefulWidget {
-  const BillPage({super.key});
+  const BillPage({super.key, this.currentBill});
+
+  final BillEntity? currentBill;
 
   @override
   State<BillPage> createState() => _BillPageState();
@@ -32,6 +34,20 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
   void initState() {
     super.initState();
     strings = MonthlyDI.I.get<RegisterStrings>();
+    if (widget.currentBill != null) {
+      _loadCurrentBill(widget.currentBill!);
+    }
+  }
+
+  void _loadCurrentBill(BillEntity billEntity) {
+    _bill = widget.currentBill!;
+    _amountController.text = _bill.amount.formatToCurrency(strings.locale);
+    _dueDateController.text = _bill.dueDate.toLocaleDateFormat(strings.locale);
+    _paymentController.text =
+        _bill.paymentDate?.toLocaleDateFormat(strings.locale) ?? '';
+    _extraInfoController.text = _bill.extraInfo ?? '';
+    _recurringMonthsController.text = _bill.recurrences?.toString() ?? '';
+    _isPaid = _bill.paid;
   }
 
   @override
@@ -45,15 +61,13 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
   }
 
   void _clearAll() {
-    setState(() {
-      _amountController.clear();
-      _dueDateController.clear();
-      _paymentController.clear();
-      _extraInfoController.clear();
-      _recurringMonthsController.clear();
-      _bill = BillEntity.empty();
-      _isPaid = false;
-    });
+    _amountController.clear();
+    _dueDateController.clear();
+    _paymentController.clear();
+    _extraInfoController.clear();
+    _recurringMonthsController.clear();
+    _bill = BillEntity.empty();
+    _isPaid = false;
   }
 
   @override
@@ -105,25 +119,26 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                           key: _formKey,
                           child: Column(
                             children: [
-                              SizedBox(height: vSmallSpace),
+                              SizedBox(height: vNormalSpace),
                               BillTypeDropdown(
+                                initialValue:
+                                    _bill.category.isNotEmpty
+                                        ? BillTypesEnum.toBillType(
+                                          _bill.category,
+                                        )
+                                        : null,
                                 onChanged: (BillTypesEnum? value) {
                                   if (value != null) {
-                                    setState(() {
-                                      _bill = _bill.copyWith(
-                                        category: value.key,
-                                      );
-                                    });
+                                    _bill = _bill.copyWith(category: value.key);
                                   }
                                 },
                               ),
                               SizedBox(height: vSmallSpace),
                               DescriptionAutocompleteWidget(
+                                initialValue: _bill.name,
                                 labelText: strings.description,
                                 onSelected: (String value) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(name: value);
-                                  });
+                                  _bill = _bill.copyWith(name: value);
                                 },
                                 validator:
                                     (value) => validateRequiredField(
@@ -131,9 +146,7 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                       value: value,
                                     ),
                                 onSaved: (newValue) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(name: newValue);
-                                  });
+                                  _bill = _bill.copyWith(name: newValue);
                                 },
                               ),
                               SizedBox(height: vSmallSpace),
@@ -151,13 +164,11 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                       value: value,
                                     ),
                                 onSaved: (newValue) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(
-                                      amount: newValue?.parseCurrencyToDouble(
-                                        strings.locale,
-                                      ),
-                                    );
-                                  });
+                                  _bill = _bill.copyWith(
+                                    amount: newValue?.parseCurrencyToDouble(
+                                      strings.locale,
+                                    ),
+                                  );
                                 },
                                 inputFormatters: [
                                   currencyTextInputFormatter(strings.locale),
@@ -186,13 +197,11 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                       value: value,
                                     ),
                                 onSaved: (newValue) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(
-                                      dueDate: newValue?.parseToDateTime(
-                                        strings.locale,
-                                      ),
-                                    );
-                                  });
+                                  _bill = _bill.copyWith(
+                                    dueDate: newValue?.parseToDateTime(
+                                      strings.locale,
+                                    ),
+                                  );
                                 },
                                 inputFormatters: [
                                   DateInputFormatter(locale: strings.locale),
@@ -208,9 +217,7 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                   suffixIcon: const Icon(Icons.notes),
                                 ),
                                 onSaved: (newValue) {
-                                  setState(() {
-                                    _bill = _bill.copyWith(extraInfo: newValue);
-                                  });
+                                  _bill = _bill.copyWith(extraInfo: newValue);
                                 },
                               ),
                               SizedBox(height: vSmallSpace),
@@ -224,11 +231,9 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                 keyboardType: TextInputType.number,
                                 onSaved: (newValue) {
                                   if (newValue != null && newValue.isNotEmpty) {
-                                    setState(() {
-                                      _bill = _bill.copyWith(
-                                        recurrences: int.parse(newValue),
-                                      );
-                                    });
+                                    _bill = _bill.copyWith(
+                                      recurrences: int.parse(newValue),
+                                    );
                                   }
                                 },
                                 inputFormatters: [
@@ -279,14 +284,10 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                             value: value,
                                           ),
                                       onSaved: (newValue) {
-                                        setState(() {
-                                          _bill = _bill.copyWith(
-                                            paymentDate: newValue
-                                                ?.parseToDateTime(
-                                                  strings.locale,
-                                                ),
-                                          );
-                                        });
+                                        _bill = _bill.copyWith(
+                                          paymentDate: newValue
+                                              ?.parseToDateTime(strings.locale),
+                                        );
                                       },
                                       inputFormatters: [
                                         DateInputFormatter(

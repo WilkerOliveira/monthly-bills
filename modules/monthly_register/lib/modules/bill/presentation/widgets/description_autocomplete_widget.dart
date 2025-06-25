@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_cubit.dart';
-import 'package:monthly_register/modules/bill/presentation/pages/widgets/cubit/description_autocomplete_state.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/cubit/description_autocomplete_cubit.dart';
+import 'package:monthly_register/modules/bill/presentation/widgets/cubit/description_autocomplete_state.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class DescriptionAutocompleteWidget extends StatelessWidget {
@@ -10,10 +10,12 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
     required this.onSelected,
     required this.validator,
     required this.onSaved,
+    required this.initialValue,
     super.key,
   });
 
   final String labelText;
+  final String initialValue;
   final void Function(String) onSelected;
   final String? Function(String?) validator;
   final void Function(String?) onSaved;
@@ -23,12 +25,13 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
     final cubit = context.read<DescriptionAutocompleteCubit>();
 
     return Autocomplete<String>(
+      initialValue: TextEditingValue(text: initialValue),
       optionsBuilder: (TextEditingValue textEditingValue) async {
         return cubit.getSuggestions(textEditingValue.text);
       },
       optionsViewBuilder: (
         BuildContext context,
-        AutocompleteOnSelected<String> onSelected,
+        AutocompleteOnSelected<String> onSelectedCallback,
         Iterable<String> options,
       ) {
         return BlocBuilder<
@@ -64,7 +67,7 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          onSelected(option);
+                          onSelectedCallback(option);
                           cubit.onOptionSelected(option);
                         },
                       );
@@ -81,7 +84,7 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
         BuildContext context,
         TextEditingController textEditingController,
         FocusNode focusNode,
-        VoidCallback onFieldSubmitted,
+        VoidCallback onFieldSubmittedCallback,
       ) {
         return BlocListener<
           DescriptionAutocompleteCubit,
@@ -102,7 +105,7 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
             controller: textEditingController,
             focusNode: focusNode,
             onFieldSubmitted: (String value) {
-              onFieldSubmitted();
+              onFieldSubmittedCallback();
             },
             validator: validator,
             onSaved: onSaved,
@@ -122,6 +125,7 @@ class DescriptionAutocompleteWidget extends StatelessWidget {
                       },
                     );
                   }
+
                   return const Icon(Icons.description);
                 },
               ),

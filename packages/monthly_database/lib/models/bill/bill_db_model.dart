@@ -14,9 +14,10 @@ class BillDbModel {
     this.recurrences,
     this.paymentDate,
     this.recurrenceId,
+    this.id,
   });
 
-  final Id id = Isar.autoIncrement;
+  final Id? id;
   final String name;
   final double amount;
   @Index()

@@ -43,6 +43,10 @@ class _HomePageState extends State<HomePage> {
     ) {
       _cubit.loadData(event.appConfig);
     });
+
+    MonthlyDI.I.get<MonthlyEventBus>().on<BillEvent>().listen((event) {
+      _cubit.loadData(null);
+    });
   }
 
   @override
@@ -93,14 +97,24 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         if (state.isEmpty)
-                          EmptyStateWidget(
-                            title: strings.homeNoBillsMessage,
-                            message: strings.homeAddFirstBill,
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: defaultBottomSpace,
+                            ),
+                            child: EmptyStateWidget(
+                              title: strings.homeNoBillsMessage,
+                              message: strings.homeAddFirstBill,
+                            ),
                           )
                         else if (state.isError)
                           ErrorStateWidget(message: strings.homeErrorMessage)
                         else
-                          BillsListWidget(bills: bill!.bills),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              bottom: defaultBottomSpace,
+                            ),
+                            child: BillsListWidget(bills: bill!.bills),
+                          ),
                       ],
                     ),
                   );

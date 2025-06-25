@@ -1,3 +1,4 @@
+import 'package:monthly_common/helpers/constants/app_constants.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 extension StringExtension on String {
@@ -48,9 +49,9 @@ extension StringExtension on String {
     DateFormat? dateFormat;
 
     if (locale == 'pt_BR') {
-      dateFormat = DateFormat('dd/MM/yyyy');
+      dateFormat = DateFormat(brDateFormat);
     }
-    dateFormat = DateFormat('yyyy/MM/dd');
+    dateFormat = DateFormat(usDateFormat);
 
     try {
       return dateFormat.parseStrict(this);

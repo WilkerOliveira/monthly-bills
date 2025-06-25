@@ -160,6 +160,7 @@ BillDbModel _billDbModelDeserialize(
     category: reader.readString(offsets[1]),
     dueDate: reader.readDateTime(offsets[2]),
     extraInfo: reader.readStringOrNull(offsets[3]),
+    id: id,
     name: reader.readString(offsets[5]),
     paid: reader.readBool(offsets[6]),
     paymentDate: reader.readDateTimeOrNull(offsets[7]),
@@ -202,7 +203,7 @@ P _billDbModelDeserializeProp<P>(
 }
 
 Id _billDbModelGetId(BillDbModel object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _billDbModelGetLinks(BillDbModel object) {
@@ -993,8 +994,24 @@ extension BillDbModelQueryFilter
     });
   }
 
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
   QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idEqualTo(
-      Id value) {
+      Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -1004,7 +1021,7 @@ extension BillDbModelQueryFilter
   }
 
   QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1017,7 +1034,7 @@ extension BillDbModelQueryFilter
   }
 
   QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1030,8 +1047,8 @@ extension BillDbModelQueryFilter
   }
 
   QueryBuilder<BillDbModel, BillDbModel, QAfterFilterCondition> idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

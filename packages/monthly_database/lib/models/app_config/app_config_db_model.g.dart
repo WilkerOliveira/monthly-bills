@@ -92,7 +92,7 @@ P _appConfigDbModelDeserializeProp<P>(
 }
 
 Id _appConfigDbModelGetId(AppConfigDbModel object) {
-  return object.id;
+  return object.id ?? Isar.autoIncrement;
 }
 
 List<IsarLinkBase<dynamic>> _appConfigDbModelGetLinks(AppConfigDbModel object) {
@@ -240,7 +240,25 @@ extension AppConfigDbModelQueryFilter
   }
 
   QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
-      idEqualTo(Id value) {
+      idIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
+      idIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'id',
+      ));
+    });
+  }
+
+  QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
+      idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -251,7 +269,7 @@ extension AppConfigDbModelQueryFilter
 
   QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
       idGreaterThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -265,7 +283,7 @@ extension AppConfigDbModelQueryFilter
 
   QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
       idLessThan(
-    Id value, {
+    Id? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -279,8 +297,8 @@ extension AppConfigDbModelQueryFilter
 
   QueryBuilder<AppConfigDbModel, AppConfigDbModel, QAfterFilterCondition>
       idBetween(
-    Id lower,
-    Id upper, {
+    Id? lower,
+    Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

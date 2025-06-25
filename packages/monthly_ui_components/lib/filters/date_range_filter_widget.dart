@@ -4,9 +4,16 @@ import 'package:monthly_ui_components/core/translation/ui_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class DateRangeFilterWidget extends StatefulWidget {
-  const DateRangeFilterWidget({required this.onFilter, super.key});
+  const DateRangeFilterWidget({
+    required this.onFilter,
+    required this.inititalDate,
+    required this.finalDate,
+    super.key,
+  });
 
   final void Function(DateTime startDate, DateTime endDate) onFilter;
+  final DateTime? inititalDate;
+  final DateTime? finalDate;
 
   @override
   State<DateRangeFilterWidget> createState() => _DateRangeFilterWidgetState();
@@ -18,6 +25,17 @@ class _DateRangeFilterWidgetState extends State<DateRangeFilterWidget> {
   final _startController = TextEditingController();
   final _endController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _startController.text =
+        widget.inititalDate?.toLocaleDateFormat(UIStrings.I.locale) ?? '';
+    _endController.text =
+        widget.finalDate?.toLocaleDateFormat(UIStrings.I.locale) ?? '';
+    _startDate = widget.inititalDate;
+    _endDate = widget.finalDate;
+  }
 
   Future<void> _selectDate(BuildContext context, bool isStart) async {
     final initialDate =
@@ -117,8 +135,6 @@ class _DateRangeFilterWidgetState extends State<DateRangeFilterWidget> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    _formKey.currentState?.save();
-
                     if (_startDate != null && _endDate != null) {
                       if (_endDate!.isBefore(_startDate!)) {
                         MonthlySnackBar.alert(

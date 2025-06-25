@@ -21,6 +21,9 @@ class _BillsPageState extends State<BillsPage> {
   late FilterWidgetCubit filterWidgetCubit;
   late ListBillsCubit listBillsCubit;
   late AppConfigServiceContract appConfigService;
+  DateTime? inititalDate;
+  DateTime? finalDate;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +36,8 @@ class _BillsPageState extends State<BillsPage> {
   Future<void> _loadConfigs() async {
     final appConfig =
         await MonthlyDI.I.get<AppConfigServiceContract>().getAppConfig();
+    inititalDate = appConfig.startDate;
+    finalDate = appConfig.endDate;
     await listBillsCubit.fetchBills(appConfig.startDate, appConfig.endDate);
   }
 
@@ -72,10 +77,17 @@ class _BillsPageState extends State<BillsPage> {
                   case ListBillsLoadedState():
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.bills.length,
                       itemBuilder: (context, index) {
-                        return BillCard(bill: state.bills[index]);
+                        return BillCard(
+                          bill: state.bills[index],
+                          onTap: () {
+                            context.push(
+                              MainRoutes.newBill,
+                              extra: state.bills[index],
+                            );
+                          },
+                        );
                       },
                     );
                   case ListBillsErrorState():
@@ -93,7 +105,11 @@ class _BillsPageState extends State<BillsPage> {
                 return Visibility(
                   visible: state.showFilter,
                   child: DateRangeFilterWidget(
+                    inititalDate: inititalDate,
+                    finalDate: finalDate,
                     onFilter: (DateTime startDate, DateTime endDate) {
+                      inititalDate = startDate;
+                      finalDate = endDate;
                       filterWidgetCubit.showFilter();
                       listBillsCubit.fetchBills(startDate, endDate);
                     },

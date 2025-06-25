@@ -32,6 +32,15 @@ class AppConfigEntity extends Equatable {
 
   DateTime get endDate {
     final now = DateTime.now();
+
+    if (endDay < startDay) {
+      if (now.month == 12) {
+        return DateTime(now.year + 1, 1, endDay);
+      } else {
+        return DateTime(now.year, now.month + 1, endDay);
+      }
+    }
+
     return DateTime(now.year, now.month, endDay);
   }
 }
