@@ -2,6 +2,7 @@ import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_register/core/translation/register_strings.dart';
 import 'package:monthly_register/modules/bill/data/repository/bill_repository_impl.dart';
 import 'package:monthly_register/modules/bill/domain/repository/bill_repository.dart';
+import 'package:monthly_register/modules/bill/domain/usecases/delete_bill_usecase.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/get_unique_descriptions_usecase.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/get_bill_usecase.dart';
 import 'package:monthly_register/modules/bill/domain/usecases/save_bill_usecase.dart';
@@ -48,7 +49,8 @@ abstract class RegisterDi {
       )
       ..registerFactory<GetUniqueDescriptionsUsecase>(
         () => GetUniqueDescriptionsUsecaseImpl(repository: di()),
-      );
+      )
+      ..registerFactory<DeleteBillUsecase>(() => DeleteBillUsecaseImpl(di()));
   }
 
   static void _registerCubit(MonthlyDI di) {
@@ -57,7 +59,7 @@ abstract class RegisterDi {
       ..registerFactory<ListBillsCubit>(
         () => ListBillsCubit(getBillsByRangeUsecase: di()),
       )
-      ..registerFactory<BillCubit>(() => BillCubit(di(), di()))
+      ..registerFactory<BillCubit>(() => BillCubit(di(), di(), di()))
       ..registerFactory<DescriptionAutocompleteCubit>(
         () => DescriptionAutocompleteCubit(di()),
       );

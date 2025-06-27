@@ -32,4 +32,9 @@ class BillRepositoryImpl implements BillRepository {
 
     await database.saveAll(dbList);
   }
+
+  @override
+  Future<void> delete(int id, {bool deleteRecurring = false}) {
+    return database.delete(id, deleteRecurring: deleteRecurring);
+  }
 }

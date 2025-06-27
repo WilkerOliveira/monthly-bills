@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:monthly_common/notifications/monthly_snackbar.dart';
+import 'package:monthly_ui_components/components/notifications/monthly_snackbar.dart';
 
 class MockScaffoldMessengerState extends Mock
     implements ScaffoldMessengerState {

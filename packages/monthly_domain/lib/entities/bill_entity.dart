@@ -104,4 +104,6 @@ class BillEntity extends Equatable {
       DateTime(dueDate.year, dueDate.month, dueDate.day).isAfter(
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
       );
+
+  bool get isRecurring => recurrences != null && recurrences! > 0;
 }

@@ -83,28 +83,41 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
       ],
       child: BlocListener<BillCubit, BillState>(
         listener: (context, state) {
-          if (state is BillSavedState) {
-            _clearAll();
-            MonthlySnackBar.success(
-              context,
-              message: strings.billSavedSuccessfully,
-            );
-          } else if (state is BillError) {
-            MonthlySnackBar.error(
-              context,
-              message: strings.billSavedSuccessfully,
-            );
+          switch (state) {
+            case BillSavedState():
+              _clearAll();
+              context.read<DescriptionAutocompleteCubit>().clearSelection();
+              MonthlySnackBar.success(
+                context,
+                message: strings.billSavedSuccessfully,
+              );
+            case BillError():
+              MonthlySnackBar.error(
+                context,
+                message: strings.billSavedSuccessfully,
+              );
+            case BillDeleted():
+              _clearAll();
+              MonthlySnackBar.success(
+                context,
+                message: strings.billDeletedSuccessfully,
+              );
+            default:
+              break;
           }
         },
         child: Scaffold(
           appBar: AppBar(
             title: Text(strings.billTitle),
             actions: [
-              IconButton(
-                onPressed: () {
-                  context.read<BillCubit>().removeBill(_bill);
-                },
-                icon: const Icon(Icons.delete),
+              Builder(
+                builder:
+                    (BuildContext innerContext) => IconButton(
+                      onPressed: () {
+                        confirmDeleteBill(innerContext);
+                      },
+                      icon: const Icon(Icons.delete),
+                    ),
               ),
             ],
           ),
@@ -226,7 +239,7 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
                                 controller: _recurringMonthsController,
                                 decoration: InputDecoration(
                                   labelText: strings.recurringMonths,
-                                  suffixIcon: const Icon(Icons.refresh),
+                                  suffixIcon: const Icon(Icons.repeat),
                                 ),
                                 keyboardType: TextInputType.number,
                                 onSaved: (newValue) {
@@ -320,6 +333,36 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  void confirmDeleteBill(BuildContext innerContext) {
+    AppBottomSheetMessage.showChoice(
+      context: innerContext,
+      bottomSheetMessage: BottomSheetMessage(
+        title: strings.deleteBillTitle,
+        message:
+            _bill.isRecurring
+                ? strings.deleteBillRecurringMessage
+                : strings.deleteBillMessage,
+        onButtonPressed: () {
+          innerContext.read<BillCubit>().removeBill(
+            _bill,
+            removeRecurring: _bill.isRecurring,
+          );
+        },
+        onClosePressed: () {
+          if (_bill.isRecurring) {
+            innerContext.read<BillCubit>().removeBill(_bill);
+          }
+          AppBottomSheetMessage.closeBottomSheet(innerContext);
+        },
+        firstButtonLabel: strings.deleteBillConfirmButton,
+        secondButtonLabel:
+            _bill.isRecurring
+                ? strings.deleteOnlyCurrentBill
+                : strings.deleteBillCancelButton,
       ),
     );
   }

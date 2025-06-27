@@ -24,8 +24,15 @@ class RegisterStrings {
   String get requiredField => _tr('required_field');
   String get invalidDate => _tr('invalid_date');
   String get billSavedSuccessfully => _tr('bill_saved_successfully');
+  String get billDeletedSuccessfully => _tr('bill_deleted_successfully');
   String get errorSavingBill => _tr('error_saving_bill');
   String get isPaid => _tr('id_paid');
   String get recurringMonths => _tr('recurring_months');
   String get save => _tr('save');
+  String get deleteBillTitle => _tr('delete_bill_title');
+  String get deleteBillMessage => _tr('delete_bill_message');
+  String get deleteBillConfirmButton => _tr('delete_bill_confirm_button');
+  String get deleteBillCancelButton => _tr('delete_bill_cancel_button');
+  String get deleteOnlyCurrentBill => _tr('delete_only_current_bill');
+  String get deleteBillRecurringMessage => _tr('delete_bill_recurring_message');
 }

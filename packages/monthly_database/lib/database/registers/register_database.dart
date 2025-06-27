@@ -8,6 +8,7 @@ abstract class RegisterDatabase {
   Future<List<BillDbModel>> getByMonth(int month, int year);
   Future<List<BillDbModel>> getByRangeDate(DateTime begin, DateTime end);
   Future<List<String>> getAllDescriptions();
+  Future<void> delete(int id, {bool deleteRecurring = false});
 }
 
 class RegisterDatabaseImpl implements RegisterDatabase {
@@ -55,6 +56,26 @@ class RegisterDatabaseImpl implements RegisterDatabase {
   Future<List<int>> saveAll(List<BillDbModel> bills) async {
     return _isar.writeTxn(() async {
       return _isar.billDbModels.putAll(bills);
+    });
+  }
+
+  @override
+  Future<void> delete(int id, {bool deleteRecurring = false}) {
+    return _isar.writeTxn(() async {
+      if (deleteRecurring) {
+        final recurrences =
+            await _isar.billDbModels.filter().recurrenceIdEqualTo(id).findAll();
+
+        if (recurrences.isNotEmpty) {
+          await _isar.billDbModels.deleteAll(
+            recurrences.map((e) => e.id!).toList(),
+          );
+        }
+      }
+      final bill = await _isar.billDbModels.get(id);
+      if (bill != null) {
+        await _isar.billDbModels.delete(id);
+      }
     });
   }
 }

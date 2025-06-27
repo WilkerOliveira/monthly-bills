@@ -34,13 +34,21 @@ class BillCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      bill.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: mediumTextSize,
-                        color: AppColors.cardTitleColor,
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            bill.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: mediumTextSize,
+                              color: AppColors.cardTitleColor,
+                            ),
+                          ),
+                        ),
+                        if (bill.isRecurring)
+                          const Icon(Icons.repeat, color: AppColors.primary),
+                      ],
                     ),
                     SizedBox(height: vSpace6),
                     RichText(

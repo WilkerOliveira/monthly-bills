@@ -44,6 +44,7 @@ final buttonRadius = 10.r;
 final largeImage = 200.h;
 final mediumImage = 150.h;
 final navBarIconSize = 24.h;
+final closeIconSize = 30.h;
 
 //Progress Indicator
 final progressIndicatorSize = 80.h;

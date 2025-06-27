@@ -17,8 +17,15 @@
     "required_field": "Campo obrigatório",
     "invalid_date": "Data inváiida",
     "bill_saved_successfully": "Conta salva com sucesso!",
+    "bill_deleted_successfully": "Conta excluída com sucesso!",
     "error_saving_bill": "Desculpe, não foi possível salvar sua conta. Tente novamente!",
     "id_paid": "Pago?",
     "recurring_months": "Repita por (meses)",
-    "save": "Salvar"
+    "save": "Salvar",
+    "delete_bill_title": "Excluir Conta",
+    "delete_bill_message": "Tem certeza de que deseja excluir esta conta?",
+    "delete_bill_confirm_button": "Sim",
+    "delete_bill_cancel_button": "Não",
+    "delete_only_current_bill": "Apenas esta",
+    "delete_bill_recurring_message": "Esta conta é recorrente. Você deseja excluir todas as ocorrências?"
 }
