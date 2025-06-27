@@ -75,21 +75,6 @@ class BillEntity extends Equatable {
     );
   }
 
-  BillEntity newRecurrence({
-    required DateTime dueDate,
-    required int recurrenceId,
-  }) {
-    return BillEntity(
-      name: name,
-      category: category,
-      amount: amount,
-      dueDate: dueDate,
-      extraInfo: extraInfo,
-      paid: false,
-      recurrenceId: recurrenceId,
-    );
-  }
-
   bool get isDueDateExpiringToday =>
       DateTime(dueDate.year, dueDate.month, dueDate.day).compareTo(
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),

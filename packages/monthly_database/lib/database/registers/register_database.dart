@@ -3,7 +3,10 @@ import 'package:monthly_database/models/bill/bill_db_model.dart';
 
 abstract class RegisterDatabase {
   Future<int> saveBill(BillDbModel bill);
-  Future<List<int>> saveAll(List<BillDbModel> bills);
+  Future<List<int>> saveAll(
+    BillDbModel currentBill,
+    List<BillDbModel> recurrences,
+  );
   Future<BillDbModel?> getById(int id);
   Future<List<BillDbModel>> getByMonth(int month, int year);
   Future<List<BillDbModel>> getByRangeDate(DateTime begin, DateTime end);
@@ -53,8 +56,29 @@ class RegisterDatabaseImpl implements RegisterDatabase {
   }
 
   @override
-  Future<List<int>> saveAll(List<BillDbModel> bills) async {
+  Future<List<int>> saveAll(
+    BillDbModel currentBill,
+    List<BillDbModel> recurrences,
+  ) async {
     return _isar.writeTxn(() async {
+      final id = await _isar.billDbModels.put(currentBill);
+
+      if (currentBill.recurrences != null) {
+        final recurrencesToDelete =
+            await _isar.billDbModels.filter().recurrenceIdEqualTo(id).findAll();
+
+        if (recurrencesToDelete.isNotEmpty) {
+          await _isar.billDbModels.deleteAll(
+            recurrencesToDelete.map((e) => e.id!).toList(),
+          );
+        }
+      }
+
+      final bills =
+          recurrences.map((bill) {
+            return bill.copyWith(recurrenceId: id);
+          }).toList();
+
       return _isar.billDbModels.putAll(bills);
     });
   }

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:isar/isar.dart';
 
 part 'bill_db_model.g.dart';
@@ -31,4 +32,30 @@ class BillDbModel {
 
   @Index(composite: [CompositeIndex('dueDate', type: IndexType.value)])
   int get monthYear => dueDate.month + dueDate.year * 100;
+
+  BillDbModel copyWith({
+    Id? id,
+    String? name,
+    double? amount,
+    DateTime? dueDate,
+    String? extraInfo,
+    bool? paid,
+    DateTime? paymentDate,
+    String? category,
+    int? recurrences,
+    int? recurrenceId,
+  }) {
+    return BillDbModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      amount: amount ?? this.amount,
+      dueDate: dueDate ?? this.dueDate,
+      extraInfo: extraInfo ?? this.extraInfo,
+      paid: paid ?? this.paid,
+      paymentDate: paymentDate ?? this.paymentDate,
+      category: category ?? this.category,
+      recurrences: recurrences ?? this.recurrences,
+      recurrenceId: recurrenceId ?? this.recurrenceId,
+    );
+  }
 }

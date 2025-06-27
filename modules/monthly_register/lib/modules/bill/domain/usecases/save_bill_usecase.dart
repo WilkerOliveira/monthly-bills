@@ -1,3 +1,4 @@
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_register/modules/bill/domain/repository/bill_repository.dart';
@@ -14,24 +15,30 @@ class SaveBillUsecaseImpl implements SaveBillUsecase {
   @override
   Future<Result<bool>> call(BillEntity bill) async {
     try {
-      final billId = await repository.save(bill);
-      final bills = <BillEntity>[];
+      final recurrences = <BillEntity>[];
 
-      if (bill.recurrences != null) {
-        for (var i = 1; i >= bill.recurrences!; i++) {
-          bills.add(
-            bill.newRecurrence(
-              recurrenceId: billId,
-              dueDate: DateTime(
-                bill.dueDate.year,
-                bill.dueDate.month + i,
-                bill.dueDate.day,
-              ),
+      if (bill.recurrences != null && bill.recurrences! > 0) {
+        DateTime? nextDueDate;
+        for (var i = 1; i <= bill.recurrences!; i++) {
+          nextDueDate =
+              nextDueDate?.getNextMonth(bill.dueDate.day) ??
+              bill.dueDate.getNextMonth(bill.dueDate.day);
+
+          recurrences.add(
+            BillEntity(
+              name: bill.name,
+              category: bill.category,
+              amount: bill.amount,
+              extraInfo: bill.extraInfo,
+              paid: false,
+              dueDate: nextDueDate,
             ),
           );
         }
 
-        await repository.saveAll(bills);
+        await repository.saveAll(bill, recurrences);
+      } else {
+        await repository.save(bill);
       }
 
       return const Success(true);

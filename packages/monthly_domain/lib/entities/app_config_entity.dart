@@ -1,3 +1,4 @@
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 class AppConfigEntity extends Equatable {
@@ -34,11 +35,7 @@ class AppConfigEntity extends Equatable {
     final now = DateTime.now();
 
     if (endDay < startDay) {
-      if (now.month == 12) {
-        return DateTime(now.year + 1, 1, endDay);
-      } else {
-        return DateTime(now.year, now.month + 1, endDay);
-      }
+      return now.getNextMonth(endDay);
     }
 
     return DateTime(now.year, now.month, endDay);

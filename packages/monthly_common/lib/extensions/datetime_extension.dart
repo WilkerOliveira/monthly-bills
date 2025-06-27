@@ -15,4 +15,12 @@ extension DateTimeExtension on DateTime {
     }
     return DateFormat('MM/dd').format(this);
   }
+
+  DateTime getNextMonth(int day) {
+    if (month == 12) {
+      return DateTime(year + 1, 1, day);
+    } else {
+      return DateTime(year, month + 1, day);
+    }
+  }
 }

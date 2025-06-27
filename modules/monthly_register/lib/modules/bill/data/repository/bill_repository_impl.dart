@@ -26,11 +26,19 @@ class BillRepositoryImpl implements BillRepository {
   }
 
   @override
-  Future<void> saveAll(List<BillEntity> bills) async {
-    final dbList =
-        bills.map((bill) => BillModel.entityToModel(bill).toDbModel()).toList();
+  Future<void> saveAll(
+    BillEntity currentBill,
+    List<BillEntity> recurrences,
+  ) async {
+    final dbRecurrences =
+        recurrences
+            .map((bill) => BillModel.entityToModel(bill).toDbModel())
+            .toList();
 
-    await database.saveAll(dbList);
+    await database.saveAll(
+      BillModel.entityToModel(currentBill).toDbModel(),
+      dbRecurrences,
+    );
   }
 
   @override
