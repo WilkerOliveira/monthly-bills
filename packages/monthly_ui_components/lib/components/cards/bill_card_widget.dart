@@ -34,6 +34,14 @@ class BillCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Text(
+                      BillTypesEnum.toBillType(bill.category).description,
+                      style: TextStyle(
+                        fontSize: smallTextSize,
+                        color: AppColors.cardSubtTitleColor,
+                      ),
+                    ),
+                    SizedBox(height: vTinySpace),
                     Row(
                       children: [
                         Expanded(

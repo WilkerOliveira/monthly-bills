@@ -32,6 +32,7 @@ final largeTextSize = 20.sp;
 final mediumTextSize = 16.sp;
 final defaultFontSize = 14.sp;
 final bottomMenuFontSize = 12.sp;
+final smallTextSize = 12.sp;
 
 //Buttons
 final defaultButtonHeight = 24.h;
