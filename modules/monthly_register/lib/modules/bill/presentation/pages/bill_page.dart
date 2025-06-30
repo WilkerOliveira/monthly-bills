@@ -106,231 +106,239 @@ class _BillPageState extends State<BillPage> with FormValidationsMixin {
               break;
           }
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(strings.billTitle),
-            actions: [
-              Builder(
-                builder:
-                    (BuildContext innerContext) => IconButton(
-                      onPressed: () {
-                        confirmDeleteBill(innerContext);
-                      },
-                      icon: const Icon(Icons.delete),
-                    ),
-              ),
-            ],
-          ),
-          body: BlocBuilder<BillCubit, BillState>(
-            builder: (context, state) {
-              return BasePage(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              SizedBox(height: vNormalSpace),
-                              BillTypeDropdown(
-                                initialValue:
-                                    _bill.category.isNotEmpty
-                                        ? BillTypesEnum.toBillType(
-                                          _bill.category,
-                                        )
-                                        : null,
-                                onChanged: (BillTypesEnum? value) {
-                                  if (value != null) {
-                                    _bill = _bill.copyWith(category: value.key);
-                                  }
-                                },
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              DescriptionAutocompleteWidget(
-                                initialValue: _bill.name,
-                                labelText: strings.description,
-                                onSelected: (String value) {
-                                  _bill = _bill.copyWith(name: value);
-                                },
-                                validator:
-                                    (value) => validateRequiredField(
-                                      message: strings.requiredField,
-                                      value: value,
-                                    ),
-                                onSaved: (newValue) {
-                                  _bill = _bill.copyWith(name: newValue);
-                                },
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              TextFormField(
-                                key: const Key('amount'),
-                                controller: _amountController,
-                                decoration: InputDecoration(
-                                  labelText: strings.amount,
-                                  suffixIcon: const Icon(Icons.attach_money),
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(strings.billTitle),
+              actions: [
+                Builder(
+                  builder:
+                      (BuildContext innerContext) => IconButton(
+                        onPressed: () {
+                          confirmDeleteBill(innerContext);
+                        },
+                        icon: const Icon(Icons.delete),
+                      ),
+                ),
+              ],
+            ),
+            body: BlocBuilder<BillCubit, BillState>(
+              builder: (context, state) {
+                return BasePage(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                SizedBox(height: vNormalSpace),
+                                BillTypeDropdown(
+                                  initialValue:
+                                      _bill.category.isNotEmpty
+                                          ? BillTypesEnum.toBillType(
+                                            _bill.category,
+                                          )
+                                          : null,
+                                  onChanged: (BillTypesEnum? value) {
+                                    if (value != null) {
+                                      _bill = _bill.copyWith(
+                                        category: value.key,
+                                      );
+                                    }
+                                  },
                                 ),
-                                keyboardType: TextInputType.number,
-                                validator:
-                                    (value) => validateRequiredField(
-                                      message: strings.requiredField,
-                                      value: value,
-                                    ),
-                                onSaved: (newValue) {
-                                  _bill = _bill.copyWith(
-                                    amount: newValue?.parseCurrencyToDouble(
-                                      strings.locale,
-                                    ),
-                                  );
-                                },
-                                inputFormatters: [
-                                  currencyTextInputFormatter(strings.locale),
-                                ],
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              TextFormField(
-                                key: const Key('dueDate'),
-                                controller: _dueDateController,
-                                decoration: InputDecoration(
-                                  labelText: strings.dueDate,
-                                  suffixIcon: GestureDetector(
-                                    onTap:
-                                        () => _openCalendar(_dueDateController),
-                                    child: const Icon(Icons.today),
-                                  ),
-                                ),
-                                keyboardType: TextInputType.number,
-                                validator:
-                                    (value) => validateDateField(
-                                      locale: strings.locale,
-                                      requiredFieldMessage:
-                                          strings.requiredField,
-                                      invalidDateMessage: strings.invalidDate,
-                                      required: true,
-                                      value: value,
-                                    ),
-                                onSaved: (newValue) {
-                                  _bill = _bill.copyWith(
-                                    dueDate: newValue?.parseToDateTime(
-                                      strings.locale,
-                                    ),
-                                  );
-                                },
-                                inputFormatters: [
-                                  DateInputFormatter(locale: strings.locale),
-                                ],
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              TextFormField(
-                                key: const Key('extraInfo'),
-                                controller: _extraInfoController,
-                                maxLines: 5,
-                                decoration: InputDecoration(
-                                  labelText: strings.extraInfo,
-                                  suffixIcon: const Icon(Icons.notes),
-                                ),
-                                onSaved: (newValue) {
-                                  _bill = _bill.copyWith(extraInfo: newValue);
-                                },
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              TextFormField(
-                                key: const Key('recurringMonths'),
-                                controller: _recurringMonthsController,
-                                decoration: InputDecoration(
-                                  labelText: strings.recurringMonths,
-                                  suffixIcon: const Icon(Icons.repeat),
-                                ),
-                                keyboardType: TextInputType.number,
-                                onSaved: (newValue) {
-                                  if (newValue != null && newValue.isNotEmpty) {
-                                    _bill = _bill.copyWith(
-                                      recurrences: int.parse(newValue),
-                                    );
-                                  }
-                                },
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
-                              ),
-                              SizedBox(height: vSmallSpace),
-                              Row(
-                                children: [
-                                  Text(strings.isPaid),
-                                  Checkbox(
-                                    key: const Key('isPaid'),
-                                    value: _isPaid,
-                                    onChanged: (bool? checked) {
-                                      setState(() {
-                                        _isPaid = checked ?? false;
-                                        _bill = _bill.copyWith(
-                                          paid: checked ?? false,
-                                        );
-                                      });
-                                    },
-                                  ),
-                                  Expanded(
-                                    child: TextFormField(
-                                      key: const Key('paymentDate'),
-                                      controller: _paymentController,
-                                      decoration: InputDecoration(
-                                        labelText: strings.paymentDate,
-                                        suffixIcon: GestureDetector(
-                                          onTap:
-                                              () => _openCalendar(
-                                                _paymentController,
-                                              ),
-                                          child: const Icon(
-                                            Icons.event_available,
-                                          ),
-                                        ),
+                                SizedBox(height: vSmallSpace),
+                                DescriptionAutocompleteWidget(
+                                  initialValue: _bill.name,
+                                  labelText: strings.description,
+                                  onSelected: (String value) {
+                                    _bill = _bill.copyWith(name: value);
+                                  },
+                                  validator:
+                                      (value) => validateRequiredField(
+                                        message: strings.requiredField,
+                                        value: value,
                                       ),
-                                      keyboardType: TextInputType.number,
-                                      validator:
-                                          (value) => validateDateField(
-                                            locale: strings.locale,
-                                            requiredFieldMessage:
-                                                strings.requiredField,
-                                            invalidDateMessage:
-                                                strings.invalidDate,
-                                            required: false,
-                                            value: value,
-                                          ),
-                                      onSaved: (newValue) {
-                                        _bill = _bill.copyWith(
-                                          paymentDate: newValue
-                                              ?.parseToDateTime(strings.locale),
-                                        );
-                                      },
-                                      inputFormatters: [
-                                        DateInputFormatter(
-                                          locale: strings.locale,
-                                        ),
-                                      ],
+                                  onSaved: (newValue) {
+                                    _bill = _bill.copyWith(name: newValue);
+                                  },
+                                ),
+                                SizedBox(height: vSmallSpace),
+                                TextFormField(
+                                  key: const Key('amount'),
+                                  controller: _amountController,
+                                  decoration: InputDecoration(
+                                    labelText: strings.amount,
+                                    suffixIcon: const Icon(Icons.attach_money),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  validator:
+                                      (value) => validateRequiredField(
+                                        message: strings.requiredField,
+                                        value: value,
+                                      ),
+                                  onSaved: (newValue) {
+                                    _bill = _bill.copyWith(
+                                      amount: newValue?.parseCurrencyToDouble(
+                                        strings.locale,
+                                      ),
+                                    );
+                                  },
+                                  inputFormatters: [
+                                    currencyTextInputFormatter(strings.locale),
+                                  ],
+                                ),
+                                SizedBox(height: vSmallSpace),
+                                TextFormField(
+                                  key: const Key('dueDate'),
+                                  controller: _dueDateController,
+                                  decoration: InputDecoration(
+                                    labelText: strings.dueDate,
+                                    suffixIcon: GestureDetector(
+                                      onTap:
+                                          () =>
+                                              _openCalendar(_dueDateController),
+                                      child: const Icon(Icons.today),
                                     ),
                                   ),
-                                ],
-                              ),
+                                  keyboardType: TextInputType.number,
+                                  validator:
+                                      (value) => validateDateField(
+                                        locale: strings.locale,
+                                        requiredFieldMessage:
+                                            strings.requiredField,
+                                        invalidDateMessage: strings.invalidDate,
+                                        required: true,
+                                        value: value,
+                                      ),
+                                  onSaved: (newValue) {
+                                    _bill = _bill.copyWith(
+                                      dueDate: newValue?.parseToDateTime(
+                                        strings.locale,
+                                      ),
+                                    );
+                                  },
+                                  inputFormatters: [
+                                    DateInputFormatter(locale: strings.locale),
+                                  ],
+                                ),
+                                SizedBox(height: vSmallSpace),
+                                TextFormField(
+                                  key: const Key('extraInfo'),
+                                  controller: _extraInfoController,
+                                  maxLines: 5,
+                                  decoration: InputDecoration(
+                                    labelText: strings.extraInfo,
+                                    suffixIcon: const Icon(Icons.notes),
+                                  ),
+                                  onSaved: (newValue) {
+                                    _bill = _bill.copyWith(extraInfo: newValue);
+                                  },
+                                ),
+                                SizedBox(height: vSmallSpace),
+                                TextFormField(
+                                  key: const Key('recurringMonths'),
+                                  controller: _recurringMonthsController,
+                                  decoration: InputDecoration(
+                                    labelText: strings.recurringMonths,
+                                    suffixIcon: const Icon(Icons.repeat),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  onSaved: (newValue) {
+                                    if (newValue != null &&
+                                        newValue.isNotEmpty) {
+                                      _bill = _bill.copyWith(
+                                        recurrences: int.parse(newValue),
+                                      );
+                                    }
+                                  },
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                  ],
+                                ),
+                                SizedBox(height: vSmallSpace),
+                                Row(
+                                  children: [
+                                    Text(strings.isPaid),
+                                    Checkbox(
+                                      key: const Key('isPaid'),
+                                      value: _isPaid,
+                                      onChanged: (bool? checked) {
+                                        setState(() {
+                                          _isPaid = checked ?? false;
+                                          _bill = _bill.copyWith(
+                                            paid: checked ?? false,
+                                          );
+                                        });
+                                      },
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        key: const Key('paymentDate'),
+                                        controller: _paymentController,
+                                        decoration: InputDecoration(
+                                          labelText: strings.paymentDate,
+                                          suffixIcon: GestureDetector(
+                                            onTap:
+                                                () => _openCalendar(
+                                                  _paymentController,
+                                                ),
+                                            child: const Icon(
+                                              Icons.event_available,
+                                            ),
+                                          ),
+                                        ),
+                                        keyboardType: TextInputType.number,
+                                        validator:
+                                            (value) => validateDateField(
+                                              locale: strings.locale,
+                                              requiredFieldMessage:
+                                                  strings.requiredField,
+                                              invalidDateMessage:
+                                                  strings.invalidDate,
+                                              required: false,
+                                              value: value,
+                                            ),
+                                        onSaved: (newValue) {
+                                          _bill = _bill.copyWith(
+                                            paymentDate: newValue
+                                                ?.parseToDateTime(
+                                                  strings.locale,
+                                                ),
+                                          );
+                                        },
+                                        inputFormatters: [
+                                          DateInputFormatter(
+                                            locale: strings.locale,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                              SizedBox(height: vNormalSpace),
-                            ],
+                                SizedBox(height: vNormalSpace),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    SimpleButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _formKey.currentState?.save();
-                          context.read<BillCubit>().saveBill(_bill);
-                        }
-                      },
-                      label: strings.save,
-                    ),
-                  ],
-                ),
-              );
-            },
+                      SimpleButton(
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            _formKey.currentState?.save();
+                            context.read<BillCubit>().saveBill(_bill);
+                          }
+                        },
+                        label: strings.save,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

@@ -31,6 +31,7 @@ final subTitleTextSize = 18.sp;
 final largeTextSize = 20.sp;
 final mediumTextSize = 16.sp;
 final defaultFontSize = 14.sp;
+final bottomMenuFontSize = 12.sp;
 
 //Buttons
 final defaultButtonHeight = 24.h;
@@ -43,7 +44,7 @@ final buttonRadius = 10.r;
 //Icons/Images
 final largeImage = 200.h;
 final mediumImage = 150.h;
-final navBarIconSize = 24.h;
+final navBarIconSize = 20.h;
 final closeIconSize = 30.h;
 
 //Progress Indicator

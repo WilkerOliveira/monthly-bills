@@ -6,6 +6,7 @@ import 'package:monthly_home/monthly_home.dart';
 import 'package:monthly_login/monthly_login.dart';
 import 'package:monthly_profile/monthly_profile.dart';
 import 'package:monthly_register/monthly_register.dart';
+import 'package:monthly_report/monthly_report.dart';
 
 class MainDI {
   static void setup() {
@@ -15,6 +16,7 @@ class MainDI {
     RegisterDi.setup(MonthlyDI.I);
     HomeDI.setup(MonthlyDI.I);
     ProfileDI.setup(MonthlyDI.I);
+    ReportDI.setup(MonthlyDI.I);
   }
 
   static void _registerExternal(MonthlyDI di) {

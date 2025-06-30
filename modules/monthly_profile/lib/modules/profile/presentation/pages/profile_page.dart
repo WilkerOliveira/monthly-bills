@@ -40,9 +40,9 @@ class _ProfilePageState extends State<ProfilePage> with FormValidationsMixin {
         appBar: AppBar(
           title: Text(strings.profileTitle),
           actions: [
-            GestureDetector(
-              child: const Icon(Icons.save),
-              onTap: () {
+            IconButton(
+              icon: const Icon(Icons.save),
+              onPressed: () {
                 _cubit.save(_appConfigEntity);
               },
             ),

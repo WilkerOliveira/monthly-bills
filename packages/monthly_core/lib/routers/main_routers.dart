@@ -63,7 +63,8 @@ final GoRouter routes = GoRouter(
             GoRoute(
               path: MainRoutes.monthlyReport,
               pageBuilder:
-                  (context, state) => const NoTransitionPage(child: HomePage()),
+                  (context, state) =>
+                      const NoTransitionPage(child: ReportPage()),
             ),
           ],
         ),

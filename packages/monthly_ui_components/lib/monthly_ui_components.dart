@@ -1,6 +1,7 @@
 export 'package:monthly_ui_components/components/bottomNavBar/bottom_nav_item.dart';
 export 'package:monthly_ui_components/components/buttons/custom_icon_button.dart';
 export 'package:monthly_ui_components/components/buttons/simple_button.dart';
+export 'package:monthly_ui_components/components/cards/base_card_widget.dart';
 export 'package:monthly_ui_components/components/cards/bill_card_widget.dart';
 export 'package:monthly_ui_components/components/date_picker/date_picker.dart';
 export 'package:monthly_ui_components/components/dropdowm/bill_type_dropdown.dart';

@@ -4,6 +4,7 @@ import 'package:monthly_home/monthly_home.dart';
 import 'package:monthly_login/monthly_login.dart';
 import 'package:monthly_profile/monthly_profile.dart';
 import 'package:monthly_register/monthly_register.dart';
+import 'package:monthly_report/monthly_report.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 MultiAssetLoader get multiAssetLoader {
@@ -14,5 +15,6 @@ MultiAssetLoader get multiAssetLoader {
     RegisterTranslateLoader(),
     UITranslateLoader(),
     ProfileTranslateLoader(),
+    ReportTranslateLoader(),
   ]);
 }

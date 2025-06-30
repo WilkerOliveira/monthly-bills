@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
-import 'package:monthly_report/modules/monthly/presentation/pages/monthly_page.dart';
-
-abstract class ReportRoutersPath {
-  static const monthlyReport = '/monthlyReport';
-}
+import 'package:monthly_report/modules/monthly/presentation/pages/report_page.dart';
 
 final List<RouteBase> reportRoutes = <RouteBase>[
   GoRoute(
-    path: ReportRoutersPath.monthlyReport,
+    path: MainRoutes.monthlyReport,
     builder: (BuildContext context, GoRouterState state) {
-      return const MonthlyPage();
+      return const ReportPage();
     },
   ),
 ];
