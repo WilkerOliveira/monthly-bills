@@ -14,4 +14,8 @@ class ReportStrings {
   String get consolidatedReport => _tr('consolidated_report');
   String get reportByDescription => _tr('report_by_description');
   String get reportByMonthTitle => _tr('report_by_month_title');
+  String get totalBills => _tr('total_bills');
+  String get paidBills => _tr('paid_bills');
+  String get pendingBills => _tr('pending_bills');
+  String get billsOverdue => _tr('bills_overdue');
 }

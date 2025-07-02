@@ -6,5 +6,9 @@
     "report_by_year": "By\n Year",
     "consolidated_report": "Consolided",
     "report_by_description": "By\n Description",
-    "report_by_month_title": "By Month"
+    "report_by_month_title": "By Month",
+    "total_bills": "Total Bills",
+    "paid_bills": "Paid Bills",
+    "pending_bills": "Pending Bills",
+    "bills_overdue": "Overdue Bills"
 }

@@ -136,7 +136,7 @@ class SimpleModal extends StatelessWidget {
                   child: Icon(
                     Icons.close_rounded,
                     color: AppColors.primaryDark,
-                    size: closeIconSize,
+                    size: defaultIconSize,
                   ),
                 ),
               ],

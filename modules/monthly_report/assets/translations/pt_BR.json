@@ -6,5 +6,9 @@
     "report_by_year": "Por\n Ano",
     "consolidated_report": "Consolidado",
     "report_by_description": "Por\n Descrição",
-    "report_by_month_title": "Por Mês"
+    "report_by_month_title": "Por Mês",
+    "total_bills": "Total de Contas",
+    "pading_bills": "Contas Pagas",
+    "pending_bills": "Contas Pendentes",
+    "bills_overdue": "Contas Vencidas"
 }
