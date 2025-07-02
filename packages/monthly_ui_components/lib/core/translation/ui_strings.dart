@@ -54,4 +54,6 @@ class UIStrings {
   String get creditCard => _tr('creditCard');
   String get dueDate => _tr('due_date');
   String get dayOfMonth => _tr('day_of_month');
+  String get errorMessage => _tr('error_message');
+  String get loadingMessage => _tr('loading');
 }

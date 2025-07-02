@@ -42,5 +42,7 @@
     "other": "Other",
     "creditCard": "Credit card",
     "due_date": "Due date",
-    "day_of_month": "Day of the Month"
+    "day_of_month": "Day of the Month",
+    "error_message": "Something went wrong!",
+    "loading": "Waiting, loading data..."
 }

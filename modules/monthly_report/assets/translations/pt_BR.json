@@ -1,4 +1,10 @@
 {    
     "locale": "pt_BR",
-    "report_title": "Relatorios"    
+    "report_title": "Relatorios",
+    "report_by_category": "Por\n Categoria",
+    "report_by_month": "Por\n Mês",
+    "report_by_year": "Por\n Ano",
+    "consolidated_report": "Consolidado",
+    "report_by_description": "Por\n Descrição",
+    "report_by_month_title": "Por Mês"
 }

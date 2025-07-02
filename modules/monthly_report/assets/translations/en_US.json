@@ -1,4 +1,10 @@
 {   
     "locale": "en_US",
-    "report_title": "Reports"    
+    "report_title": "Reports",
+    "report_by_category": "By\n Category",
+    "report_by_month": "By\n Month",
+    "report_by_year": "By\n Year",
+    "consolidated_report": "Consolided",
+    "report_by_description": "By\n Description",
+    "report_by_month_title": "By Month"
 }

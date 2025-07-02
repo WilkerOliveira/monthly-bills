@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_ui_components/core/translation/ui_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class LoadingStateWidget extends StatelessWidget {
@@ -17,7 +18,7 @@ class LoadingStateWidget extends StatelessWidget {
         ),
         SizedBox(height: vMediumSpace),
         Text(
-          message ?? '',
+          message ?? UIStrings.I.loadingMessage,
           style: TextStyle(
             fontSize: subTitleTextSize,
             fontWeight: FontWeight.w500,

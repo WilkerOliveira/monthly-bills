@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_ui_components/core/translation/ui_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class ErrorStateWidget extends StatefulWidget {
@@ -45,7 +46,7 @@ class _ErrorStateWidgetState extends State<ErrorStateWidget>
         ),
         SizedBox(height: vNormalSpace),
         Text(
-          widget.message ?? '',
+          widget.message ?? UIStrings.I.errorMessage,
           style: TextStyle(
             fontSize: subTitleTextSize,
             color: Colors.red.shade300,

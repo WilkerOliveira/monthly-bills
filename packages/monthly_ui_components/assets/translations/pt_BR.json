@@ -42,5 +42,7 @@
     "other": "Outros",
     "creditCard": "Cartão de crédito",
     "due_date": "Vencimento",
-    "day_of_month": "Dia do mês"
+    "day_of_month": "Dia do mês",
+    "error_message": "Algo deu errado!",
+    "loading": "Aguarde, carregando dados..."
 }

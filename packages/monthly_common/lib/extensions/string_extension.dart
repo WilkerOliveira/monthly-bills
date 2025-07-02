@@ -1,4 +1,4 @@
-import 'package:monthly_common/helpers/constants/app_constants.dart';
+import 'package:monthly_common/utils/constants/app_constants.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 
 extension StringExtension on String {
@@ -58,5 +58,9 @@ extension StringExtension on String {
     } on Exception {
       return null;
     }
+  }
+
+  String capitalize() {
+    return '${this[0].toUpperCase()}${substring(1)}';
   }
 }
