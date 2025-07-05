@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class ByMonthSummaryItem extends StatelessWidget {
   const ByMonthSummaryItem({
@@ -6,6 +8,7 @@ class ByMonthSummaryItem extends StatelessWidget {
     required this.label,
     required this.value,
     required this.color,
+    required this.locale,
     super.key,
   });
 
@@ -13,20 +16,24 @@ class ByMonthSummaryItem extends StatelessWidget {
   final String label;
   final double value;
   final Color color;
+  final String locale;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Icon(icon, color: color, size: 30),
-        const SizedBox(height: 4),
+        Icon(icon, color: color, size: defaultIconSize),
+        SizedBox(height: vSpace4),
         Text(
           label,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontSize: defaultFontSize,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: vSpace4),
         Text(
-          'R\$ ${value.toStringAsFixed(2)}',
+          value.formatToCurrency(locale),
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,

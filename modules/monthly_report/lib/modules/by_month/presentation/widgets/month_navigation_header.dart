@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
+import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class MonthNavigationHeader extends StatelessWidget {
   const MonthNavigationHeader({
@@ -18,8 +19,11 @@ class MonthNavigationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-      color: Theme.of(context).primaryColor.withValues(alpha: 0.05),
+      padding: EdgeInsets.symmetric(
+        vertical: vSmallSpace,
+        horizontal: hTinySpace,
+      ),
+      color: AppColors.primary.withValues(alpha: 0.05),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
