@@ -10,5 +10,7 @@
     "total_bills": "Total de Contas",
     "pading_bills": "Contas Pagas",
     "pending_bills": "Contas Pendentes",
-    "bills_overdue": "Contas Vencidas"
+    "bills_overdue": "Contas Vencidas",
+    "no_bills_found": "Nenhuma conta encontrada!",
+    "due_date": "Vencimento"
 }

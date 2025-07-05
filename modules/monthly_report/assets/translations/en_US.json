@@ -10,5 +10,7 @@
     "total_bills": "Total Bills",
     "paid_bills": "Paid Bills",
     "pending_bills": "Pending Bills",
-    "bills_overdue": "Overdue Bills"
+    "bills_overdue": "Overdue Bills",
+    "no_bills_found": "No Bills found!",
+    "due_date": "Due date"
 }

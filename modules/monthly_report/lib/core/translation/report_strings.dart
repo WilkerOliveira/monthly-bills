@@ -18,4 +18,6 @@ class ReportStrings {
   String get paidBills => _tr('paid_bills');
   String get pendingBills => _tr('pending_bills');
   String get billsOverdue => _tr('bills_overdue');
+  String get noBillsFound => _tr('no_bills_found');
+  String get dueDate => _tr('due_date');
 }

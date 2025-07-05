@@ -97,6 +97,12 @@ class _ByMonthReportPageState extends State<ByMonthReportPage> {
                         _currentReportDate.month == pageDate.month &&
                         _currentReportDate.year == pageDate.year) {
                       return const Center(child: ErrorStateWidget());
+                    } else if (state is ByMonthEmptyState &&
+                        _currentReportDate.month == pageDate.month &&
+                        _currentReportDate.year == pageDate.year) {
+                      return Center(
+                        child: EmptyStateWidget(title: strings.noBillsFound),
+                      );
                     } else {
                       return const Center(child: LoadingStateWidget());
                     }
