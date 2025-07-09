@@ -88,6 +88,7 @@ class _ByMonthReportPageState extends State<ByMonthReportPage> {
                       return ByMonthContent(
                         report: state.monthlyReport,
                         strings: strings,
+                        cubit: _byMonthCubit,
                       );
                     } else if (state is ByMonthLoadingState &&
                         _currentReportDate.month == pageDate.month &&

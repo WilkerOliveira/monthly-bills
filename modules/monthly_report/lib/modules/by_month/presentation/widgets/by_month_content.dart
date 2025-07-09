@@ -3,6 +3,8 @@ import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
 import 'package:monthly_report/modules/by_month/domain/entities/monthly_report_entity.dart';
+import 'package:monthly_report/modules/by_month/presentation/cubit/by_month_cubit.dart';
+import 'package:monthly_report/modules/by_month/presentation/widgets/bill_detail_widget.dart';
 import 'package:monthly_report/modules/by_month/presentation/widgets/by_month_detail_section.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
@@ -10,10 +12,12 @@ class ByMonthContent extends StatelessWidget {
   const ByMonthContent({
     required this.report,
     required this.strings,
+    required this.cubit,
     super.key,
   });
   final MonthlyReportEntity report;
   final ReportStrings strings;
+  final ByMonthCubit cubit;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -61,16 +65,10 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.green.shade700,
             locale: strings.locale,
             onTap: () {
-              _showBillDetails(
-                context,
-                strings.paidBills,
-                report.month,
-                report.year,
-                true,
-                false,
-                report.bills,
-                strings,
-              );
+              final list = cubit.filterPaidBills(report.bills);
+              if (list.isNotEmpty) {
+                _showBillDetails(context, strings.paidBills, list);
+              }
             },
           ),
           const SizedBox(height: 12),
@@ -81,16 +79,10 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.orange.shade700,
             locale: strings.locale,
             onTap: () {
-              _showBillDetails(
-                context,
-                strings.pendingBills,
-                report.month,
-                report.year,
-                false,
-                false,
-                report.bills,
-                strings,
-              );
+              final list = cubit.filterPendingBills(report.bills);
+              if (list.isNotEmpty) {
+                _showBillDetails(context, strings.pendingBills, list);
+              }
             },
           ),
           const SizedBox(height: 12),
@@ -101,16 +93,10 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.red.shade700,
             locale: strings.locale,
             onTap: () {
-              _showBillDetails(
-                context,
-                strings.billsOverdue,
-                report.month,
-                report.year,
-                false,
-                true,
-                report.bills,
-                strings,
-              );
+              final list = cubit.filterOverdueBills(report.bills);
+              if (list.isNotEmpty) {
+                _showBillDetails(context, strings.billsOverdue, list);
+              }
             },
           ),
         ],
@@ -121,74 +107,16 @@ class ByMonthContent extends StatelessWidget {
   void _showBillDetails(
     BuildContext context,
     String title,
-    int month,
-    int year,
-    bool paid,
-    bool overdue,
     List<BillEntity> bills,
-    ReportStrings strings,
   ) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        return DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          minChildSize: 0.3,
-          maxChildSize: 0.95,
-          expand: false,
-          builder: (_, scrollController) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: bills.length,
-                    itemBuilder: (context, index) {
-                      final bill = bills[index];
-                      return ListTile(
-                        leading: Icon(
-                          bill.paid
-                              ? Icons.check_circle
-                              : (bill.isDueDateExpired
-                                  ? Icons.warning
-                                  : Icons.access_time),
-                          color:
-                              bill.paid
-                                  ? Colors.green
-                                  : (bill.isDueDateExpired
-                                      ? Colors.red
-                                      : Colors.orange),
-                        ),
-                        title: Text(bill.name),
-                        subtitle: Text(
-                          '${bill.category} - ${strings.dueDate}: ${bill.dueDate.toLocaleDateFormat(strings.locale)}',
-                        ),
-                        trailing: Text(
-                          'R\$ ${bill.amount.toStringAsFixed(2)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: bill.paid ? Colors.green : Colors.red,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          },
-        );
+        return BillDetailWidget(bills: bills, title: title);
       },
     );
   }
