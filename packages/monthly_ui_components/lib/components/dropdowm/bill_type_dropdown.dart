@@ -23,11 +23,11 @@ class _BillTypeDropdownState extends State<BillTypeDropdown> {
   @override
   void initState() {
     super.initState();
-    _selectedBillType = widget.initialValue;
   }
 
   @override
   Widget build(BuildContext context) {
+    _selectedBillType = widget.initialValue;
     return DropdownButtonFormField<BillTypesEnum>(
       key: const Key('billType'),
       value: _selectedBillType,

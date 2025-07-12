@@ -46,12 +46,11 @@ extension StringExtension on String {
   }
 
   DateTime? parseToDateTime(String locale) {
-    DateFormat? dateFormat;
+    DateFormat? dateFormat = DateFormat(usDateFormat);
 
     if (locale == 'pt_BR') {
       dateFormat = DateFormat(brDateFormat);
     }
-    dateFormat = DateFormat(usDateFormat);
 
     try {
       return dateFormat.parseStrict(this);
