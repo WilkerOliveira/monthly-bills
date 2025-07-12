@@ -39,13 +39,12 @@ class MonthlyReportEntity extends Equatable {
       if (bill.paid) {
         totalPaid += bill.amount;
         totalPaidBills++;
-      } else {
+      } else if (bill.isFutureDueDate || bill.isDueDateExpiringToday) {
         totalPending += bill.amount;
         totalPendingBills++;
-        if (bill.isDueDateExpired) {
-          totalOverdue += bill.amount;
-          totalOverdueBills++;
-        }
+      } else {
+        totalOverdue += bill.amount;
+        totalOverdueBills++;
       }
     }
 

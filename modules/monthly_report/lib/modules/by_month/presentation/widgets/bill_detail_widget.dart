@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
@@ -33,7 +35,13 @@ class BillDetailWidget extends StatelessWidget {
                 itemCount: bills.length,
                 itemBuilder: (context, index) {
                   final bill = bills[index];
-                  return BillCard(bill: bill, onTap: () {});
+                  return BillCard(
+                    bill: bill,
+                    onTap: () {
+                      context.push(MainRoutes.newBill, extra: bills[index]);
+                      Navigator.of(context).pop();
+                    },
+                  );
                 },
               ),
             ),

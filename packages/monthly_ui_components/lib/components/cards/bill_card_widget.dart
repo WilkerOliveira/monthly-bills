@@ -41,7 +41,6 @@ class BillCard extends StatelessWidget {
                         color: AppColors.cardSubtTitleColor,
                       ),
                     ),
-                    SizedBox(height: vTinySpace),
                     Row(
                       children: [
                         Expanded(
@@ -78,7 +77,7 @@ class BillCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: vTinySpace),
+                    SizedBox(height: vSpace6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -88,7 +87,7 @@ class BillCard extends StatelessWidget {
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: largeTextSize,
+                              fontSize: subTitleTextSize,
                               color: AppColors.highlightedCardColor,
                             ),
                           ),

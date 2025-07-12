@@ -28,13 +28,13 @@ final vSpace4 = 4.h;
 final defaultBottomSpace = 50.h;
 
 //Text size
-final titleTextSize = 26.sp;
-final subTitleTextSize = 18.sp;
-final largeTextSize = 20.sp;
-final mediumTextSize = 16.sp;
-final defaultFontSize = 14.sp;
+final titleTextSize = 20.sp;
+final subTitleTextSize = 16.sp;
+final largeTextSize = 18.sp;
+final mediumTextSize = 14.sp;
+final defaultFontSize = 12.sp;
 final bottomMenuFontSize = 12.sp;
-final smallTextSize = 12.sp;
+final smallTextSize = 10.sp;
 
 //Buttons
 final defaultButtonHeight = 24.h;

@@ -18,8 +18,8 @@ class SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: hNormalSpace,
-        vertical: vNormalSpace,
+        horizontal: hSmallSpace,
+        vertical: hSmallSpace,
       ),
       decoration: BoxDecoration(
         color: color.withValues(alpha: .2),
@@ -30,13 +30,13 @@ class SummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color),
-          SizedBox(height: vTinySpace),
+          SizedBox(height: vSpace6),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
               value,
               style: TextStyle(
-                fontSize: largeTextSize,
+                fontSize: subTitleTextSize,
                 fontWeight: FontWeight.bold,
                 color: color,
               ),

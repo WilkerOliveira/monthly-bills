@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
+import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_domain/monthly_domain.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
 import 'package:monthly_report/modules/by_month/domain/entities/monthly_report_entity.dart';
@@ -12,12 +13,11 @@ class ByMonthContent extends StatelessWidget {
   const ByMonthContent({
     required this.report,
     required this.strings,
-    required this.cubit,
     super.key,
   });
   final MonthlyReportEntity report;
   final ReportStrings strings;
-  final ByMonthCubit cubit;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -65,7 +65,9 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.green.shade700,
             locale: strings.locale,
             onTap: () {
-              final list = cubit.filterPaidBills(report.bills);
+              final list = context.read<ByMonthCubit>().filterPaidBills(
+                report.bills,
+              );
               if (list.isNotEmpty) {
                 _showBillDetails(context, strings.paidBills, list);
               }
@@ -79,7 +81,9 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.orange.shade700,
             locale: strings.locale,
             onTap: () {
-              final list = cubit.filterPendingBills(report.bills);
+              final list = context.read<ByMonthCubit>().filterPendingBills(
+                report.bills,
+              );
               if (list.isNotEmpty) {
                 _showBillDetails(context, strings.pendingBills, list);
               }
@@ -93,7 +97,9 @@ class ByMonthContent extends StatelessWidget {
             color: Colors.red.shade700,
             locale: strings.locale,
             onTap: () {
-              final list = cubit.filterOverdueBills(report.bills);
+              final list = context.read<ByMonthCubit>().filterOverdueBills(
+                report.bills,
+              );
               if (list.isNotEmpty) {
                 _showBillDetails(context, strings.billsOverdue, list);
               }
