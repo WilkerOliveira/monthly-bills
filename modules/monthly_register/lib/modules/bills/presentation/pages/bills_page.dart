@@ -31,6 +31,7 @@ class _BillsPageState extends State<BillsPage> {
     filterWidgetCubit = MonthlyDI.I.get<FilterWidgetCubit>();
     listBillsCubit = MonthlyDI.I.get<ListBillsCubit>();
     _loadConfigs();
+    _listenEvents();
   }
 
   Future<void> _loadConfigs() async {
@@ -46,6 +47,12 @@ class _BillsPageState extends State<BillsPage> {
     filterWidgetCubit.close();
     listBillsCubit.close();
     super.dispose();
+  }
+
+  void _listenEvents() {
+    MonthlyDI.I.get<MonthlyEventBus>().on<BillEvent>().listen((event) {
+      listBillsCubit.fetchBills(inititalDate!, finalDate!);
+    });
   }
 
   @override

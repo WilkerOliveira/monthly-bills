@@ -34,8 +34,8 @@ class RegisterDatabaseImpl implements RegisterDatabase {
   @override
   Future<List<BillDbModel>> getByMonth(int month, int year) async {
     return _isar.billDbModels
-        .where()
-        .monthYearDueDateEqualTo(year * 100 + month, DateTime(year, month))
+        .filter()
+        .monthYearEqualTo(year * 100 + month)
         .findAll();
   }
 
