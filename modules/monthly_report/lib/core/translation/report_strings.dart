@@ -20,4 +20,5 @@ class ReportStrings {
   String get billsOverdue => _tr('bills_overdue');
   String get noBillsFound => _tr('no_bills_found');
   String get dueDate => _tr('due_date');
+  String get reportByYearTitle => _tr('report_by_year_title');
 }

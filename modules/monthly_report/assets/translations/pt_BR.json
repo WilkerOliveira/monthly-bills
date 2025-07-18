@@ -12,5 +12,6 @@
     "pending_bills": "Contas Pendentes",
     "bills_overdue": "Contas Vencidas",
     "no_bills_found": "Nenhuma conta encontrada!",
-    "due_date": "Vencimento"
+    "due_date": "Vencimento",
+    "report_by_year_title": "Ano"
 }

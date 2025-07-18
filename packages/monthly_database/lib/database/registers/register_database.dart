@@ -9,6 +9,7 @@ abstract class RegisterDatabase {
   );
   Future<BillDbModel?> getById(int id);
   Future<List<BillDbModel>> getByMonth(int month, int year);
+  Future<List<BillDbModel>> getByYear(int year);
   Future<List<BillDbModel>> getByRangeDate(DateTime begin, DateTime end);
   Future<List<String>> getAllDescriptions();
   Future<void> delete(int id, {bool deleteRecurring = false});
@@ -36,6 +37,14 @@ class RegisterDatabaseImpl implements RegisterDatabase {
     return _isar.billDbModels
         .filter()
         .monthYearEqualTo(year * 100 + month)
+        .findAll();
+  }
+
+  @override
+  Future<List<BillDbModel>> getByYear(int year) async {
+    return _isar.billDbModels
+        .filter()
+        .monthYearBetween(year * 100 + 1, year * 100 + 12)
         .findAll();
   }
 

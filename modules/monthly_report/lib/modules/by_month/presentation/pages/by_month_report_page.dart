@@ -10,7 +10,9 @@ import 'package:monthly_report/modules/by_month/presentation/widgets/month_navig
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class ByMonthReportPage extends StatefulWidget {
-  const ByMonthReportPage({super.key});
+  const ByMonthReportPage({super.key, this.initialDate});
+
+  final DateTime? initialDate;
 
   @override
   State<ByMonthReportPage> createState() => _ByMonthReportPageState();
@@ -27,8 +29,20 @@ class _ByMonthReportPageState extends State<ByMonthReportPage> {
     super.initState();
     strings = MonthlyDI.I.get<ReportStrings>();
     final now = DateTime.now();
-    _currentReportDate = DateTime(now.year, now.month);
-    _pageController = PageController(initialPage: _initialPageOffset);
+    _currentReportDate =
+        widget.initialDate == null
+            ? DateTime(now.year, now.month)
+            : widget.initialDate!;
+
+    if (widget.initialDate != null) {
+      final diff =
+          _currentReportDate.month -
+          now.month +
+          (_currentReportDate.year - now.year) * 12;
+      _pageController = PageController(initialPage: _initialPageOffset + diff);
+    } else {
+      _pageController = PageController(initialPage: _initialPageOffset);
+    }
   }
 
   DateTime _getDateForPageIndex(int pageIndex) {
@@ -38,6 +52,7 @@ class _ByMonthReportPageState extends State<ByMonthReportPage> {
   }
 
   void _loadReportForDate(BuildContext context, DateTime date) {
+    //TODO: Fix problem with closed cubit
     context.read<ByMonthCubit>().getMonthlyReport(
       month: date.month,
       year: date.year,

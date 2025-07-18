@@ -54,7 +54,9 @@ class _ReportPageState extends State<ReportPage> {
                   SizedBox(width: hNormalSpace),
                   Expanded(
                     child: BaseCard(
-                      onTap: () {},
+                      onTap: () {
+                        context.push(ReportRoutersPath.reportByYear);
+                      },
                       child: Padding(
                         padding: EdgeInsets.all(vSmallSpace),
                         child: Text(

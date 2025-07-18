@@ -12,5 +12,6 @@
     "pending_bills": "Pending Bills",
     "bills_overdue": "Overdue Bills",
     "no_bills_found": "No Bills found!",
-    "due_date": "Due date"
+    "due_date": "Due date",
+    "report_by_year_title": "Year"
 }
