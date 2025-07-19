@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
+import 'package:monthly_report/core/routers/report_routers.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
+import 'package:monthly_report/modules/by_year/domain/entities/month_year_report_entity.dart';
 import 'package:monthly_report/modules/by_year/presentation/cubit/by_year_cubit.dart';
 import 'package:monthly_report/modules/by_year/presentation/cubit/by_year_state.dart';
 import 'package:monthly_report/modules/by_year/presentation/widgets/by_year_content.dart';
@@ -20,7 +22,7 @@ class _ByYearReportPageState extends State<ByYearReportPage> {
   static const int _initialPageOffset = 12000;
   late DateTime _currentReportDate;
   late ReportStrings strings;
-
+  List<MonthYearReportEntity>? months;
   @override
   void initState() {
     super.initState();
@@ -49,64 +51,86 @@ class _ByYearReportPageState extends State<ByYearReportPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(strings.reportByYearTitle), centerTitle: true),
-      body: BlocProvider<ByYearCubit>(
-        create: (_) {
-          final cubit =
-              MonthlyDI.I.get<ByYearCubit>()
-                ..getYearReport(year: _currentReportDate.year);
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(strings.reportByYearTitle),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.bar_chart),
+              onPressed: () {
+                if (months?.isNotEmpty ?? false) {
+                  context.push(
+                    ReportRoutersPath.reportByYearChart,
+                    extra: months,
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+        body: BlocProvider<ByYearCubit>(
+          create: (_) {
+            final cubit =
+                MonthlyDI.I.get<ByYearCubit>()
+                  ..getYearReport(year: _currentReportDate.year);
 
-          return cubit;
-        },
-        child: BlocBuilder<ByYearCubit, ByYearState>(
-          builder: (context, state) {
-            return Column(
-              children: [
-                YearNavigationHeader(
-                  pageController: _pageController,
-                  strings: strings,
-                  year: _currentReportDate.year,
-                ),
-                Expanded(
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: _initialPageOffset * 2,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentReportDate = _getDateForPageIndex(index);
-                      });
-                      _loadReportForYear(context, _currentReportDate.year);
-                    },
-                    itemBuilder: (context, pageIndex) {
-                      final pageDate = _getDateForPageIndex(pageIndex);
-
-                      if (state is ByYearLoadedState &&
-                          state.yearReportEntity.year == pageDate.year) {
-                        return ByYearContent(
-                          report: state.yearReportEntity,
-                          strings: strings,
-                        );
-                      } else if (state is ByYearLoadingState &&
-                          _currentReportDate.year == pageDate.year) {
-                        return const Center(child: LoadingStateWidget());
-                      } else if (state is ByYearErrorState &&
-                          _currentReportDate.year == pageDate.year) {
-                        return const Center(child: ErrorStateWidget());
-                      } else if (state is ByYearEmptyState &&
-                          _currentReportDate.year == pageDate.year) {
-                        return Center(
-                          child: EmptyStateWidget(title: strings.noBillsFound),
-                        );
-                      } else {
-                        return const Center(child: LoadingStateWidget());
-                      }
-                    },
-                  ),
-                ),
-              ],
-            );
+            return cubit;
           },
+          child: BlocBuilder<ByYearCubit, ByYearState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  YearNavigationHeader(
+                    pageController: _pageController,
+                    strings: strings,
+                    year: _currentReportDate.year,
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: _initialPageOffset * 2,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentReportDate = _getDateForPageIndex(index);
+                        });
+                        _loadReportForYear(context, _currentReportDate.year);
+                      },
+                      itemBuilder: (context, pageIndex) {
+                        final pageDate = _getDateForPageIndex(pageIndex);
+                        months = [];
+                        if (state is ByYearLoadedState &&
+                            state.yearReportEntity.year == pageDate.year) {
+                          months = state.yearReportEntity.months;
+
+                          return ByYearContent(
+                            report: state.yearReportEntity,
+                            strings: strings,
+                          );
+                        } else if (state is ByYearLoadingState &&
+                            _currentReportDate.year == pageDate.year) {
+                          return const Center(child: LoadingStateWidget());
+                        } else if (state is ByYearErrorState &&
+                            _currentReportDate.year == pageDate.year) {
+                          return const Center(child: ErrorStateWidget());
+                        } else if (state is ByYearEmptyState &&
+                            _currentReportDate.year == pageDate.year) {
+                          return Center(
+                            child: EmptyStateWidget(
+                              title: strings.noBillsFound,
+                            ),
+                          );
+                        } else {
+                          return const Center(child: LoadingStateWidget());
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );
