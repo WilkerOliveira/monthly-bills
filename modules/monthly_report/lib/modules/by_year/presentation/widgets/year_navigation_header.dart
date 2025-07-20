@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 

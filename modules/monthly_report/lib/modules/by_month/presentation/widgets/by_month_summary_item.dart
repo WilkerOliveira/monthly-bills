@@ -35,7 +35,7 @@ class ByMonthSummaryItem extends StatelessWidget {
         Text(
           value.formatToCurrency(locale),
           style: TextStyle(
-            fontSize: 16,
+            fontSize: subTitleTextSize,
             fontWeight: FontWeight.bold,
             color: color,
           ),

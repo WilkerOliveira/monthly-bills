@@ -3,7 +3,7 @@ import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_report/core/routers/report_routers.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
-import 'package:monthly_report/modules/by_year/domain/entities/month_year_report_entity.dart';
+import 'package:monthly_report/modules/by_year/domain/entities/year_report_entity.dart';
 import 'package:monthly_report/modules/by_year/presentation/cubit/by_year_cubit.dart';
 import 'package:monthly_report/modules/by_year/presentation/cubit/by_year_state.dart';
 import 'package:monthly_report/modules/by_year/presentation/widgets/by_year_content.dart';
@@ -22,7 +22,7 @@ class _ByYearReportPageState extends State<ByYearReportPage> {
   static const int _initialPageOffset = 12000;
   late DateTime _currentReportDate;
   late ReportStrings strings;
-  List<MonthYearReportEntity>? months;
+  YearReportEntity? report;
   @override
   void initState() {
     super.initState();
@@ -60,10 +60,10 @@ class _ByYearReportPageState extends State<ByYearReportPage> {
             IconButton(
               icon: const Icon(Icons.bar_chart),
               onPressed: () {
-                if (months?.isNotEmpty ?? false) {
+                if (report?.months.isNotEmpty ?? false) {
                   context.push(
                     ReportRoutersPath.reportByYearChart,
-                    extra: months,
+                    extra: report,
                   );
                 }
               },
@@ -99,10 +99,10 @@ class _ByYearReportPageState extends State<ByYearReportPage> {
                       },
                       itemBuilder: (context, pageIndex) {
                         final pageDate = _getDateForPageIndex(pageIndex);
-                        months = [];
+                        report = null;
                         if (state is ByYearLoadedState &&
                             state.yearReportEntity.year == pageDate.year) {
-                          months = state.yearReportEntity.months;
+                          report = state.yearReportEntity;
 
                           return ByYearContent(
                             report: state.yearReportEntity,

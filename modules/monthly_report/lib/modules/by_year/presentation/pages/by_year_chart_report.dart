@@ -5,11 +5,12 @@ import 'package:monthly_common/monthly_common.dart';
 import 'package:monthly_dependencies/monthly_dependencies.dart';
 import 'package:monthly_report/core/translation/report_strings.dart';
 import 'package:monthly_report/modules/by_year/domain/entities/month_year_report_entity.dart';
+import 'package:monthly_report/modules/by_year/domain/entities/year_report_entity.dart';
 import 'package:monthly_ui_components/monthly_ui_components.dart';
 
 class ByYearChartReport extends StatefulWidget {
   const ByYearChartReport({required this.data, super.key});
-  final List<MonthYearReportEntity> data;
+  final YearReportEntity data;
 
   @override
   State<ByYearChartReport> createState() => _ByYearChartReportState();
@@ -17,7 +18,7 @@ class ByYearChartReport extends StatefulWidget {
 
 class _ByYearChartReportState extends State<ByYearChartReport> {
   late ReportStrings strings;
-
+  double get chartWidth => widget.data.months.length * 100.0;
   @override
   void initState() {
     super.initState();
@@ -32,14 +33,14 @@ class _ByYearChartReportState extends State<ByYearChartReport> {
         domainFn:
             (MonthYearReportEntity report, _) => _getMonthName(report.month),
         measureFn: (MonthYearReportEntity report, _) => report.total,
-        data: widget.data,
+        data: widget.data.months,
         labelAccessorFn:
             (MonthYearReportEntity report, _) =>
                 report.total.formatToCurrency(strings.locale),
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
       ),
     ];
-    final chartWidth = widget.data.length * 100.0;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -55,63 +56,105 @@ class _ByYearChartReportState extends State<ByYearChartReport> {
           ],
         ),
         body: BasePage(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width:
-                  chartWidth < MediaQuery.of(context).size.width
-                      ? MediaQuery.of(context).size.width
-                      : chartWidth,
-              child: charts.BarChart(
-                series,
-                animate: true,
-                barRendererDecorator: charts.BarLabelDecorator<String>(
-                  outsideLabelStyleSpec: const charts.TextStyleSpec(
-                    fontSize: 12,
-                    color: charts.Color.white,
+          child: Column(
+            children: [
+              Card(
+                color: AppColors.onBackground,
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(defaultRadius),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: hSpace20,
+                    vertical: vSpace20,
                   ),
-                  insideLabelStyleSpec: const charts.TextStyleSpec(
-                    fontSize: 10,
-                    color: charts.Color.white,
+                  child: Row(
+                    children: [
+                      Text(
+                        strings.totalBills,
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontSize: mediumTextSize,
+                        ),
+                      ),
+                      SizedBox(width: vTinySpace),
+                      Text(
+                        widget.data.total.formatToCurrency(strings.locale),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.displaySmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: subTitleTextSize,
+                        ),
+                      ),
+                      SizedBox(height: vNormalSpace),
+                    ],
                   ),
                 ),
-                behaviors: [
-                  charts.SlidingViewport(),
-                  charts.PanAndZoomBehavior(),
-                ],
-                domainAxis: charts.OrdinalAxisSpec(
-                  renderSpec: charts.SmallTickRendererSpec(
-                    labelRotation: 0,
-                    labelStyle: const charts.TextStyleSpec(
-                      fontSize: 12,
-                      color: charts.MaterialPalette.white,
-                    ),
-                    lineStyle: charts.LineStyleSpec(
-                      color: charts.MaterialPalette.blue.shadeDefault,
-                    ),
-                  ),
-                  viewport: charts.OrdinalViewport(
-                    _getMonthName(widget.data.first.month),
-                    6,
-                  ),
-                ),
-                primaryMeasureAxis: charts.NumericAxisSpec(
-                  tickProviderSpec: const charts.BasicNumericTickProviderSpec(
-                    desiredMinTickCount: 5,
-                    desiredMaxTickCount: 10,
-                  ),
-                  renderSpec: charts.GridlineRendererSpec(
-                    labelStyle: const charts.TextStyleSpec(
-                      fontSize: 10,
-                      color: charts.MaterialPalette.white,
-                    ),
-                    lineStyle: charts.LineStyleSpec(
-                      color: charts.MaterialPalette.green.shadeDefault,
+              ),
+              SizedBox(height: vMediumSpace),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width:
+                        chartWidth < MediaQuery.of(context).size.width
+                            ? MediaQuery.of(context).size.width
+                            : chartWidth,
+                    child: charts.BarChart(
+                      series,
+                      animate: true,
+                      barRendererDecorator: charts.BarLabelDecorator<String>(
+                        outsideLabelStyleSpec: const charts.TextStyleSpec(
+                          fontSize: 12,
+                          color: charts.Color.white,
+                        ),
+                        insideLabelStyleSpec: const charts.TextStyleSpec(
+                          fontSize: 10,
+                          color: charts.Color.white,
+                        ),
+                      ),
+                      behaviors: [
+                        charts.SlidingViewport(),
+                        charts.PanAndZoomBehavior(),
+                      ],
+                      domainAxis: charts.OrdinalAxisSpec(
+                        renderSpec: charts.SmallTickRendererSpec(
+                          labelRotation: 0,
+                          labelStyle: const charts.TextStyleSpec(
+                            fontSize: 12,
+                            color: charts.MaterialPalette.white,
+                          ),
+                          lineStyle: charts.LineStyleSpec(
+                            color: charts.MaterialPalette.blue.shadeDefault,
+                          ),
+                        ),
+                        viewport: charts.OrdinalViewport(
+                          _getMonthName(widget.data.months.first.month),
+                          6,
+                        ),
+                      ),
+                      primaryMeasureAxis: charts.NumericAxisSpec(
+                        tickProviderSpec:
+                            const charts.BasicNumericTickProviderSpec(
+                              desiredMinTickCount: 5,
+                              desiredMaxTickCount: 10,
+                            ),
+                        renderSpec: charts.GridlineRendererSpec(
+                          labelStyle: const charts.TextStyleSpec(
+                            fontSize: 10,
+                            color: charts.MaterialPalette.white,
+                          ),
+                          lineStyle: charts.LineStyleSpec(
+                            color: charts.MaterialPalette.green.shadeDefault,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),

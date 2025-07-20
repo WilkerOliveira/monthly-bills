@@ -37,13 +37,16 @@ class ByYearContent extends StatelessWidget {
                 children: [
                   Text(
                     strings.totalBills,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: subTitleTextSize,
+                    ),
                   ),
                   SizedBox(height: vTinySpace),
                   Text(
                     report.total.formatToCurrency(strings.locale),
                     style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: largeTextSize,
                     ),
                   ),
                   SizedBox(height: vNormalSpace),
