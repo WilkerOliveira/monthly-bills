@@ -30,8 +30,8 @@ class ByYearContent extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: hSpace20,
-                vertical: vSpace20,
+                horizontal: hSpace10,
+                vertical: vSpace10,
               ),
               child: Column(
                 children: [
@@ -46,10 +46,9 @@ class ByYearContent extends StatelessWidget {
                     report.total.formatToCurrency(strings.locale),
                     style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: largeTextSize,
+                      fontSize: titleTextSize,
                     ),
                   ),
-                  SizedBox(height: vNormalSpace),
                 ],
               ),
             ),
